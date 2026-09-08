@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recibo de Caja - Municipalidad Provincial de Canas - Yanaoca</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --strip-width: 212mm;
+    --slip-width: 106mm;
+    --strip-height: 102mm;
+    --content-box-width: 90mm;
+    --content-box-height: 92mm;
+    --page-width: 212mm;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0b1329;
+    color: #0f172a;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .font-receipt {
+    font-family: 'Courier Prime', monospace, 'Courier New', Courier;
+  }
+
+  .receipt-watermark-bg {
+    background-color: #ffffff;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .watermark-horizontal-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+    user-select: none;
+  }
+
+  .sheet-page-wrapper {
+    position: relative;
+    margin: 8px auto 24px auto;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+
+  .sheet-page {
+    box-sizing: border-box;
+    background: #ffffff;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: top left;
+    overflow: hidden;
+  }
+
+  .receipt-strip {
+    width: var(--strip-width);
+    min-width: var(--strip-width);
+    max-width: var(--strip-width);
+    height: var(--strip-height);
+    min-height: var(--strip-height);
+    max-height: var(--strip-height);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap !important;
+    position: relative;
+    background: transparent;
+    border-top: 1px dashed #cbd5e1;
+    border-bottom: 1.5px dashed #64748b;
+  }
+  .receipt-strip:first-child { border-top: 0; }
+
+  .receipt-pane {
+    width: var(--slip-width);
+    min-width: var(--slip-width);
+    max-width: var(--slip-width);
+    flex: 0 0 var(--slip-width) !important;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background: transparent;
+  }
+  .pane-left {
+    padding: 5mm 9mm 5mm 7mm;
+    border-right: 1.5px dashed #94a3b8;
+  }
+  .pane-right {
+    padding: 5mm 7mm 5mm 9mm;
+  }
+
+  .inner-box-9cm {
+    width: var(--content-box-width);
+    min-width: var(--content-box-width);
+    max-width: var(--content-box-width);
+    height: var(--content-box-height);
+    min-height: var(--content-box-height);
+    max-height: var(--content-box-height);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+    position: relative;
+    z-index: 10;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .box-num-fecha {
+    width: 41mm;
+    min-width: 41mm;
+    max-width: 41mm;
+    height: 16mm;
+    min-height: 16mm;
+    max-height: 16mm;
+    border: 1px solid #0f172a;
+    border-radius: 4px;
+    background: transparent !important;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .box-num-fecha .lbl-col {
+    width: 20mm;
+    min-width: 20mm;
+    max-width: 20mm;
+    height: 100%;
+    border-right: 1px solid #0f172a;
+    background: transparent !important;
+    font-family: Inter, sans-serif !important;
+    font-weight: 900;
+    font-size: 7.5px;
+    color: #000000;
+    text-transform: uppercase;
+    text-align: left;
+    padding-left: 1.5mm;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    line-height: 1;
+    box-sizing: border-box;
+  }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+
+<!-- ================================================================= -->
+<!-- HEADER GLOBAL SUPERIOR CON SELECTOR DE MODO DE PANTALLA           -->
+<!-- ================================================================= -->
+<header class="w-full bg-slate-900/95 border-b border-slate-800 sticky top-0 z-50 backdrop-blur px-3 sm:px-5 py-2.5 shadow-xl">
+  <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-3">
+    
+    <!-- Logo e Identidad Municipal -->
+    <div class="flex items-center gap-3">
+      <img src="logo/sin_fondo.png" alt="Escudo de Canas" class="w-10 h-10 object-contain filter drop-shadow">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-[10px] font-black tracking-widest text-sky-400 uppercase">MUNICIPALIDAD PROVINCIAL DE CANAS - YANAOCA</span>
+        </div>
+        <h1 class="text-sm font-black text-white leading-tight">Generador Oficial de Recibos de Caja</h1>
+      </div>
+    </div>
+
+    <!-- BOTÓN SELECTOR DE MODO DE VISTA (SOLO ESCRITORIO / LAPTOP >= 1024px) -->
+    <div class="hidden lg:flex items-center bg-slate-950 p-1 rounded-xl border border-slate-700 shadow-inner gap-1">
+      <button type="button" id="btn-layout-normal" onclick="setLayoutMode('normal')" class="px-3.5 py-1.5 rounded-lg text-xs font-black transition cursor-pointer flex items-center gap-1.5 bg-sky-600 text-white shadow">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        <span>Modo Normal</span>
+      </button>
+      <button type="button" id="btn-layout-paralelo" onclick="setLayoutMode('paralelo')" class="px-3.5 py-1.5 rounded-lg text-xs font-black transition cursor-pointer flex items-center gap-1.5 text-slate-400 hover:text-white">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
+        <span>Modo Paralelo (Split)</span>
+      </button>
+    </div>
+
+    <!-- Acción Rápida y Ajustes -->
+    <div class="flex items-center gap-2">
+      <button type="button" onclick="abrirModalAjustes()" class="py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs rounded-xl border border-slate-700 shadow transition flex items-center gap-1.5 cursor-pointer" title="Calibración fina de medidas y tamaños de texto">
+        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        <span>Ajustes</span>
+      </button>
+
+      <button type="button" id="btn-header-preview" onclick="irAVistaPrevia()" class="py-2 px-3.5 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="2"></path></svg>
+        <span>Ver Vista Previa</span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<!-- ================================================================= -->
+<!-- CONTENEDOR PRINCIPAL (#main-container)                            -->
+<!-- ================================================================= -->
+<main id="main-container" class="w-full max-w-[1260px] mx-auto p-4 sm:p-6 flex flex-col gap-5">
+
+  <!-- ======================== PANEL FORMULARIO (#view-form) ======================== -->
+  <div id="view-form" class="w-full flex flex-col gap-5">
+
+    <!-- PASO 1: SELECCIÓN DE MODO -->
+    <section class="bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 p-4 sm:p-5 space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+        <div class="flex items-center gap-2">
+          <span class="w-6 h-6 rounded-lg bg-sky-600 text-white flex items-center justify-center text-xs font-black">1</span>
+          <h2 class="text-sm font-black text-slate-900 uppercase">Modo de Impresión</h2>
+        </div>
+        <span class="text-xs text-slate-500 font-semibold hidden sm:inline">Selecciona modalidad</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+        <!-- Modo 1: Blanco -->
+        <button type="button" id="btn-modo-1" onclick="setModo(1)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-slate-200 bg-slate-50 cursor-pointer">
+          <div class="text-lg mb-0.5">📄</div>
+          <div class="text-xs font-black text-slate-900 uppercase">1. En Blanco</div>
+          <div class="text-[10px] text-slate-500 mt-0.5">Plantilla vacía para llenar a mano.</div>
+        </button>
+
+        <!-- Modo 2: Solo Correlativo (Default) -->
+        <button type="button" id="btn-modo-2" onclick="setModo(2)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-red-500 bg-red-50 ring-2 ring-red-400/30 cursor-pointer">
+          <div class="text-lg mb-0.5">🔴</div>
+          <div class="text-xs font-black text-red-900 uppercase">2. Solo Correlativo</div>
+          <div class="text-[10px] text-red-700 mt-0.5">Numeración roja correlativa Desde/Hasta.</div>
+        </button>
+
+        <!-- Modo 3: Con Datos -->
+        <button type="button" id="btn-modo-3" onclick="setModo(3)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-slate-200 bg-slate-50 cursor-pointer">
+          <div class="text-lg mb-0.5">📝</div>
+          <div class="text-xs font-black text-slate-900 uppercase">3. Con Datos</div>
+          <div class="text-[10px] text-slate-500 mt-0.5">Contribuyente, conceptos y montos en soles.</div>
+        </button>
+      </div>
+    </section>
+
+    <!-- FORMULARIO: COLUMNAS (#form-columns) -->
+    <div id="form-columns" class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start">
+
+    <!-- ==================== COLUMNA IZQUIERDA: PARÁMETROS DEL TALONARIO ==================== -->
+    <div class="flex flex-col gap-5">
+
+      <!-- PASO 2: FORMATO DE HOJA (PAPEL) -->
+      <section class="bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 p-5 space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs font-black">2</span>
+            <h2 class="text-sm font-black text-slate-900 uppercase">Formato de Hoja (Papel)</h2>
+          </div>
+          <span id="badge-tipo-hoja" class="text-[10px] font-black bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded">Ajustado: 21.2 × 30.6 cm</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <button type="button" id="btn-papel-ajustado" onclick="setTipoHoja('ajustado')" class="papel-btn p-2.5 rounded-xl border-2 text-left transition border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-400/30 cursor-pointer">
+            <span class="block text-[11px] font-black text-indigo-950 uppercase leading-tight truncate">Ajustado (3 Tiras)</span>
+            <span class="block text-[10px] font-bold text-indigo-800 mt-0.5 whitespace-nowrap">21.2 × 30.6 cm</span>
+            <span class="block text-[8.5px] text-slate-500 mt-1 leading-tight">3 tiras de 10.2 cm al ras (0 sobrante)</span>
+          </button>
+
+          <button type="button" id="btn-papel-a4" onclick="setTipoHoja('a4')" class="papel-btn p-2.5 rounded-xl border-2 text-left transition border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer">
+            <span class="block text-[11px] font-black text-slate-900 uppercase leading-tight truncate">A4 Estándar</span>
+            <span class="block text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap">21.0 × 29.7 cm</span>
+            <span class="block text-[8.5px] text-slate-500 mt-1 leading-tight">2 tiras + corte 9.3 cm sobrante</span>
+          </button>
+
+          <button type="button" id="btn-papel-tira" onclick="setTipoHoja('tira')" class="papel-btn p-2.5 rounded-xl border-2 text-left transition border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer">
+            <span class="block text-[11px] font-black text-slate-900 uppercase leading-tight truncate">Tira Suelta</span>
+            <span class="block text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap">21.2 × 10.2 cm</span>
+            <span class="block text-[8.5px] text-slate-500 mt-1 leading-tight">1 tira exacta (recibo individual)</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- PASO 3: RANGO DE CORRELATIVOS (Modos 2 y 3) -->
+      <section id="sec-rango" class="bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 p-5 space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-lg bg-red-600 text-white flex items-center justify-center text-xs font-black">3</span>
+            <h2 class="text-sm font-black text-slate-900 uppercase">Rango Correlativo Rojo</h2>
+          </div>
+          <span class="text-xs text-red-700 font-bold">Generación automática</span>
+        </div>
+
+        <div class="bg-red-50/70 p-4 rounded-xl border border-red-200 space-y-3">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 items-end">
+            <div>
+              <label class="block text-[11px] font-bold text-red-900 uppercase mb-1">Desde:</label>
+              <input id="f-serie-desde" type="text" oninput="onRangoChange()" class="w-full px-3 py-2 border border-red-300 rounded-lg font-receipt font-black text-red-600 text-sm focus:ring-2 focus:ring-red-500 outline-none" value="098466" placeholder="098466">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-red-900 uppercase mb-1">Hasta:</label>
+              <input id="f-serie-hasta" type="text" oninput="onRangoChange()" class="w-full px-3 py-2 border border-red-300 rounded-lg font-receipt font-black text-red-600 text-sm focus:ring-2 focus:ring-red-500 outline-none" value="098468" placeholder="098468">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Total Recibos:</label>
+              <div id="lbl-total-recibos" class="px-3 py-2 bg-white border border-red-200 rounded-lg font-receipt font-black text-red-700 text-sm text-center">3</div>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Páginas PDF:</label>
+              <div id="lbl-total-paginas" class="px-3 py-2 bg-white border border-slate-200 rounded-lg font-receipt font-bold text-slate-700 text-sm text-center">1 pág</div>
+            </div>
+          </div>
+          <p class="text-[10px] text-red-800">El sistema arma automáticamente todas las páginas necesarias según la cantidad de recibos y el papel elegido.</p>
+        </div>
+      </section>
+
+      <!-- PASO 4: FECHA & ELEMENTOS VISUALES -->
+      <section class="bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-lg bg-slate-700 text-white flex items-center justify-center text-xs font-black">4</span>
+            <h2 class="text-sm font-black text-slate-900 uppercase">Fecha y Opciones Visuales</h2>
+          </div>
+        </div>
+
+        <!-- Fecha -->
+        <div class="flex items-center justify-between gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-800">
+            <input type="checkbox" id="chk-fecha" onchange="onChkFechaChange()" checked class="w-4 h-4 text-sky-600 rounded">
+            <span>Imprimir Fecha:</span>
+          </label>
+          <div id="box-fecha-input" class="flex items-center gap-2">
+            <input id="f-fecha-global" type="text" oninput="triggerLivePreview()" class="w-36 px-3 py-1.5 border border-slate-300 rounded-lg font-receipt font-bold text-xs text-slate-900 focus:ring-2 focus:ring-sky-500 outline-none" value="01/09/2026" placeholder="DD/MM/AAAA">
+          </div>
+        </div>
+
+        <!-- Opciones visuales -->
+        <div class="grid grid-cols-3 gap-2.5 text-xs">
+          <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer">
+            <input type="checkbox" id="chk-num-recibo" onchange="triggerLivePreview()" checked class="w-4 h-4 text-sky-600 rounded">
+            <span class="font-medium text-slate-800">Nº Recibo</span>
+          </label>
+          <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer">
+            <input type="checkbox" id="chk-filigrana" onchange="triggerLivePreview()" checked class="w-4 h-4 text-sky-600 rounded">
+            <span class="font-medium text-slate-800">Filigrana</span>
+          </label>
+          <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer">
+            <input type="checkbox" id="chk-escudo" onchange="triggerLivePreview()" checked class="w-4 h-4 text-sky-600 rounded">
+            <span class="font-medium text-slate-800">Escudo agua</span>
+          </label>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ==================== COLUMNA DERECHA: DATOS / RESUMEN EN PARALELO ==================== -->
+    <div class="flex flex-col gap-5">
+
+      <!-- PASO 5: DATOS POR RECIBO (Modo 3) -->
+      <section id="sec-datos" class="bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 p-4 sm:p-5 space-y-3 hidden">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs font-black">5</span>
+            <h2 class="text-sm font-black text-slate-900 uppercase">Datos · <span id="lbl-recibo-editando" class="text-sky-700">Nº 098466</span></h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="badge-sincronizado" class="hidden text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-md">
+              Sincronizado
+            </span>
+            <button type="button" onclick="abrirModalCompartir()" class="flex items-center gap-1.5 text-xs font-bold text-sky-900 bg-sky-50 hover:bg-sky-100 px-2.5 py-1.5 rounded-lg border border-sky-300 transition shadow-xs cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+              <span>Replicar / Compartir</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Leyenda de estado y selector de recibos -->
+        <div class="flex items-center justify-between text-[11px] text-slate-500 font-semibold px-0.5">
+          <span>Seleccionar recibo a editar:</span>
+          <div class="flex items-center gap-2.5 text-[10px]">
+            <span class="flex items-center gap-1 text-emerald-700 font-bold"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Con datos</span>
+            <span class="flex items-center gap-1 text-rose-600 font-medium"><span class="w-2 h-2 rounded-full bg-rose-400"></span> Vacío</span>
+          </div>
+        </div>
+
+        <!-- Selector de recibo con colores verde / rojo suave -->
+        <div class="flex items-center gap-1.5 flex-wrap" id="nav-recibos"></div>
+
+        <!-- Campos de entrada -->
+        <div class="space-y-2.5">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Nombre o Razón Social:</label>
+            <input id="f-nombre" type="text" oninput="onDatoChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none font-normal" value="SABINA USCAMAYTA TACO - 24583755" placeholder="APELLIDOS Y NOMBRES">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Domicilio Fiscal (Opcional):</label>
+            <input id="f-domicilio" type="text" oninput="onDatoChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none font-normal" placeholder="Ej: Plaza de Armas Canas">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Observaciones:</label>
+            <input id="f-obs" type="text" oninput="onDatoChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none font-normal" value="CREACION Y/O APERTURA DE CARPETA PREDIAL" placeholder="Observaciones">
+          </div>
+        </div>
+
+        <!-- Tabla conceptos -->
+        <div class="border border-slate-300 rounded-xl overflow-hidden shadow-2xs">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-100 font-bold border-b border-slate-300 text-slate-800 text-[10px]">
+              <tr>
+                <th class="p-2 w-16 text-center">PARTIDA</th>
+                <th class="p-2">DESCRIPCIÓN</th>
+                <th class="p-2 w-28 text-right">IMPORTE (S/)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-xs">
+              <tr>
+                <td class="p-1"><input id="f-p1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs" value="1"></td>
+                <td class="p-1"><input id="f-d1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 uppercase font-receipt text-slate-900 text-xs" value="OTROS DERECHOS ADMINISTRATIVOS GENERALES"></td>
+                <td class="p-1"><input id="f-i1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs" value="10.00" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td class="p-1"><input id="f-p2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs"></td>
+                <td class="p-1"><input id="f-d2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 uppercase font-receipt text-slate-900 text-xs"></td>
+                <td class="p-1"><input id="f-i2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td class="p-1"><input id="f-p3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs"></td>
+                <td class="p-1"><input id="f-d3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 uppercase font-receipt text-slate-900 text-xs"></td>
+                <td class="p-1"><input id="f-i3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs" placeholder="0.00"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Total y Son -->
+        <div class="bg-sky-50 rounded-xl p-3 border border-sky-200 flex items-center justify-between">
+          <div class="flex-1 min-w-0 pr-3">
+            <span class="text-[10px] font-bold text-sky-900 uppercase block">Son:</span>
+            <div id="f-txt-son" class="font-receipt font-bold text-xs text-sky-950 uppercase truncate">DIEZ CON 00/100 SOLES</div>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <span class="text-[10px] font-bold text-sky-900 uppercase block">Total</span>
+            <div class="text-lg font-black font-receipt text-sky-950">S/ <span id="f-txt-total">10.00</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TARJETA INFORMATIVA / RESUMEN EN PARALELO (Visible en Modos 1 y 2) -->
+      <section id="sec-info-resumen" class="bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 p-5 space-y-4">
+        <div class="flex items-center gap-2 border-b border-slate-200 pb-2.5">
+          <span class="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs font-black">📋</span>
+          <h2 class="text-sm font-black text-slate-900 uppercase">Resumen de Impresión</h2>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3 text-xs">
+          <div class="flex justify-between items-center py-1 border-b border-slate-200">
+            <span class="text-slate-500 font-medium">Modo activo:</span>
+            <span id="resumen-modo" class="font-bold text-red-600">Solo Nº Correlativo Rojo</span>
+          </div>
+          <div class="flex justify-between items-center py-1 border-b border-slate-200">
+            <span class="text-slate-500 font-medium">Formato de hoja:</span>
+            <span id="resumen-papel" class="font-bold text-indigo-700">Ajustado (21.2 × 30.6 cm)</span>
+          </div>
+          <div class="flex justify-between items-center py-1 border-b border-slate-200">
+            <span class="text-slate-500 font-medium">Distribución:</span>
+            <span id="resumen-distrib" class="font-bold text-slate-800">3 tiras de 10.2 cm exactas al ras</span>
+          </div>
+          <div class="flex justify-between items-center py-1 border-b border-slate-200">
+            <span class="text-slate-500 font-medium">Línea de corte:</span>
+            <span class="font-bold text-slate-700">Líneas entrecortadas suaves</span>
+          </div>
+          <div class="flex justify-between items-center py-1">
+            <span class="text-slate-500 font-medium">Copias:</span>
+            <span class="font-bold text-slate-800">Original (izq) + Copia idéntica (der)</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-sky-50 rounded-xl border border-sky-200 text-[11px] text-sky-900 leading-relaxed">
+          💡 Puedes presionar <strong>"Ver Vista Previa"</strong> para revisar cómo queda cada hoja antes de imprimir o descargar directamente el archivo PDF listo para imprenta.
+        </div>
+      </section>
+
+      <!-- BOTONES DE ACCIÓN PRINCIPALES (MODO NORMAL) -->
+      <div id="form-action-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+        <button type="button" onclick="irAVistaPrevia()" class="py-3.5 px-5 bg-sky-600 hover:bg-sky-500 text-white font-black text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="2"></path></svg>
+          <span>VER VISTA PREVIA</span>
+        </button>
+        <button type="button" onclick="descargarPDF()" class="py-3.5 px-5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2 border border-emerald-400 cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span>DESCARGAR PDF</span>
+        </button>
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+  <footer class="text-center text-xs text-slate-500 pt-2 pb-1">
+    Municipalidad Provincial de Canas - Yanaoca · Sistema de Recibos de Caja
+  </footer>
+
+</div>
+
+  <!-- ================================================================= -->
+  <!-- PANEL VISTA PREVIA (#view-preview)                                -->
+  <!-- ================================================================= -->
+  <div id="view-preview" class="w-full min-h-screen pt-1 px-2 pb-8 hidden flex-col items-center bg-slate-900 rounded-2xl border border-slate-800">
+    
+    <!-- Toolbar de Vista Previa Compacta (2 Filas Lineales sin Select) -->
+    <div class="w-full bg-slate-800/95 backdrop-blur border border-slate-700 text-white rounded-xl shadow-md p-2 mb-2 flex flex-col gap-1.5 sticky top-0 z-40">
+      
+      <!-- Fila 1: Encabezado, Info y Descarga Directa -->
+      <div class="flex items-center justify-between gap-2 w-full">
+        <div class="flex items-center gap-2">
+          <button type="button" id="preview-back-btn" onclick="volverAFormulario()" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-xs font-bold text-white rounded-lg border border-slate-600 transition flex items-center gap-1 cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <span class="hidden sm:inline">Volver</span>
+          </button>
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-xs font-black text-sky-400 uppercase tracking-tight whitespace-nowrap">VISTA PREVIA</span>
+            <span class="text-[10px] text-slate-300 font-bold bg-slate-900 px-2 py-0.5 rounded border border-slate-700 whitespace-nowrap" id="preview-info"></span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="abrirModalAjustes()" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 font-bold text-xs text-amber-300 hover:text-white rounded-lg border border-slate-600 shadow transition flex items-center gap-1.5 cursor-pointer flex-shrink-0 whitespace-nowrap" title="Calibrar fuentes y medidas">
+            <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span>Ajustes</span>
+          </button>
+          <button type="button" onclick="descargarPDF()" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 font-black text-xs text-white rounded-lg shadow transition flex items-center gap-1.5 border border-emerald-400 cursor-pointer flex-shrink-0 whitespace-nowrap">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span>DESCARGAR PDF</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Fila 2: Selector Lineal de Papel (Sin select) y Zoom -->
+      <div class="flex items-center justify-between gap-2 w-full pt-1.5 border-t border-slate-700/60 overflow-x-auto">
+        <!-- Papeles Lineales en Botones -->
+        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-700 text-xs flex-shrink-0">
+          <span class="text-[10px] font-bold text-slate-400 uppercase px-1.5 hidden md:inline">Papel:</span>
+          <button type="button" onclick="setTipoHoja('ajustado')" id="preview-papel-ajustado" class="preview-papel-btn px-2.5 py-1 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer transition shadow">Ajustado (21.2×30.6 cm)</button>
+          <button type="button" onclick="setTipoHoja('a4')" id="preview-papel-a4" class="preview-papel-btn px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer transition">A4 (21.0×29.7 cm)</button>
+          <button type="button" onclick="setTipoHoja('tira')" id="preview-papel-tira" class="preview-papel-btn px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer transition">Tira (21.2×10.2 cm)</button>
+        </div>
+
+        <!-- Controles de Zoom Lineales -->
+        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-700 text-xs flex-shrink-0">
+          <span class="text-[10px] font-bold text-slate-400 uppercase px-1 hidden sm:inline">Zoom:</span>
+          <button type="button" onclick="setZoom('auto')" class="zoom-btn px-2 py-0.5 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer" id="zoom-auto" title="Ajuste automático a ancho completo">Auto</button>
+          <button type="button" onclick="setZoom(1.0)" class="zoom-btn px-1.5 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer" id="zoom-100">100%</button>
+          <button type="button" onclick="setZoom(0.8)" class="zoom-btn px-1.5 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer" id="zoom-80">80%</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Contenedor de páginas de preview (sin margen superior muerto) -->
+    <div id="preview-zoom-container" class="w-full flex flex-col items-center overflow-x-auto pt-0 pb-12"></div>
+
+  </div>
+
+</main>
+
+<!-- ======================== MODAL REPLICAR / COMPARTIR DATOS ======================== -->
+<div id="modal-compartir" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[999999] items-center justify-center p-4 select-none">
+  <div class="bg-white text-slate-900 border border-slate-200 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-150">
+    
+    <!-- Header -->
+    <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
+        <h3 class="text-sm font-black uppercase tracking-wide">Replicar y Compartir Datos</h3>
+      </div>
+      <button type="button" onclick="cerrarModalCompartir()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer p-1">✕</button>
+    </div>
+
+    <div class="p-5 space-y-4 text-xs">
+      
+      <!-- Origen -->
+      <div class="p-3 bg-sky-50 rounded-xl border border-sky-200 flex items-center justify-between">
+        <span class="font-bold text-sky-950">Recibo Origen (Datos a copiar):</span>
+        <span id="modal-origen-recibo" class="font-receipt font-black text-sm text-sky-700 bg-white px-2.5 py-0.5 rounded border border-sky-300">Nº 098466</span>
+      </div>
+
+      <!-- Campos a compartir -->
+      <div class="space-y-2">
+        <label class="block font-black text-slate-800 uppercase tracking-wide text-[11px]">
+          1. ¿Qué datos deseas copiar o compartir?
+        </label>
+        <div class="grid grid-cols-1 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <label class="flex items-center gap-2.5 cursor-pointer p-1 hover:bg-white rounded-lg transition">
+            <input type="checkbox" id="chk-rep-nombre" checked class="w-4 h-4 text-sky-600 rounded">
+            <div>
+              <span class="font-bold text-slate-900 block">Nombre o Razón Social y Domicilio</span>
+              <span class="text-[10px] text-slate-500 block" id="preview-rep-nombre">Ej: SABINA USCAMAYTA TACO</span>
+            </div>
+          </label>
+
+          <label class="flex items-center gap-2.5 cursor-pointer p-1 hover:bg-white rounded-lg transition">
+            <input type="checkbox" id="chk-rep-obs" checked class="w-4 h-4 text-sky-600 rounded">
+            <div>
+              <span class="font-bold text-slate-900 block">Observaciones</span>
+              <span class="text-[10px] text-slate-500 block" id="preview-rep-obs">Ej: CREACION Y/O APERTURA DE CARPETA PREDIAL</span>
+            </div>
+          </label>
+
+          <label class="flex items-center gap-2.5 cursor-pointer p-1 hover:bg-white rounded-lg transition">
+            <input type="checkbox" id="chk-rep-conceptos" checked class="w-4 h-4 text-sky-600 rounded">
+            <div>
+              <span class="font-bold text-slate-900 block">Conceptos, Partidas e Importes (S/)</span>
+              <span class="text-[10px] text-slate-500 block" id="preview-rep-conceptos">Partidas 1, 2, 3 con sus descripciones y montos</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Destino -->
+      <div class="space-y-2">
+        <label class="block font-black text-slate-800 uppercase tracking-wide text-[11px]">
+          2. ¿A cuáles recibos aplicar?
+        </label>
+        <div class="grid grid-cols-1 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <label class="flex items-center gap-2.5 cursor-pointer">
+            <input type="radio" name="rep-destino" value="todos" checked class="w-4 h-4 text-sky-600">
+            <span class="font-bold text-slate-900">A todos los recibos del rango (<span id="modal-rango-texto">098466 al 098468</span>)</span>
+          </label>
+          <label class="flex items-center gap-2.5 cursor-pointer">
+            <input type="radio" name="rep-destino" value="vacios" class="w-4 h-4 text-sky-600">
+            <span class="font-bold text-slate-900">Solo a los recibos vacíos (<span class="text-rose-600 font-bold">marcados en rojo suave</span>)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Sincronización continua -->
+      <div class="p-3 bg-amber-50 rounded-xl border border-amber-200">
+        <label class="flex items-center gap-2.5 cursor-pointer">
+          <input type="checkbox" id="chk-rep-sync" class="w-4 h-4 text-amber-600 rounded">
+          <div>
+            <span class="font-bold text-amber-950 block">Mantener sincronizado continuamente</span>
+            <span class="text-[10px] text-amber-800 block">Al modificar este recibo, los campos elegidos se actualizarán automáticamente en todos.</span>
+          </div>
+        </label>
+      </div>
+
+      <!-- Notificación interna -->
+      <div id="modal-notif" class="hidden p-2.5 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-bold text-center text-xs"></div>
+
+    </div>
+
+    <!-- Footer acciones -->
+    <div class="bg-slate-100 px-5 py-3.5 flex items-center justify-end gap-2.5 border-t border-slate-200">
+      <button type="button" onclick="cerrarModalCompartir()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded-xl transition cursor-pointer">
+        Cancelar
+      </button>
+      <button type="button" onclick="ejecutarReplicacion()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-xl shadow transition flex items-center gap-1.5 border border-emerald-400 cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span>APLICAR REPLICACIÓN</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ======================== MODAL DE AJUSTES Y CALIBRACIÓN ======================== -->
+<div id="modal-ajustes" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[999999] items-center justify-center p-3 sm:p-4 select-none">
+  <div class="bg-white text-slate-900 border border-slate-200 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-150 flex flex-col max-h-[90vh]">
+    
+    <!-- Header -->
+    <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between flex-shrink-0">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+        <div>
+          <h3 class="text-sm font-black uppercase tracking-wide">Ajustes y Calibrador Visual</h3>
+          <p class="text-[10px] text-slate-400">Edita tamaños de letra y dimensiones exactas en cm / mm / px</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" id="btn-toggle-lock" onclick="toggleLockAjustes()" class="px-2.5 py-1 rounded-lg text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white">
+          <span id="lock-icon">🔓</span>
+          <span id="lock-text">Desbloqueado</span>
+        </button>
+        <button type="button" onclick="cerrarModalAjustes()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer p-1">✕</button>
+      </div>
+    </div>
+
+    <!-- Contenido scrolleable -->
+    <div class="p-5 space-y-5 overflow-y-auto text-xs flex-1" id="ajustes-inputs-container">
+      
+      <!-- SECCIÓN 1: TAMAÑOS DE LETRA -->
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <h4 class="font-black text-slate-900 uppercase text-xs flex items-center gap-1.5">
+            <span>🔤</span> Tamaños de Letra (Tipografía en Píxeles)
+          </h4>
+          <span class="text-[10px] font-bold text-slate-500">Afecta vista previa y PDF</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Nº DE RECIBO y FECHA (Etiquetas):</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontNumFecha" min="6" max="14" step="0.5" oninput="onAjusteInput('fontNumFecha', this.value)" class="flex-1">
+              <span id="val-fontNumFecha" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">9.5 px</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Nº Recibo y Fecha (Datos correlativos):</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontNumFechaVal" min="6" max="14" step="0.5" oninput="onAjusteInput('fontNumFechaVal', this.value)" class="flex-1">
+              <span id="val-fontNumFechaVal" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">9.0 px</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Título "RECIBO DE CAJA":</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontReciboCaja" min="8" max="18" step="0.5" oninput="onAjusteInput('fontReciboCaja', this.value)" class="flex-1">
+              <span id="val-fontReciboCaja" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">11.5 px</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Nº Correlativo Rojo (Serie):</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontSerie" min="10" max="22" step="0.5" oninput="onAjusteInput('fontSerie', this.value)" class="flex-1">
+              <span id="val-fontSerie" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs text-red-600">16.0 px</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Etiquetas (Nombre, Domicilio, Obs):</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontLabels" min="6" max="12" step="0.5" oninput="onAjusteInput('fontLabels', this.value)" class="flex-1">
+              <span id="val-fontLabels" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">8.0 px</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Datos Contribuyente (Nombre/Domicilio):</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontDatos" min="6" max="14" step="0.5" oninput="onAjusteInput('fontDatos', this.value)" class="flex-1">
+              <span id="val-fontDatos" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">8.5 px</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Datos Observaciones:</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontObs" min="6" max="12" step="0.5" oninput="onAjusteInput('fontObs', this.value)" class="flex-1">
+              <span id="val-fontObs" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">7.5 px</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Tabla Cabecera (PARTIDA, etc.):</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontTablaHdr" min="6" max="12" step="0.5" oninput="onAjusteInput('fontTablaHdr', this.value)" class="flex-1">
+              <span id="val-fontTablaHdr" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">8.0 px</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Tabla Contenido (Conceptos y Montos):</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontTablaBody" min="6" max="12" step="0.5" oninput="onAjusteInput('fontTablaBody', this.value)" class="flex-1">
+              <span id="val-fontTablaBody" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">7.5 px</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Pie de Tabla (Son y TOTAL):</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-fontSonTotal" min="6" max="12" step="0.5" oninput="onAjusteInput('fontSonTotal', this.value)" class="flex-1">
+              <span id="val-fontSonTotal" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">8.0 px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2: DIMENSIONES Y ESPESORES EN CM / MM -->
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <h4 class="font-black text-slate-900 uppercase text-xs flex items-center gap-1.5">
+            <span>📏</span> Dimensiones y Espesores (en Milímetros y Centímetros)
+          </h4>
+          <span class="text-[10px] font-bold text-slate-500">10 mm = 1.0 cm</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Espesor Cajetín Nombre o Razón Social:</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-hNombre" min="4" max="12" step="0.5" oninput="onAjusteInput('hNombre', this.value)" class="flex-1">
+              <span id="val-hNombre" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">6.0 mm</span>
+            </div>
+            <span class="text-[9.5px] text-slate-500">0.6 cm (calibrado)</span>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Espesor Cajetín Domicilio Fiscal:</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-hDomicilio" min="4" max="12" step="0.5" oninput="onAjusteInput('hDomicilio', this.value)" class="flex-1">
+              <span id="val-hDomicilio" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">6.0 mm</span>
+            </div>
+            <span class="text-[9.5px] text-slate-500">0.6 cm</span>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Espesor Cajetín Observaciones:</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-hObs" min="5" max="15" step="0.5" oninput="onAjusteInput('hObs', this.value)" class="flex-1">
+              <span id="val-hObs" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">9.0 mm</span>
+            </div>
+            <span class="text-[9.5px] text-slate-500">0.9 cm</span>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Alto Cuerpo de Tabla (Conceptos):</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-hTablaBody" min="25" max="45" step="0.5" oninput="onAjusteInput('hTablaBody', this.value)" class="flex-1">
+              <span id="val-hTablaBody" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">34.0 mm</span>
+            </div>
+            <span class="text-[9.5px] text-slate-500">3.4 cm (altura útil partidas)</span>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Ancho Cajetín Nº/Fecha/Serie:</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-wBoxNumFecha" min="35" max="48" step="0.5" oninput="onAjusteInput('wBoxNumFecha', this.value)" class="flex-1">
+              <span id="val-wBoxNumFecha" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">41.0 mm</span>
+            </div>
+            <span class="text-[9.5px] text-slate-500">4.1 cm</span>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Alto Encabezado Oficial:</label>
+            <div class="flex items-center gap-2">
+              <input type="range" id="ajuste-hHeader" min="14" max="22" step="0.5" oninput="onAjusteInput('hHeader', this.value)" class="flex-1">
+              <span id="val-hHeader" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">17.0 mm</span>
+            </div>
+            <span class="text-[9.5px] text-slate-500">1.7 cm (espacio para escudo y texto)</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Modal -->
+    <div class="bg-slate-100 px-5 py-3.5 flex items-center justify-between border-t border-slate-200 flex-shrink-0">
+      <button type="button" onclick="restablecerAjustesFabrica()" class="px-3.5 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition cursor-pointer text-xs flex items-center gap-1">
+        <span>🔄</span> Restablecer Fábrica
+      </button>
+
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="cerrarModalAjustes()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-white font-black rounded-xl shadow transition cursor-pointer text-xs">
+          Guardar y Listo
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ======================== MODAL DE CARGA ANTI-PARPADEO ======================== -->
+<div id="pdf-loading-modal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[99999999] flex-col items-center justify-center text-white select-none">
+  <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl shadow-2xl flex flex-col items-center max-w-sm text-center">
+    <div class="w-12 h-12 border-4 border-sky-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+    <div class="text-sm font-black tracking-wide text-white uppercase" id="pdf-modal-title">Generando Recibos PDF</div>
+    <div class="text-xs text-sky-400 font-semibold mt-1" id="pdf-modal-subtitle">Procesando páginas oficiales...</div>
+    <div class="text-[11px] text-slate-400 mt-2">Medidas exactas 1:1 · Líneas de corte · Cero parpadeo</div>
+  </div>
+</div>
+
+<!-- ======================== JAVASCRIPT ======================== -->
+<script>
+(function() {
+
+  // ======================== ESTADO ========================
+  let modo = 2;            // 1=blanco, 2=solo correlativo, 3=con datos
+  let tipoHoja = "ajustado"; // "ajustado" (212x306mm), "a4" (210x297mm), "tira" (212x102mm)
+  let serieDesde = 98466;
+  let serieHasta = 98468;
+  let fechaGlobal = "01/09/2026";
+  let showFecha = true;
+  let showNumRecibo = true;
+  let showFiligrana = true;
+  let showEscudo = true;
+  let currentZoom = 0.8;
+  let savedLayout = localStorage.getItem('recibo_layout_mode') || 'paralelo';
+  let layoutMode = (window.innerWidth < 1024) ? 'normal' : savedLayout;
+  let currentScreen = 'form';
+  let liveTimer = null;
+
+  // Datos por recibo
+  let recibosData = {
+    98466: {
+      nombre: "SABINA USCAMAYTA TACO - 24583755",
+      domicilio: "",
+      obs: "CREACION Y/O APERTURA DE CARPETA PREDIAL",
+      p1: "1", d1: "OTROS DERECHOS ADMINISTRATIVOS GENERALES", i1: "10.00",
+      p2: "", d2: "", i2: "",
+      p3: "", d3: "", i3: ""
+    }
+  };
+  let reciboEditandoIdx = 0;
+
+  // ======================== CONFIGURACIÓN Y CALIBRADOR VISUAL ========================
+  const AJUSTES_DEFAULT = {
+    // Fuentes (px)
+    fontNumFecha: 9.5,
+    fontNumFechaVal: 9.0,
+    fontReciboCaja: 11.5,
+    fontSerie: 16.0,
+    fontLabels: 8.0,
+    fontDatos: 8.5,
+    fontObs: 7.5,
+    fontTablaHdr: 8.0,
+    fontTablaBody: 7.5,
+    fontSonTotal: 8.0,
+    // Dimensiones (mm)
+    hNombre: 6.0,       // 0.6 cm
+    hDomicilio: 6.0,    // 0.6 cm
+    hObs: 9.0,          // 0.9 cm
+    hTablaBody: 34.0,   // 3.4 cm
+    wBoxNumFecha: 41.0, // 4.1 cm
+    hHeader: 17.0       // 1.7 cm
+  };
+
+  let ajustesLocked = localStorage.getItem('recibo_mc_ajustes_locked') === 'true';
+  let ajustes = { ...AJUSTES_DEFAULT };
+  try {
+    const savedAjustes = localStorage.getItem('recibo_mc_ajustes');
+    if (savedAjustes) {
+      ajustes = { ...AJUSTES_DEFAULT, ...JSON.parse(savedAjustes) };
+    }
+  } catch(e) {
+    console.warn("Error cargando ajustes:", e);
+  }
+
+  function onAjusteInput(key, val) {
+    if (ajustesLocked) return;
+    const num = parseFloat(val);
+    if (isNaN(num)) return;
+    ajustes[key] = num;
+    try {
+      localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
+    } catch(e) {}
+
+    const lbl = document.getElementById('val-' + key);
+    if (lbl) {
+      lbl.textContent = (key.startsWith('h') || key.startsWith('w')) ? `${num.toFixed(1)} mm` : `${num.toFixed(1)} px`;
+    }
+    triggerLivePreview();
+  }
+
+  function toggleLockAjustes() {
+    ajustesLocked = !ajustesLocked;
+    try {
+      localStorage.setItem('recibo_mc_ajustes_locked', String(ajustesLocked));
+    } catch(e) {}
+    actualizarEstadoLockUI();
+  }
+
+  function actualizarEstadoLockUI() {
+    const btn = document.getElementById('btn-toggle-lock');
+    const icon = document.getElementById('lock-icon');
+    const text = document.getElementById('lock-text');
+    const container = document.getElementById('ajustes-inputs-container');
+
+    if (btn && icon && text) {
+      if (ajustesLocked) {
+        btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-amber-500/20 border-amber-500 text-amber-300 hover:bg-amber-500/30";
+        icon.textContent = "🔒";
+        text.textContent = "Bloqueado";
+      } else {
+        btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white";
+        icon.textContent = "🔓";
+        text.textContent = "Desbloqueado";
+      }
+    }
+    if (container) {
+      const inputs = container.querySelectorAll('input');
+      inputs.forEach(inp => {
+        inp.disabled = ajustesLocked;
+        if (ajustesLocked) {
+          inp.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+          inp.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+      });
+    }
+  }
+
+  function restablecerAjustesFabrica() {
+    if (ajustesLocked) {
+      alert("Los ajustes están bloqueados. Desbloquéalos primero con el botón 🔒.");
+      return;
+    }
+    ajustes = { ...AJUSTES_DEFAULT };
+    try {
+      localStorage.removeItem('recibo_mc_ajustes');
+    } catch(e) {}
+    sincronizarValoresAjustesUI();
+    triggerLivePreview();
+  }
+
+  function abrirModalAjustes() {
+    sincronizarValoresAjustesUI();
+    actualizarEstadoLockUI();
+    const modal = document.getElementById('modal-ajustes');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  }
+
+  function cerrarModalAjustes() {
+    const modal = document.getElementById('modal-ajustes');
+    if (modal) {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+  }
+
+  function sincronizarValoresAjustesUI() {
+    for (const [key, val] of Object.entries(ajustes)) {
+      const input = document.getElementById('ajuste-' + key);
+      const lbl = document.getElementById('val-' + key);
+      if (input) input.value = val;
+      if (lbl) {
+        lbl.textContent = (key.startsWith('h') || key.startsWith('w')) ? `${Number(val).toFixed(1)} mm` : `${Number(val).toFixed(1)} px`;
+      }
+    }
+  }
+  function getTirasPorPagina() {
+    if (tipoHoja === "a4") return 2;
+    if (tipoHoja === "tira") return 1;
+    return 3; // "ajustado" default
+  }
+
+  function getPageDimensions(tirasEnPag) {
+    // Medidas físicas exactas calibradas por el usuario:
+    // Tira: 21.2 cm × 10.2 cm (212 × 102 mm)
+    // Slip: 10.6 cm (106 mm) mitad original / copia
+    // Caja contenido: 9.0 cm × 9.2 cm (90 × 92 mm)
+    // Márgenes: 0.5 cm arriba/abajo, 0.7 cm exteriores, 0.9 cm corte central
+    const STRIP_W   = 212;   // mm - ancho físico real de la tira
+    const STRIP_H   = 102;   // mm - alto exacto 1 tira (10.2 cm)
+    const SLIP_W    = 106;   // mm - mitad exacta (10.6 cm)
+    const BOX_W     = "90mm";
+    const BOX_H     = "92mm";
+    const STRIP_H_S = "102mm";
+
+    if (tipoHoja === "a4") {
+      const pageW = 210;
+      const pageH = 297;
+      const slipW = 105;
+      return {
+        widthMm: pageW,
+        heightMm: pageH,
+        stripWidth: `${pageW}mm`,
+        slipWidth: `${slipW}mm`,
+        boxWidth: BOX_W,
+        boxHeight: BOX_H,
+        stripHeight: STRIP_H_S,
+        sobranteMm: Math.max(0, pageH - (tirasEnPag * STRIP_H)),
+        nombrePapel: `A4 (${(pageW/10).toFixed(1)} × ${(pageH/10).toFixed(1)} cm)`,
+        nombreCorto: "A4"
+      };
+    } else if (tipoHoja === "tira") {
+      return {
+        widthMm: STRIP_W,
+        heightMm: STRIP_H,
+        stripWidth: `${STRIP_W}mm`,
+        slipWidth: `${SLIP_W}mm`,
+        boxWidth: BOX_W,
+        boxHeight: BOX_H,
+        stripHeight: STRIP_H_S,
+        sobranteMm: 0,
+        nombrePapel: `Tira Individual (${(STRIP_W/10).toFixed(1)} × ${(STRIP_H/10).toFixed(1)} cm)`,
+        nombreCorto: "Tira"
+      };
+    } else { // "ajustado" - 3 tiras al ras
+      const pageH = Math.round(tirasEnPag * STRIP_H * 10) / 10;
+      return {
+        widthMm: STRIP_W,
+        heightMm: pageH,
+        stripWidth: `${STRIP_W}mm`,
+        slipWidth: `${SLIP_W}mm`,
+        boxWidth: BOX_W,
+        boxHeight: BOX_H,
+        stripHeight: STRIP_H_S,
+        sobranteMm: 0,
+        nombrePapel: `Ajustado (${(STRIP_W/10).toFixed(1)} × ${(pageH/10).toFixed(1)} cm)`,
+        nombreCorto: "Ajustado"
+      };
+    }
+  }
+
+  // ======================== NÚMERO A LETRAS ========================
+  const UNIDADES = ["", "UN", "DOS", "TRES", "CUATRO", "CINCO", "SEIS", "SIETE", "OCHO", "NUEVE"];
+  const DECENAS = ["", "DIEZ", "VEINTE", "TREINTA", "CUARENTA", "CINCUENTA", "SESENTA", "SETENTA", "OCHENTA", "NOVENTA"];
+  const ESPECIALES = ["DIEZ", "ONCE", "DOCE", "TRECE", "CATORCE", "QUINCE", "DIECISEIS", "DIECISIETE", "DIECIOCHO", "DIECINUEVE"];
+  const CENTENAS = ["", "CIENTO", "DOSCIENTOS", "TRESCIENTOS", "CUATROCIENTOS", "QUINIENTOS", "SEISCIENTOS", "SETECIENTOS", "OCHOCIENTOS", "NOVECIENTOS"];
+
+  function centenasALetras(n) {
+    if (n === 0) return "";
+    if (n === 100) return "CIEN";
+    let c = Math.floor(n / 100), d = Math.floor((n % 100) / 10), u = n % 10;
+    let res = CENTENAS[c] ? CENTENAS[c] + " " : "";
+    if (d === 1 && u > 0) res += ESPECIALES[u];
+    else if (d === 2 && u > 0) res += "VEINTI" + UNIDADES[u];
+    else {
+      if (d > 0) res += DECENAS[d];
+      if (d > 0 && u > 0) res += " Y ";
+      if (u > 0) res += UNIDADES[u];
+    }
+    return res.trim();
+  }
+
+  function numeroALetras(num) {
+    let enter = Math.floor(num);
+    if (enter === 0) return "CERO";
+    if (enter === 1) return "UN";
+    let miles = Math.floor(enter / 1000), resto = enter % 1000;
+    let txt = "";
+    if (miles > 0) txt += (miles === 1 ? "MIL" : centenasALetras(miles) + " MIL") + " ";
+    if (resto > 0) txt += centenasALetras(resto);
+    return txt.trim();
+  }
+
+  function parseVal(v) {
+    if (!v) return 0;
+    let n = parseFloat(String(v).replace(/,/g, '.'));
+    return isNaN(n) ? 0 : n;
+  }
+
+  function getTotalRecibos() {
+    return Math.max(1, serieHasta - serieDesde + 1);
+  }
+
+  function getTotalPaginas() {
+    const tirasPorPag = getTirasPorPagina();
+    return Math.ceil(getTotalRecibos() / tirasPorPag);
+  }
+
+  function getReciboData(serieNum) {
+    if (!recibosData[serieNum]) {
+      recibosData[serieNum] = {
+        nombre: "", domicilio: "", obs: "",
+        p1: "", d1: "", i1: "",
+        p2: "", d2: "", i2: "",
+        p3: "", d3: "", i3: ""
+      };
+    }
+    return recibosData[serieNum];
+  }
+
+  // ======================== MODOS ========================
+  function setModo(m) {
+    modo = m;
+    document.querySelectorAll('.mode-btn').forEach(b => {
+      b.className = "mode-btn p-4 rounded-xl border-2 text-left transition hover:shadow-md border-slate-200 bg-slate-50 cursor-pointer";
+    });
+    const active = document.getElementById('btn-modo-' + m);
+    if (active) {
+      if (m === 2) active.className = "mode-btn p-4 rounded-xl border-2 text-left transition hover:shadow-md border-red-500 bg-red-50 ring-2 ring-red-400/30 cursor-pointer";
+      else if (m === 3) active.className = "mode-btn p-4 rounded-xl border-2 text-left transition hover:shadow-md border-emerald-500 bg-emerald-50 ring-2 ring-emerald-400/30 cursor-pointer";
+      else active.className = "mode-btn p-4 rounded-xl border-2 text-left transition hover:shadow-md border-sky-500 bg-sky-50 ring-2 ring-sky-400/30 cursor-pointer";
+    }
+
+    const secRango = document.getElementById('sec-rango');
+    const secDatos = document.getElementById('sec-datos');
+    const secResumen = document.getElementById('sec-info-resumen');
+    const lblModo = document.getElementById('resumen-modo');
+
+    if (m === 1) {
+      secRango.classList.add('hidden');
+      secDatos.classList.add('hidden');
+      secResumen.classList.remove('hidden');
+      if (lblModo) lblModo.textContent = "1. Completamente en Blanco";
+    } else if (m === 2) {
+      secRango.classList.remove('hidden');
+      secDatos.classList.add('hidden');
+      secResumen.classList.remove('hidden');
+      if (lblModo) lblModo.textContent = "2. Solo Nº Correlativo Rojo";
+    } else {
+      secRango.classList.remove('hidden');
+      secDatos.classList.remove('hidden');
+      secResumen.classList.add('hidden');
+      if (lblModo) lblModo.textContent = "3. Con Datos Completos";
+      renderNavRecibos();
+      cargarReciboEnForm(0);
+    }
+    triggerLivePreview();
+  }
+
+  // ======================== FORMATO DE HOJA ========================
+  function setTipoHoja(th) {
+    if (!['ajustado', 'a4', 'tira'].includes(th)) th = 'ajustado';
+    tipoHoja = th;
+
+    document.querySelectorAll('.papel-btn').forEach(b => {
+      b.className = "papel-btn p-2.5 rounded-xl border-2 text-left transition border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer";
+      const spans = b.querySelectorAll('span');
+      if (spans[0]) spans[0].className = "block text-[11px] font-black text-slate-900 uppercase leading-tight truncate";
+      if (spans[1]) spans[1].className = "block text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap";
+    });
+    const activeBtn = document.getElementById('btn-papel-' + th);
+    if (activeBtn) {
+      activeBtn.className = "papel-btn p-2.5 rounded-xl border-2 text-left transition border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-400/30 cursor-pointer";
+      const spans = activeBtn.querySelectorAll('span');
+      if (spans[0]) spans[0].className = "block text-[11px] font-black text-indigo-950 uppercase leading-tight truncate";
+      if (spans[1]) spans[1].className = "block text-[10px] font-bold text-indigo-800 mt-0.5 whitespace-nowrap";
+    }
+
+    document.querySelectorAll('.preview-papel-btn').forEach(b => {
+      b.className = "preview-papel-btn px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer transition";
+    });
+    const previewBtn = document.getElementById('preview-papel-' + th);
+    if (previewBtn) {
+      previewBtn.className = "preview-papel-btn px-2.5 py-1 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer transition shadow";
+    }
+
+    const badge = document.getElementById('badge-tipo-hoja');
+    const rPapel = document.getElementById('resumen-papel');
+    const rDistrib = document.getElementById('resumen-distrib');
+
+    if (th === 'a4') {
+      if (badge) badge.textContent = "A4: 21.0 × 29.7 cm";
+      if (rPapel) rPapel.textContent = "A4 Estándar (21.0 × 29.7 cm)";
+      if (rDistrib) rDistrib.textContent = "2 tiras de 10.2 cm + 9.3 cm corte";
+    } else if (th === 'tira') {
+      if (badge) badge.textContent = "Tira Suelta: 21.2 × 10.2 cm";
+      if (rPapel) rPapel.textContent = "Tira Individual (21.2 × 10.2 cm)";
+      if (rDistrib) rDistrib.textContent = "1 tira de 10.2 cm exacta al ras";
+    } else {
+      if (badge) badge.textContent = "Ajustado: 21.2 × 30.6 cm";
+      if (rPapel) rPapel.textContent = "Ajustado (21.2 × 30.6 cm)";
+      if (rDistrib) rDistrib.textContent = "3 tiras de 10.2 cm exactas (0 sobrante)";
+    }
+
+    if (isAutoZoom) {
+      autoAjustarZoom();
+    }
+    onRangoChange();
+
+    const viewPrev = document.getElementById('view-preview');
+    if (viewPrev && !viewPrev.classList.contains('hidden') && layoutMode === 'normal') {
+      irAVistaPrevia();
+    }
+  }
+
+  // ======================== RANGO ========================
+  function onRangoChange() {
+    const dVal = document.getElementById('f-serie-desde').value.replace(/\D/g, '');
+    const hVal = document.getElementById('f-serie-hasta').value.replace(/\D/g, '');
+    serieDesde = parseInt(dVal) || 98466;
+    serieHasta = parseInt(hVal) || serieDesde;
+    if (serieHasta < serieDesde) serieHasta = serieDesde;
+
+    const total = getTotalRecibos();
+    const pags = getTotalPaginas();
+    const tirasPorPag = getTirasPorPagina();
+
+    document.getElementById('lbl-total-recibos').textContent = total;
+    document.getElementById('lbl-total-paginas').textContent = pags + (pags === 1 ? ` (${Math.min(total, tirasPorPag)} tiras)` : ` (${total} tiras)`);
+
+    if (modo === 3) {
+      renderNavRecibos();
+      if (reciboEditandoIdx >= total) {
+        reciboEditandoIdx = 0;
+        cargarReciboEnForm(0);
+      }
+    }
+    triggerLivePreview();
+  }
+
+  // ======================== FECHA ========================
+  function onChkFechaChange() {
+    showFecha = document.getElementById('chk-fecha').checked;
+    const box = document.getElementById('box-fecha-input');
+    if (showFecha) {
+      box.classList.remove('opacity-40', 'pointer-events-none');
+    } else {
+      box.classList.add('opacity-40', 'pointer-events-none');
+    }
+    triggerLivePreview();
+  }
+
+  // ======================== MODO 3: FORMULARIO Y ESTADO RECIBOS ========================
+  let syncReplicacionActiva = false;
+  let syncConfig = {
+    nombre: true,
+    obs: true,
+    conceptos: true
+  };
+
+  function hasReciboData(serieNum) {
+    const rd = recibosData[serieNum];
+    if (!rd) return false;
+    const hasNombre = rd.nombre && rd.nombre.trim() !== "";
+    const hasObs = rd.obs && rd.obs.trim() !== "";
+    const hasItems = (rd.d1 && rd.d1.trim() !== "") || (rd.i1 && parseVal(rd.i1) > 0) ||
+                     (rd.d2 && rd.d2.trim() !== "") || (rd.i2 && parseVal(rd.i2) > 0) ||
+                     (rd.d3 && rd.d3.trim() !== "") || (rd.i3 && parseVal(rd.i3) > 0);
+    return !!(hasNombre || hasObs || hasItems);
+  }
+
+  function renderNavRecibos() {
+    const container = document.getElementById('nav-recibos');
+    if (!container) return;
+    const total = getTotalRecibos();
+    let html = '';
+    const maxShow = Math.min(total, 36);
+    for (let i = 0; i < maxShow; i++) {
+      const serieNum = serieDesde + i;
+      const serieStr = String(serieNum).padStart(6, '0');
+      const isActive = (i === reciboEditandoIdx);
+      const hasData = hasReciboData(serieNum);
+
+      let cls = "";
+      let dot = "";
+      if (isActive) {
+        if (hasData) {
+          cls = "px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400 flex items-center gap-1.5 cursor-pointer";
+          dot = '<span class="w-2 h-2 rounded-full bg-white shadow-xs"></span>';
+        } else {
+          cls = "px-2.5 py-1 rounded-lg text-xs font-black bg-rose-500 text-white shadow-md ring-2 ring-rose-400 flex items-center gap-1.5 cursor-pointer";
+          dot = '<span class="w-2 h-2 rounded-full bg-white shadow-xs"></span>';
+        }
+      } else {
+        if (hasData) {
+          cls = "px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-400 hover:bg-emerald-200 flex items-center gap-1.5 cursor-pointer transition";
+          dot = '<span class="w-2 h-2 rounded-full bg-emerald-500"></span>';
+        } else {
+          cls = "px-2.5 py-1 rounded-lg text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 flex items-center gap-1.5 cursor-pointer transition";
+          dot = '<span class="w-2 h-2 rounded-full bg-rose-400"></span>';
+        }
+      }
+      html += `<button type="button" onclick="seleccionarRecibo(${i})" class="${cls}" title="Recibo Nº ${serieStr}: ${hasData ? 'Con datos ingresados' : 'Vacío'}">${dot}<span>${serieStr}</span></button>`;
+    }
+    if (total > maxShow) {
+      html += `<span class="text-xs text-slate-400 px-2 self-center">+${total - maxShow} más</span>`;
+    }
+    container.innerHTML = html;
+  }
+
+  function seleccionarRecibo(idx) {
+    guardarFormEnRecibo();
+    reciboEditandoIdx = idx;
+    cargarReciboEnForm(idx);
+    renderNavRecibos();
+    triggerLivePreview();
+  }
+
+  function cargarReciboEnForm(idx) {
+    const serieNum = serieDesde + idx;
+    const rd = getReciboData(serieNum);
+    const serieStr = String(serieNum).padStart(6, '0');
+
+    document.getElementById('lbl-recibo-editando').textContent = `Nº ${serieStr}`;
+    document.getElementById('f-nombre').value = rd.nombre || "";
+    document.getElementById('f-domicilio').value = rd.domicilio || "";
+    document.getElementById('f-obs').value = rd.obs || "";
+    document.getElementById('f-p1').value = rd.p1 || "";
+    document.getElementById('f-d1').value = rd.d1 || "";
+    document.getElementById('f-i1').value = rd.i1 || "";
+    document.getElementById('f-p2').value = rd.p2 || "";
+    document.getElementById('f-d2').value = rd.d2 || "";
+    document.getElementById('f-i2').value = rd.i2 || "";
+    document.getElementById('f-p3').value = rd.p3 || "";
+    document.getElementById('f-d3').value = rd.d3 || "";
+    document.getElementById('f-i3').value = rd.i3 || "";
+
+    actualizarTotalForm();
+  }
+
+  function guardarFormEnRecibo() {
+    if (modo !== 3) return;
+    const serieNum = serieDesde + reciboEditandoIdx;
+    const rd = getReciboData(serieNum);
+    rd.nombre = (document.getElementById('f-nombre').value || "").toUpperCase();
+    rd.domicilio = (document.getElementById('f-domicilio').value || "").toUpperCase();
+    rd.obs = (document.getElementById('f-obs').value || "").toUpperCase();
+    rd.p1 = (document.getElementById('f-p1').value || "").toUpperCase();
+    rd.d1 = (document.getElementById('f-d1').value || "").toUpperCase();
+    rd.i1 = document.getElementById('f-i1').value;
+    rd.p2 = (document.getElementById('f-p2').value || "").toUpperCase();
+    rd.d2 = (document.getElementById('f-d2').value || "").toUpperCase();
+    rd.i2 = document.getElementById('f-i2').value;
+    rd.p3 = (document.getElementById('f-p3').value || "").toUpperCase();
+    rd.d3 = (document.getElementById('f-d3').value || "").toUpperCase();
+    rd.i3 = document.getElementById('f-i3').value;
+
+    if (syncReplicacionActiva) {
+      const total = getTotalRecibos();
+      for (let i = 0; i < total; i++) {
+        const s = serieDesde + i;
+        if (s === serieNum) continue;
+        const rdDest = getReciboData(s);
+        if (syncConfig.nombre) {
+          rdDest.nombre = rd.nombre;
+          rdDest.domicilio = rd.domicilio;
+        }
+        if (syncConfig.obs) {
+          rdDest.obs = rd.obs;
+        }
+        if (syncConfig.conceptos) {
+          rdDest.p1 = rd.p1; rdDest.d1 = rd.d1; rdDest.i1 = rd.i1;
+          rdDest.p2 = rd.p2; rdDest.d2 = rd.d2; rdDest.i2 = rd.i2;
+          rdDest.p3 = rd.p3; rdDest.d3 = rd.d3; rdDest.i3 = rd.i3;
+        }
+      }
+    }
+  }
+
+  function onDatoChange() {
+    // Forzar mayúsculas en campos de texto respetando la posición del cursor
+    ['f-nombre', 'f-domicilio', 'f-obs', 'f-p1', 'f-d1', 'f-p2', 'f-d2', 'f-p3', 'f-d3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.value !== el.value.toUpperCase()) {
+        const start = el.selectionStart;
+        const end = el.selectionEnd;
+        el.value = el.value.toUpperCase();
+        if (start !== null && end !== null) {
+          el.setSelectionRange(start, end);
+        }
+      }
+    });
+
+    guardarFormEnRecibo();
+    actualizarTotalForm();
+    renderNavRecibos();
+    triggerLivePreview();
+  }
+
+  function actualizarTotalForm() {
+    let i1 = parseVal(document.getElementById('f-i1').value);
+    let i2 = parseVal(document.getElementById('f-i2').value);
+    let i3 = parseVal(document.getElementById('f-i3').value);
+    let total = i1 + i2 + i3;
+    document.getElementById('f-txt-total').textContent = total.toFixed(2);
+    let ent = Math.floor(total);
+    let cen = Math.round((total - ent) * 100);
+    let sonStr = `${numeroALetras(ent)} CON ${String(cen).padStart(2, '0')}/100 SOLES`;
+    document.getElementById('f-txt-son').textContent = total > 0 ? sonStr : "CERO CON 00/100 SOLES";
+  }
+
+  // ======================== MODAL COMPARTIR / REPLICAR ========================
+  function abrirModalCompartir() {
+    guardarFormEnRecibo();
+    const serieActual = serieDesde + reciboEditandoIdx;
+    const serieStr = String(serieActual).padStart(6, '0');
+    const dStr = String(serieDesde).padStart(6, '0');
+    const hStr = String(serieHasta).padStart(6, '0');
+
+    const origenLbl = document.getElementById('modal-origen-recibo');
+    if (origenLbl) origenLbl.textContent = `Nº ${serieStr}`;
+    const rangoLbl = document.getElementById('modal-rango-texto');
+    if (rangoLbl) rangoLbl.textContent = `${dStr} al ${hStr}`;
+
+    const rd = getReciboData(serieActual);
+    const pNom = document.getElementById('preview-rep-nombre');
+    if (pNom) pNom.textContent = rd.nombre ? rd.nombre : "(Vacío)";
+    const pObs = document.getElementById('preview-rep-obs');
+    if (pObs) pObs.textContent = rd.obs ? rd.obs : "(Vacío)";
+    const pCon = document.getElementById('preview-rep-conceptos');
+    if (pCon) {
+      pCon.textContent = (rd.d1 || rd.i1) ? `${rd.d1 || 'Concepto'} (S/ ${rd.i1 || '0.00'})` : "(Vacío)";
+    }
+
+    const chkSync = document.getElementById('chk-rep-sync');
+    if (chkSync) chkSync.checked = syncReplicacionActiva;
+
+    const notif = document.getElementById('modal-notif');
+    if (notif) notif.classList.add('hidden');
+
+    const modal = document.getElementById('modal-compartir');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  }
+
+  function cerrarModalCompartir() {
+    const modal = document.getElementById('modal-compartir');
+    if (modal) {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+  }
+
+  function ejecutarReplicacion() {
+    guardarFormEnRecibo();
+    const serieActual = serieDesde + reciboEditandoIdx;
+    const rdOrigen = getReciboData(serieActual);
+
+    const cNombre = document.getElementById('chk-rep-nombre').checked;
+    const cObs = document.getElementById('chk-rep-obs').checked;
+    const cConceptos = document.getElementById('chk-rep-conceptos').checked;
+
+    const destinoRadio = document.querySelector('input[name="rep-destino"]:checked');
+    const soloVacios = destinoRadio ? (destinoRadio.value === 'vacios') : false;
+
+    syncReplicacionActiva = document.getElementById('chk-rep-sync').checked;
+    syncConfig.nombre = cNombre;
+    syncConfig.obs = cObs;
+    syncConfig.conceptos = cConceptos;
+
+    const badgeSync = document.getElementById('badge-sincronizado');
+    if (badgeSync) {
+      if (syncReplicacionActiva) badgeSync.classList.remove('hidden');
+      else badgeSync.classList.add('hidden');
+    }
+
+    const total = getTotalRecibos();
+    let countAplicados = 0;
+
+    for (let i = 0; i < total; i++) {
+      const s = serieDesde + i;
+      if (s === serieActual) continue;
+
+      if (soloVacios && hasReciboData(s)) {
+        continue;
+      }
+
+      const rdDest = getReciboData(s);
+      if (cNombre) {
+        rdDest.nombre = rdOrigen.nombre;
+        rdDest.domicilio = rdOrigen.domicilio;
+      }
+      if (cObs) {
+        rdDest.obs = rdOrigen.obs;
+      }
+      if (cConceptos) {
+        rdDest.p1 = rdOrigen.p1; rdDest.d1 = rdOrigen.d1; rdDest.i1 = rdOrigen.i1;
+        rdDest.p2 = rdOrigen.p2; rdDest.d2 = rdOrigen.d2; rdDest.i2 = rdOrigen.i2;
+        rdDest.p3 = rdOrigen.p3; rdDest.d3 = rdOrigen.d3; rdDest.i3 = rdOrigen.i3;
+      }
+      countAplicados++;
+    }
+
+    renderNavRecibos();
+    triggerLivePreview();
+
+    const notif = document.getElementById('modal-notif');
+    if (notif) {
+      notif.textContent = `¡Datos replicados a ${countAplicados} recibo(s) con éxito!`;
+      notif.classList.remove('hidden');
+    }
+
+    setTimeout(() => {
+      cerrarModalCompartir();
+    }, 450);
+  }
+
+  // ======================== GENERADOR HTML TIRA ========================
+  function buildStripHTML(serieNum, forceBlank, stripWidth = '212mm', slipWidth = '106mm', boxWidth = '90mm', boxHeight = '92mm', stripHeight = '102mm') {
+    const serieStr = String(serieNum).padStart(6, '0');
+    const numStr = String(serieNum).padStart(10, '0');
+    const isBlank = (modo === 1 || forceBlank);
+
+    let currentFecha = "";
+    if (showFecha && !isBlank) {
+      currentFecha = document.getElementById('f-fecha-global').value || fechaGlobal;
+    }
+
+    let currentNum = "";
+    if (showNumRecibo && !isBlank) {
+      currentNum = numStr;
+    }
+
+    let currentSerie = "";
+    if (!isBlank) {
+      currentSerie = serieStr;
+    }
+
+    let valNombre = "", valDomicilio = "", valObs = "";
+    let valP1 = "", valD1 = "", valI1 = "";
+    let valP2 = "", valD2 = "", valI2 = "";
+    let valP3 = "", valD3 = "", valI3 = "";
+
+    if (modo === 3 && !forceBlank) {
+      const rd = getReciboData(serieNum);
+      valNombre = (rd.nombre || "").toUpperCase();
+      valDomicilio = (rd.domicilio || "").toUpperCase();
+      valObs = (rd.obs || "").toUpperCase();
+      valP1 = (rd.p1 || "").toUpperCase(); valD1 = (rd.d1 || "").toUpperCase(); valI1 = rd.i1 ? parseFloat(rd.i1).toFixed(2) : "";
+      valP2 = (rd.p2 || "").toUpperCase(); valD2 = (rd.d2 || "").toUpperCase(); valI2 = rd.i2 ? parseFloat(rd.i2).toFixed(2) : "";
+      valP3 = (rd.p3 || "").toUpperCase(); valD3 = (rd.d3 || "").toUpperCase(); valI3 = rd.i3 ? parseFloat(rd.i3).toFixed(2) : "";
+    }
+
+    const fmtI1 = valI1 ? `S/ ${valI1}` : "";
+    const fmtI2 = valI2 ? `S/ ${valI2}` : "";
+    const fmtI3 = valI3 ? `S/ ${valI3}` : "";
+
+    let totalStr = "", sonStr = "";
+    if (modo === 3 && !forceBlank) {
+      let tot = parseVal(valI1) + parseVal(valI2) + parseVal(valI3);
+      if (tot > 0) {
+        totalStr = tot.toFixed(2);
+        let ent = Math.floor(tot);
+        let cen = Math.round((tot - ent) * 100);
+        sonStr = `${numeroALetras(ent)} CON ${String(cen).padStart(2, '0')}/100 SOLES`;
+      }
+    }
+
+    const escudoHTML = showEscudo ? `
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+        <img src="datos/escudo_gris.png" alt="" class="w-[22mm] h-[22mm] object-contain opacity-[0.12] select-none">
+      </div>
+    ` : '';
+
+    function slipBox() {
+      const a = ajustes;
+      const hTablaTotal = (4 + Number(a.hTablaBody) + 6).toFixed(1);
+      const hFilaNum = (a.hHeader * 0.31).toFixed(1);
+      const hFilaFecha = (a.hHeader * 0.31).toFixed(1);
+
+      return `
+        <div class="inner-box-9cm" style="width: ${boxWidth}; min-width: ${boxWidth}; max-width: ${boxWidth}; height: ${boxHeight}; min-height: ${boxHeight}; max-height: ${boxHeight}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; position: relative; z-index: 10; background: transparent; overflow: hidden;">
+          
+          <!-- ENCABEZADO OFICIAL (${a.hHeader}mm de alto exacto) -->
+          <div style="height: ${a.hHeader}mm; min-height: ${a.hHeader}mm; max-height: ${a.hHeader}mm; width: 100%; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; box-sizing: border-box;">
+            <!-- Escudo oficial (15x15mm) -->
+            <div style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+              <img src="logo/mc.png" alt="Escudo" style="width: 15mm; height: 100%; max-height: 16.5mm; object-fit: contain;">
+            </div>
+
+            <!-- Identidad Municipal Centrada (white-space: nowrap para evitar colisión de líneas) -->
+            <div style="flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 1mm; line-height: 1.1; box-sizing: border-box; overflow: hidden;">
+              <div style="font-size: 7.5px; font-weight: 900; text-transform: uppercase; color: #020617; line-height: 1.1; letter-spacing: 0.1px; font-family: Inter, sans-serif; white-space: nowrap !important;">
+                MUNICIPALIDAD PROVINCIAL<br>DE CANAS - YANAOCA
+              </div>
+              <div style="font-size: 5.8px; font-weight: 700; color: #1e293b; line-height: 1.1; margin-top: 0.3mm; font-family: Inter, sans-serif; white-space: nowrap !important;">
+                <div>Plaza de Armas · Canas - Yanaoca - Cusco</div>
+                <div>R.U.C. 20170325185</div>
+              </div>
+              <div style="font-size: ${a.fontReciboCaja}px; font-weight: 900; text-transform: uppercase; color: #020617; line-height: 1; margin-top: 0.5mm; letter-spacing: 0.8px; font-family: Inter, sans-serif; white-space: nowrap !important;">
+                RECIBO DE CAJA
+              </div>
+            </div>
+
+            <!-- Cajetín Nº Recibo / Fecha / Serie (${a.wBoxNumFecha}mm de ancho, ${a.hHeader}mm de alto) -->
+            <div class="box-num-fecha" style="width: ${a.wBoxNumFecha}mm; min-width: ${a.wBoxNumFecha}mm; max-width: ${a.wBoxNumFecha}mm; height: ${a.hHeader}mm; min-height: ${a.hHeader}mm; max-height: ${a.hHeader}mm; border: 1px solid #0f172a; border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; box-sizing: border-box; background: transparent;">
+              <!-- Fila 1: Nº Recibo -->
+              <div style="height: ${hFilaNum}mm; min-height: ${hFilaNum}mm; max-height: ${hFilaNum}mm; display: flex; align-items: center; border-bottom: 1px solid #0f172a; box-sizing: border-box;">
+                <span class="lbl-col" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: 1px solid #0f172a; font-family: Inter, sans-serif; font-size: ${a.fontNumFecha}px; font-weight: 900; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">Nº RECIBO</span>
+                <span style="flex: 1; min-width: 0; height: 100%; font-family: Inter, sans-serif; font-size: ${a.fontNumFechaVal}px; font-weight: 700; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentNum}</span>
+              </div>
+              <!-- Fila 2: Fecha -->
+              <div style="height: ${hFilaFecha}mm; min-height: ${hFilaFecha}mm; max-height: ${hFilaFecha}mm; display: flex; align-items: center; border-bottom: 1px solid #0f172a; box-sizing: border-box;">
+                <span class="lbl-col" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: 1px solid #0f172a; font-family: Inter, sans-serif; font-size: ${a.fontNumFecha}px; font-weight: 900; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">FECHA</span>
+                <span style="flex: 1; min-width: 0; height: 100%; font-family: Inter, sans-serif; font-size: ${a.fontNumFechaVal}px; font-weight: 700; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentFecha}</span>
+              </div>
+              <!-- Fila 3: Nº Serie Rojo -->
+              <div style="flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; font-family: 'Times New Roman', Times, Georgia, serif; font-size: ${a.fontSerie}px; font-weight: 900; color: #dc2626; line-height: 1; box-sizing: border-box; white-space: nowrap;">
+                ${currentSerie ? `<span>Nº ${currentSerie}</span>` : ''}
+              </div>
+            </div>
+          </div>
+
+          <!-- CAMPOS DE DATOS DEL CONTRIBUYENTE -->
+          <div style="width: 100%; flex-shrink: 0; display: flex; flex-direction: column; box-sizing: border-box;">
+            <!-- 1. Nombre o Razón Social (Etiqueta 3mm, Cajetín ${a.hNombre}mm) -->
+            <div style="height: 3mm; min-height: 3mm; max-height: 3mm; font-family: Inter, sans-serif; font-size: ${a.fontLabels}px; font-weight: 800; color: #0f172a; display: flex; align-items: flex-end; padding-bottom: 0.3mm; box-sizing: border-box;">Nombre o Razón Social:</div>
+            <div style="height: ${a.hNombre}mm; min-height: ${a.hNombre}mm; max-height: ${a.hNombre}mm; border: 1px solid #0f172a; border-radius: 4px; padding: 0 4px; display: flex; align-items: center; font-family: Inter, sans-serif; font-size: ${a.fontDatos}px; font-weight: 600; color: #020617; text-transform: uppercase; overflow: hidden; white-space: nowrap; box-sizing: border-box; background: transparent;">
+              ${valNombre}
+            </div>
+
+            <!-- 2. Domicilio Fiscal (Etiqueta 3mm, Cajetín ${a.hDomicilio}mm) -->
+            <div style="height: 3mm; min-height: 3mm; max-height: 3mm; font-family: Inter, sans-serif; font-size: ${a.fontLabels}px; font-weight: 800; color: #0f172a; display: flex; align-items: flex-end; padding-bottom: 0.3mm; box-sizing: border-box;">Domicilio Fiscal:</div>
+            <div style="height: ${a.hDomicilio}mm; min-height: ${a.hDomicilio}mm; max-height: ${a.hDomicilio}mm; border: 1px solid #0f172a; border-radius: 4px; padding: 0 4px; display: flex; align-items: center; font-family: Inter, sans-serif; font-size: ${a.fontDatos}px; font-weight: 600; color: #020617; text-transform: uppercase; overflow: hidden; white-space: nowrap; box-sizing: border-box; background: transparent;">
+              ${valDomicilio}
+            </div>
+
+            <!-- 3. Observaciones (Etiqueta 3mm, Cajetín ${a.hObs}mm) -->
+            <div style="height: 3mm; min-height: 3mm; max-height: 3mm; font-family: Inter, sans-serif; font-size: ${a.fontLabels}px; font-weight: 800; color: #0f172a; display: flex; align-items: flex-end; padding-bottom: 0.3mm; box-sizing: border-box;">Observaciones:</div>
+            <div style="height: ${a.hObs}mm; min-height: ${a.hObs}mm; max-height: ${a.hObs}mm; border: 1px solid #0f172a; border-radius: 4px; padding: 1.5px 4px; display: flex; align-items: flex-start; font-family: Inter, sans-serif; font-size: ${a.fontObs}px; font-weight: 500; color: #020617; text-transform: uppercase; overflow: hidden; word-break: break-word; line-height: 1.2; box-sizing: border-box; background: transparent;">
+              ${valObs}
+            </div>
+          </div>
+
+          <!-- Separación exacta de 1mm hacia la tabla -->
+          <div style="height: 1mm; min-height: 1mm; max-height: 1mm; flex-shrink: 0;"></div>
+
+          <!-- TABLA OFICIAL (${hTablaTotal}mm de alto: Cabecera 4mm + Cuerpo ${a.hTablaBody}mm + Total 6mm) -->
+          <div style="width: 100%; height: ${hTablaTotal}mm; min-height: ${hTablaTotal}mm; max-height: ${hTablaTotal}mm; border: 1px solid #0f172a; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; box-sizing: border-box; background: transparent; position: relative;">
+            
+            <!-- Cabecera de Tabla (4mm de alto) -->
+            <div style="height: 4mm; min-height: 4mm; max-height: 4mm; display: flex; border-bottom: 1px solid #0f172a; align-items: center; background: transparent; box-sizing: border-box;" class="relative z-[2]">
+              <div style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; border-right: 1px solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-size: ${a.fontTablaHdr}px; font-weight: 900; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">PARTIDA</div>
+              <div style="width: 62mm; min-width: 62mm; max-width: 62mm; height: 100%; border-right: 1px solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-size: ${a.fontTablaHdr}px; font-weight: 900; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">DESCRIPCIÓN</div>
+              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-size: ${a.fontTablaHdr}px; font-weight: 900; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">IMPORTE</div>
+            </div>
+
+            <!-- Cuerpo de Tabla (${a.hTablaBody}mm de alto) con Escudo Gris de fondo -->
+            <div style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; font-size: ${a.fontTablaBody}px; font-family: Inter, sans-serif; position: relative; box-sizing: border-box; overflow: hidden;">
+              ${escudoHTML}
+              <!-- Columna Partida (15mm) -->
+              <div style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; border-right: 1px solid #0f172a; padding: 1mm 0.5mm; text-align: center; line-height: 1.25; color: #000; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-family: 'Courier Prime', Courier, monospace; font-weight: 700;">
+                ${valP1 ? valP1 + '<br>' : ''}${valP2 ? valP2 + '<br>' : ''}${valP3 || ''}
+              </div>
+              <!-- Columna Descripción (62mm) -->
+              <div style="width: 62mm; min-width: 62mm; max-width: 62mm; height: 100%; border-right: 1px solid #0f172a; padding: 1mm 1.5mm; text-align: left; line-height: 1.25; color: #000; text-transform: uppercase; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-weight: 500;">
+                ${valD1 ? valD1 + '<br>' : ''}${valD2 ? valD2 + '<br>' : ''}${valD3 || ''}
+              </div>
+              <!-- Columna Importe (13mm) -->
+              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; padding: 1mm 1.2mm; text-align: right; line-height: 1.25; color: #000; font-weight: 700; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-family: 'Courier Prime', Courier, monospace;">
+                ${fmtI1 ? fmtI1 + '<br>' : ''}${fmtI2 ? fmtI2 + '<br>' : ''}${fmtI3 || ''}
+              </div>
+            </div>
+
+            <!-- Pie de Tabla: Son / TOTAL / Monto (6mm de alto, line-height: 1 sin recortes) -->
+            <div style="height: 6mm; min-height: 6mm; max-height: 6mm; display: flex; border-top: 1px solid #0f172a; align-items: center; background: transparent; box-sizing: border-box;" class="text-black relative z-[2]">
+              <!-- Son (64mm) -->
+              <div style="width: 64mm; min-width: 64mm; max-width: 64mm; height: 100%; border-right: 1px solid #0f172a; padding: 0 1.5mm; display: flex; align-items: center; gap: 1mm; overflow: hidden; box-sizing: border-box; line-height: 1;">
+                <span style="font-family: Inter, sans-serif; font-weight: 900; font-size: ${a.fontSonTotal}px; color: #000; flex-shrink: 0; line-height: 1;">Son:</span>
+                <span style="font-family: Inter, sans-serif; text-transform: uppercase; font-size: ${Math.max(6, a.fontSonTotal - 0.5)}px; font-weight: 600; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1;">${sonStr}</span>
+              </div>
+              <!-- TOTAL (13mm) -->
+              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: 1px solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-weight: 900; font-size: ${a.fontSonTotal}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap;">
+                TOTAL
+              </div>
+              <!-- Monto (13mm) -->
+              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-family: 'Courier Prime', Courier, monospace; font-weight: 900; font-size: ${a.fontSonTotal}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap;">
+                ${totalStr}
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      `;
+    }
+
+    const isA4 = (stripWidth === '210mm');
+    const pLeft = isA4 ? 'padding: 5mm 8mm 5mm 7mm;' : 'padding: 5mm 9mm 5mm 7mm;';
+    const pRight = isA4 ? 'padding: 5mm 7mm 5mm 8mm;' : 'padding: 5mm 7mm 5mm 9mm;';
+
+    return `
+      <section class="receipt-strip bg-transparent" style="width: ${stripWidth}; min-width: ${stripWidth}; max-width: ${stripWidth}; height: ${stripHeight}; min-height: ${stripHeight}; max-height: ${stripHeight}; display: flex; flex-direction: row; flex-wrap: nowrap !important; box-sizing: border-box; position: relative;">
+        <div class="receipt-pane pane-left" style="width: ${slipWidth}; min-width: ${slipWidth}; max-width: ${slipWidth}; flex: 0 0 ${slipWidth} !important; ${pLeft} box-sizing: border-box; position: relative;">
+          ${slipBox()}
+        </div>
+        <div class="receipt-pane pane-right" style="width: ${slipWidth}; min-width: ${slipWidth}; max-width: ${slipWidth}; flex: 0 0 ${slipWidth} !important; ${pRight} box-sizing: border-box; position: relative;">
+          ${slipBox()}
+        </div>
+      </section>
+    `;
+  }
+
+  // ======================== GENERADOR TODAS LAS PÁGINAS ========================
+  function buildAllPagesHTML() {
+    if (modo === 3) guardarFormEnRecibo();
+
+    showFecha = document.getElementById('chk-fecha') ? document.getElementById('chk-fecha').checked : true;
+    showNumRecibo = document.getElementById('chk-num-recibo') ? document.getElementById('chk-num-recibo').checked : true;
+    showFiligrana = document.getElementById('chk-filigrana') ? document.getElementById('chk-filigrana').checked : true;
+    showEscudo = document.getElementById('chk-escudo') ? document.getElementById('chk-escudo').checked : true;
+
+    const tirasPorPag = getTirasPorPagina();
+    const totalRecibos = (modo === 1) ? tirasPorPag : getTotalRecibos();
+    const totalPags = Math.ceil(totalRecibos / tirasPorPag);
+    let pagesHTML = '';
+
+    for (let pag = 0; pag < totalPags; pag++) {
+      const tirasEnEstaPag = Math.min(tirasPorPag, totalRecibos - pag * tirasPorPag);
+      const dims = getPageDimensions(tirasEnEstaPag);
+
+      let watermarkHTML = '';
+      if (showFiligrana) {
+        watermarkHTML = `
+          <div class="watermark-horizontal-lines" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0;">
+            <svg style="width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="wm-p-${pag}" width="141" height="9.6" patternUnits="userSpaceOnUse">
+                  <text x="0" y="7.5" textLength="141" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="6.8px" font-weight="700" fill="#0284c7" opacity="0.26">MUNICIPALIDAD PROVINCIAL DE CANAS </text>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#wm-p-${pag})" />
+            </svg>
+          </div>
+        `;
+      }
+
+      let stripsHTML = '';
+      for (let t = 0; t < tirasEnEstaPag; t++) {
+        const globalIdx = pag * tirasPorPag + t;
+        if (modo === 1) {
+          stripsHTML += buildStripHTML(0, true, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm');
+        } else {
+          const serieNum = serieDesde + globalIdx;
+          stripsHTML += buildStripHTML(serieNum, false, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm');
+        }
+      }
+
+      let sobranteHTML = '';
+      if (dims.sobranteMm > 0) {
+        sobranteHTML = `
+          <div class="page-sobrante" style="height: ${dims.sobranteMm}mm; min-height: ${dims.sobranteMm}mm; max-height: ${dims.sobranteMm}mm; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; border-top: 1.5px dashed #64748b; background: transparent; box-sizing: border-box; overflow: hidden; z-index: 10;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; font-family: 'Courier Prime', Courier, monospace; font-size: 7.5px; font-weight: 700; color: #475569; letter-spacing: 0.8px; user-select: none; padding: 2px 10px;">
+              <span>✂ - - - - - - - - - - - - - - - - - - - -</span>
+              <span>LÍNEA DE CORTE · SOBRANTE ${(dims.sobranteMm / 10).toFixed(1)} CM</span>
+              <span>- - - - - - - - - - - - - - - - - - - - ✂</span>
+            </div>
+          </div>
+        `;
+      }
+
+      const wPx = dims.widthMm * 96 / 25.4;
+      const hPx = dims.heightMm * 96 / 25.4;
+      const scaledW = Math.round(wPx * currentZoom);
+      const scaledH = Math.round(hPx * currentZoom);
+
+      pagesHTML += `
+        <div class="sheet-page-wrapper" data-w-mm="${dims.widthMm}" data-h-mm="${dims.heightMm}" style="width: ${scaledW}px; height: ${scaledH}px; margin: 8px auto 24px auto; position: relative; flex-shrink: 0;">
+          <div class="sheet-page receipt-watermark-bg" style="position: absolute; top: 0; left: 0; width: ${dims.widthMm}mm; min-width: ${dims.widthMm}mm; max-width: ${dims.widthMm}mm; height: ${dims.heightMm}mm; min-height: ${dims.heightMm}mm; max-height: ${dims.heightMm}mm; margin: 0; transform: scale(${currentZoom}); transform-origin: top left; overflow: hidden; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start;">
+            ${watermarkHTML}
+            <div style="width: 100%; display: flex; flex-direction: column; position: relative; z-index: 10;">
+              ${stripsHTML}
+            </div>
+            ${sobranteHTML}
+          </div>
+        </div>
+      `;
+    }
+
+    return { html: pagesHTML, totalPags, totalRecibos };
+  }
+
+  // ======================== LIVE PREVIEW TRIGGER ========================
+  function triggerLivePreview() {
+    if (layoutMode !== 'paralelo' && currentScreen !== 'preview') return;
+    if (liveTimer) clearTimeout(liveTimer);
+    liveTimer = setTimeout(() => {
+      const container = document.getElementById('preview-zoom-container');
+      const viewPreview = document.getElementById('view-preview');
+      if (!container) return;
+
+      const prevScrollTop = viewPreview ? viewPreview.scrollTop : 0;
+      const prevContScrollTop = container.scrollTop;
+
+      const { html, totalPags, totalRecibos } = buildAllPagesHTML();
+      container.innerHTML = html;
+
+      if (isAutoZoom) {
+        autoAjustarZoom();
+      } else {
+        applyZoom();
+      }
+
+      if (viewPreview && viewPreview.scrollTop !== prevScrollTop) {
+        viewPreview.scrollTop = prevScrollTop;
+      }
+      if (container && container.scrollTop !== prevContScrollTop) {
+        container.scrollTop = prevContScrollTop;
+      }
+
+      const tirasPorPag = getTirasPorPagina();
+      const dims = getPageDimensions(Math.min(totalRecibos, tirasPorPag));
+      const info = document.getElementById('preview-info');
+      if (info) info.textContent = `${totalRecibos} rec · ${dims.nombreCorto}`;
+    }, 50);
+  }
+
+  // ======================== MODO DE PANTALLA (NORMAL vs PARALELO) ========================
+  function setLayoutMode(mode) {
+    if (window.innerWidth < 1024) {
+      mode = 'normal';
+    }
+    layoutMode = mode;
+    localStorage.setItem('recibo_layout_mode', mode);
+
+    const btnNormal = document.getElementById('btn-layout-normal');
+    const btnParalelo = document.getElementById('btn-layout-paralelo');
+    const mainContainer = document.getElementById('main-container');
+    const viewForm = document.getElementById('view-form');
+    const viewPreview = document.getElementById('view-preview');
+    const formCols = document.getElementById('form-columns');
+    const btnNavPreview = document.getElementById('btn-header-preview');
+    const previewBackBtn = document.getElementById('preview-back-btn');
+    const formActionBtns = document.getElementById('form-action-buttons');
+    const formParallelDl = document.getElementById('form-parallel-download');
+
+    if (mode === 'paralelo') {
+      if (btnNormal) btnNormal.className = "px-3.5 py-1.5 rounded-lg text-xs font-black transition cursor-pointer flex items-center gap-1.5 text-slate-400 hover:text-white";
+      if (btnParalelo) btnParalelo.className = "px-3.5 py-1.5 rounded-lg text-xs font-black transition cursor-pointer flex items-center gap-1.5 bg-sky-600 text-white shadow";
+
+      if (mainContainer) mainContainer.className = "w-full max-w-[1920px] mx-auto p-3 sm:p-4 flex flex-col lg:flex-row gap-5 items-start";
+      if (viewForm) {
+        viewForm.className = "w-full lg:w-[465px] xl:w-[500px] flex-shrink-0 flex flex-col gap-4 max-h-[calc(100vh-80px)] overflow-y-auto pr-1 pb-10 sticky top-16";
+        viewForm.classList.remove('hidden');
+      }
+      if (formCols) formCols.className = "flex flex-col gap-4";
+      if (viewPreview) {
+        viewPreview.className = "flex-1 w-full min-w-0 flex flex-col items-center bg-slate-900 rounded-2xl border border-slate-800 pt-1 px-2 pb-16 min-h-[calc(100vh-80px)] overflow-y-auto";
+        viewPreview.classList.remove('hidden');
+        viewPreview.classList.add('flex');
+      }
+
+      if (btnNavPreview) btnNavPreview.classList.add('hidden');
+      if (previewBackBtn) previewBackBtn.classList.add('hidden');
+      if (formActionBtns) formActionBtns.classList.add('hidden');
+      if (formParallelDl) formParallelDl.classList.add('hidden');
+
+      setZoom('auto');
+      triggerLivePreview();
+    } else {
+      if (btnNormal) btnNormal.className = "px-3.5 py-1.5 rounded-lg text-xs font-black transition cursor-pointer flex items-center gap-1.5 bg-sky-600 text-white shadow";
+      if (btnParalelo) btnParalelo.className = "px-3.5 py-1.5 rounded-lg text-xs font-black transition cursor-pointer flex items-center gap-1.5 text-slate-400 hover:text-white";
+
+      if (mainContainer) mainContainer.className = "w-full max-w-[1260px] mx-auto p-4 sm:p-6 flex flex-col gap-5";
+      if (viewForm) viewForm.className = "w-full flex flex-col gap-5";
+      if (formCols) formCols.className = "grid grid-cols-1 lg:grid-cols-2 gap-5 items-start";
+
+      if (formActionBtns) formActionBtns.classList.remove('hidden');
+      if (formParallelDl) formParallelDl.classList.add('hidden');
+      if (previewBackBtn) previewBackBtn.classList.remove('hidden');
+
+      if (currentScreen === 'preview') {
+        if (viewForm) viewForm.classList.add('hidden');
+        if (viewPreview) {
+          viewPreview.className = "w-full min-h-screen pt-1 px-2 pb-8 flex flex-col items-center bg-slate-900";
+          viewPreview.classList.remove('hidden');
+          viewPreview.classList.add('flex');
+        }
+        if (btnNavPreview) btnNavPreview.classList.add('hidden');
+        setZoom('auto');
+        triggerLivePreview();
+      } else {
+        if (viewForm) viewForm.classList.remove('hidden');
+        if (viewPreview) {
+          viewPreview.classList.add('hidden');
+          viewPreview.classList.remove('flex');
+        }
+        if (btnNavPreview) btnNavPreview.classList.remove('hidden');
+      }
+    }
+  }
+
+  // ======================== VISTA PREVIA ========================
+  function irAVistaPrevia() {
+    currentScreen = 'preview';
+    if (layoutMode === 'paralelo') {
+      const prev = document.getElementById('view-preview');
+      if (prev) prev.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    const { html, totalPags, totalRecibos } = buildAllPagesHTML();
+    const container = document.getElementById('preview-zoom-container');
+    if (container) container.innerHTML = html;
+
+    const tirasPorPag = getTirasPorPagina();
+    const dims = getPageDimensions(Math.min(totalRecibos, tirasPorPag));
+    const info = document.getElementById('preview-info');
+    if (info) info.textContent = `${totalRecibos} rec · ${dims.nombreCorto}`;
+
+    document.getElementById('view-form').classList.add('hidden');
+    const vp = document.getElementById('view-preview');
+    vp.className = "w-full min-h-screen pt-1 px-2 pb-8 flex flex-col items-center bg-slate-900";
+    vp.classList.remove('hidden');
+    vp.classList.add('flex');
+    const btnNav = document.getElementById('btn-header-preview');
+    if (btnNav) btnNav.classList.add('hidden');
+    applyZoom();
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  function volverAFormulario() {
+    currentScreen = 'form';
+    if (layoutMode === 'paralelo') return;
+    const vp = document.getElementById('view-preview');
+    vp.classList.add('hidden');
+    vp.classList.remove('flex');
+    document.getElementById('view-form').classList.remove('hidden');
+    const btnNav = document.getElementById('btn-header-preview');
+    if (btnNav) btnNav.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  let isAutoZoom = true;
+
+  function autoAjustarZoom() {
+    const container = document.getElementById('preview-zoom-container');
+    const viewPreview = document.getElementById('view-preview');
+    if (!container || !viewPreview) return;
+
+    const availableWidth = Math.max(50, viewPreview.clientWidth - 20);
+    const tirasPorPag = getTirasPorPagina();
+    const dims = getPageDimensions(Math.min(getTotalRecibos(), tirasPorPag));
+    const pageWidthPx = dims.widthMm * 96 / 25.4;
+
+    if (availableWidth > 50 && pageWidthPx > 50) {
+      let z = (availableWidth / pageWidthPx) * 0.985;
+      z = Math.floor(z * 100) / 100;
+      z = Math.max(0.40, Math.min(1.5, z));
+      currentZoom = z;
+      applyZoom();
+      updateZoomButtons('auto');
+    }
+  }
+
+  function setZoom(z) {
+    if (z === 'auto') {
+      isAutoZoom = true;
+      autoAjustarZoom();
+      return;
+    }
+    isAutoZoom = false;
+    currentZoom = parseFloat(z) || 1.0;
+    applyZoom();
+    updateZoomButtons(Math.round(currentZoom * 100));
+  }
+
+  function updateZoomButtons(activeId) {
+    document.querySelectorAll('.zoom-btn').forEach(b => {
+      b.className = "zoom-btn px-2 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer";
+    });
+    const btn = document.getElementById('zoom-' + activeId);
+    if (btn) btn.className = "zoom-btn px-2 py-0.5 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer";
+  }
+
+  function applyZoom() {
+    const wrappers = document.querySelectorAll('#preview-zoom-container .sheet-page-wrapper');
+    wrappers.forEach((w) => {
+      const page = w.querySelector('.sheet-page');
+      if (!page) return;
+      const wMm = parseFloat(w.getAttribute('data-w-mm')) || 216;
+      const hMm = parseFloat(w.getAttribute('data-h-mm')) || 330;
+      const wPx = wMm * 96 / 25.4;
+      const hPx = hMm * 96 / 25.4;
+      const scaledW = Math.round(wPx * currentZoom);
+      const scaledH = Math.round(hPx * currentZoom);
+
+      w.style.width = `${scaledW}px`;
+      w.style.height = `${scaledH}px`;
+      w.style.margin = '8px auto 24px auto';
+      w.style.position = 'relative';
+
+      page.style.position = 'absolute';
+      page.style.top = '0';
+      page.style.left = '0';
+      page.style.transform = `scale(${currentZoom})`;
+      page.style.transformOrigin = 'top left';
+    });
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth < 1024) {
+      if (layoutMode === 'paralelo') {
+        setLayoutMode('normal');
+        return;
+      }
+    }
+    if (isAutoZoom && (layoutMode === 'paralelo' || currentScreen === 'preview')) {
+      autoAjustarZoom();
+    }
+  });
+
+  // ======================== DESCARGA PDF DIRECTO ========================
+  async function descargarPDF() {
+    const { totalPags, totalRecibos } = buildAllPagesHTML();
+
+    const modal = document.getElementById('pdf-loading-modal');
+    const modalSub = document.getElementById('pdf-modal-subtitle');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    const prevScrollX = window.scrollX || window.pageXOffset || 0;
+    const prevScrollY = window.scrollY || window.pageYOffset || 0;
+    window.scrollTo(0, 0);
+
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+    await new Promise(r => setTimeout(r, 150));
+
+    const sandbox = document.createElement('div');
+    sandbox.id = 'pdf-sandbox';
+    // Colocar en flujo absoluto a top:0, left:0 con opacidad 0 para métricas tipográficas nativas perfectas sin parpadeo
+    sandbox.style.cssText = 'position: absolute; left: 0; top: 0; margin: 0; padding: 0; background: #ffffff; z-index: -9999; opacity: 0; pointer-events: none; box-sizing: border-box; overflow: visible; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased;';
+    document.body.appendChild(sandbox);
+
+    const { jsPDF } = window.jspdf || {};
+    const tirasPorPag = getTirasPorPagina();
+
+    const tirasPerPag = [];
+    for (let p = 0; p < totalPags; p++) {
+      tirasPerPag.push(Math.min(tirasPorPag, totalRecibos - p * tirasPorPag));
+    }
+
+    let pdfDoc = null;
+    const filename = totalPags > 1
+      ? `Recibo_Caja_Canas_${String(serieDesde).padStart(6,'0')}_a_${String(serieHasta).padStart(6,'0')}.pdf`
+      : `Recibo_Caja_Canas_${String(serieDesde).padStart(6,'0')}.pdf`;
+
+    try {
+      for (let p = 0; p < totalPags; p++) {
+        if (modalSub) {
+          modalSub.textContent = `Procesando página ${p + 1} de ${totalPags}...`;
+        }
+
+        const tiras = tirasPerPag[p];
+        const dims = getPageDimensions(tiras);
+        sandbox.style.width = dims.widthMm + 'mm';
+
+        let watermarkHTML = '';
+        if (showFiligrana) {
+          watermarkHTML = `
+            <div style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0;">
+              <svg style="width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="wm-sb-${p}" width="141" height="9.6" patternUnits="userSpaceOnUse">
+                    <text x="0" y="7.5" textLength="141" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="6.8px" font-weight="700" fill="#0284c7" opacity="0.25">MUNICIPALIDAD PROVINCIAL DE CANAS </text>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#wm-sb-${p})" />
+              </svg>
+            </div>
+          `;
+        }
+
+        let stripsHTML = '';
+        for (let t = 0; t < tiras; t++) {
+          const globalIdx = p * tirasPorPag + t;
+          if (modo === 1) {
+            stripsHTML += buildStripHTML(0, true, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm');
+          } else {
+            stripsHTML += buildStripHTML(serieDesde + globalIdx, false, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm');
+          }
+        }
+
+        let sobranteHTML = '';
+        if (dims.sobranteMm > 0) {
+          sobranteHTML = `
+            <div class="page-sobrante" style="height: ${dims.sobranteMm}mm; min-height: ${dims.sobranteMm}mm; max-height: ${dims.sobranteMm}mm; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; border-top: 1.5px dashed #64748b; background: transparent; box-sizing: border-box; overflow: hidden; z-index: 10;">
+              <div style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; font-family: 'Courier Prime', Courier, monospace; font-size: 7.5px; font-weight: 700; color: #475569; letter-spacing: 0.8px; user-select: none; padding: 2px 10px;">
+                <span>✂ - - - - - - - - - - - - - - - - - - - -</span>
+                <span>LÍNEA DE CORTE · SOBRANTE ${(dims.sobranteMm / 10).toFixed(1)} CM</span>
+                <span>- - - - - - - - - - - - - - - - - - - - ✂</span>
+              </div>
+            </div>
+          `;
+        }
+
+        sandbox.innerHTML = `
+          <div id="sb-page" class="sheet-page receipt-watermark-bg" style="position: relative; width: ${dims.widthMm}mm; min-width: ${dims.widthMm}mm; max-width: ${dims.widthMm}mm; height: ${dims.heightMm}mm; min-height: ${dims.heightMm}mm; max-height: ${dims.heightMm}mm; margin: 0; padding: 0; background: #ffffff; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-start; box-shadow: none !important; transform: none !important;">
+            ${watermarkHTML}
+            <div style="width: 100%; display: flex; flex-direction: column; position: relative; z-index: 10;">
+              ${stripsHTML}
+            </div>
+            ${sobranteHTML}
+          </div>
+        `;
+
+        const imgs = Array.from(sandbox.querySelectorAll('img'));
+        await Promise.all(imgs.map(img => {
+          if (img.complete) return Promise.resolve();
+          return new Promise(res => { img.onload = res; img.onerror = res; });
+        }));
+        await new Promise(r => setTimeout(r, 120));
+
+        const target = document.getElementById('sb-page');
+        const targetRect = target.getBoundingClientRect();
+        const h2cOpts = {
+          scale: 3,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff',
+          scrollX: 0,
+          scrollY: 0,
+          x: 0,
+          y: 0,
+          width: target.offsetWidth,
+          height: target.offsetHeight,
+          windowWidth: Math.max(1600, target.offsetWidth * 2),
+          windowHeight: Math.max(1600, target.offsetHeight * 2),
+          onclone: (doc) => {
+            const el = doc.getElementById('pdf-sandbox');
+            if (el) el.style.opacity = '1';
+            const style = doc.createElement('style');
+            style.textContent = `
+              * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+              img { display: inline-block !important; vertical-align: middle !important; }
+            `;
+            doc.head.appendChild(style);
+          }
+        };
+
+        const canvas = await html2canvas(target, h2cOpts);
+        const imgData = canvas.toDataURL('image/png');
+
+        if (p === 0) {
+          pdfDoc = new jsPDF({ unit: 'mm', format: [dims.widthMm, dims.heightMm], orientation: 'portrait' });
+        } else {
+          pdfDoc.addPage([dims.widthMm, dims.heightMm], 'portrait');
+        }
+        pdfDoc.addImage(imgData, 'PNG', 0, 0, dims.widthMm, dims.heightMm, undefined, 'FAST');
+      }
+
+      if (pdfDoc) {
+        if (modalSub) modalSub.textContent = "Descargando archivo...";
+        pdfDoc.save(filename);
+      }
+    } catch(err) {
+      console.error("Error PDF:", err);
+      alert("Error al generar PDF: " + err.message);
+    } finally {
+      if (sandbox.parentNode) sandbox.parentNode.removeChild(sandbox);
+      window.scrollTo(prevScrollX, prevScrollY);
+      if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
+    }
+  }
+
+  // ======================== EXPORTS ========================
+  window.setModo = setModo;
+  window.setTipoHoja = setTipoHoja;
+  window.onRangoChange = onRangoChange;
+  window.onChkFechaChange = onChkFechaChange;
+  window.seleccionarRecibo = seleccionarRecibo;
+  window.onDatoChange = onDatoChange;
+  window.irAVistaPrevia = irAVistaPrevia;
+  window.volverAFormulario = volverAFormulario;
+  window.setZoom = setZoom;
+  window.descargarPDF = descargarPDF;
+  window.setLayoutMode = setLayoutMode;
+  window.triggerLivePreview = triggerLivePreview;
+  window.autoAjustarZoom = autoAjustarZoom;
+  window.abrirModalCompartir = abrirModalCompartir;
+  window.cerrarModalCompartir = cerrarModalCompartir;
+  window.ejecutarReplicacion = ejecutarReplicacion;
+  window.abrirModalAjustes = abrirModalAjustes;
+  window.cerrarModalAjustes = cerrarModalAjustes;
+  window.onAjusteInput = onAjusteInput;
+  window.toggleLockAjustes = toggleLockAjustes;
+  window.restablecerAjustesFabrica = restablecerAjustesFabrica;
+
+  // ======================== INIT ========================
+  setModo(2);
+  setTipoHoja("ajustado");
+  onRangoChange();
+  setLayoutMode(layoutMode);
+  sincronizarValoresAjustesUI();
+  actualizarEstadoLockUI();
+
+})();
+</script>
+
+</body>
+</html>
