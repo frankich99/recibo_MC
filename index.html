@@ -972,7 +972,7 @@
                 </div>
                 <div class="flex items-center gap-1.5 mt-1">
                   <button type="button" onclick="stepAjuste('gapLabelBox', -0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
-                  <input type="range" id="ajuste-gapLabelBox" min="0.4" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapLabelBox', this.value)" class="flex-1 cursor-pointer">
+                  <input type="range" id="ajuste-gapLabelBox" min="-2.0" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapLabelBox', this.value)" class="flex-1 cursor-pointer">
                   <button type="button" onclick="stepAjuste('gapLabelBox', 0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
                 </div>
               </div>
@@ -985,7 +985,7 @@
                 </div>
                 <div class="flex items-center gap-1.5 mt-1">
                   <button type="button" onclick="stepAjuste('gapCampos', -0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
-                  <input type="range" id="ajuste-gapCampos" min="0.8" max="5.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapCampos', this.value)" class="flex-1 cursor-pointer">
+                  <input type="range" id="ajuste-gapCampos" min="-2.5" max="5.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapCampos', this.value)" class="flex-1 cursor-pointer">
                   <button type="button" onclick="stepAjuste('gapCampos', 0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
                 </div>
               </div>
@@ -2450,11 +2450,9 @@
     const escudoY = a.escudoOffsetY || 0.0;
     const escudoOp = a.escudoOpacity !== undefined ? a.escudoOpacity : 0.12;
 
-    // Espaciados calibrados para ajuste milimétrico continuo (nunca colisionan)
-    const rawGapLbl = a.gapLabelBox !== undefined ? Number(a.gapLabelBox) : 1.2;
-    const gapLbl = Math.max(0.6, rawGapLbl);
-    const rawGapCmp = a.gapCampos !== undefined ? Number(a.gapCampos) : 2.0;
-    const gapCmp = Math.max(1.0, rawGapCmp);
+    // Espaciados calibrados para ajuste milimétrico continuo (admite valores negativos)
+    const gapLbl = a.gapLabelBox !== undefined ? Number(a.gapLabelBox) : 1.2;
+    const gapCmp = a.gapCampos !== undefined ? Number(a.gapCampos) : 2.0;
 
     // Ajuste responsive preventivo contra desbordes en textos de contribuyente
     let fitFontNombre = fontG43;
@@ -2505,20 +2503,20 @@
 
     let rowsHTML = '';
     for (let i = 0; i < 3; i++) {
-      const p = rowP[i] ? rowP[i].trim() : '';
-      const d = rowD[i] ? rowD[i].trim() : '';
-      const rawI = rowI[i] ? rowI[i].trim() : '';
+      const p = rowP[i] ? String(rowP[i]).trim() : '';
+      const d = rowD[i] ? String(rowD[i]).trim() : '';
+      const rawI = rowI[i] ? String(rowI[i]).trim() : '';
       const safeI = rawI ? rawI.replace(/S\/\s*/g, 'S/&nbsp;') : '';
 
       rowsHTML += `
-        <div style="width: 100%; height: ${rowHeightMm}mm; min-height: ${rowHeightMm}mm; max-height: ${rowHeightMm}mm; display: flex; flex-direction: row; align-items: center; box-sizing: border-box; position: relative; z-index: 1;">
-          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0 0.5mm;">
+        <div style="width: 100%; height: ${rowHeightMm}mm; min-height: ${rowHeightMm}mm; max-height: ${rowHeightMm}mm; display: flex; flex-direction: row; align-items: center; box-sizing: border-box; position: relative; z-index: 1; color: #000; font-family: ${ffG44};">
+          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0 0.5mm;">
             ${p || '&nbsp;'}
           </div>
-          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: flex-start; padding: 0 1.5mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; text-transform: uppercase; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box;">
+          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: flex-start; padding: 0 1.5mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box;">
             ${d || '&nbsp;'}
           </div>
-          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; overflow: hidden; white-space: nowrap; box-sizing: border-box;">
+          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box;">
             ${safeI || '&nbsp;'}
           </div>
         </div>
