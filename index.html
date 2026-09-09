@@ -797,27 +797,54 @@
             </div>
 
             <!-- GRUPO 3: Encabezado & Títulos -->
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-3')" onmouseleave="unhighlightPreviewPart()">
+            <!-- GRUPO 3.1: Título RECIBO DE CAJA (Independiente) -->
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-recibo-caja')" onmouseleave="unhighlightPreviewPart()">
               <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                  <span class="font-black text-slate-900 text-xs">3. Encabezado & Títulos</span>
-                  <span class="text-[10px] text-slate-400 hidden sm:inline">(RECIBO DE CAJA, Nº RECIBO, FECHA)</span>
+                  <span class="font-black text-slate-900 text-xs">3.1. Título "RECIBO DE CAJA"</span>
+                  <span class="text-[10px] text-slate-400 hidden sm:inline">(Texto central superior)</span>
                 </div>
                 <div class="flex items-center gap-1.5">
-                  <span id="val-fontG3_HeaderTitulos" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">9.5 px</span>
-                  <button type="button" onclick="restablecerGrupo('g3')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
+                  <span id="val-fontG3_ReciboCaja" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">9.5 px</span>
+                  <button type="button" onclick="restablecerGrupo('g3_rc')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
                 </div>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
                 <div class="sm:col-span-6">
-                  <select id="ajuste-ffG3_HeaderTitulos" onchange="onAjusteFontFamily('ffG3_HeaderTitulos', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                  <select id="ajuste-ffG3_ReciboCaja" onchange="onAjusteFontFamily('ffG3_ReciboCaja', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
                 </div>
                 <div class="sm:col-span-6 flex items-center gap-1.5">
-                  <button type="button" onclick="stepAjuste('fontG3_HeaderTitulos', -0.5); highlightPreviewPart('grupo-3');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
-                  <input type="range" id="ajuste-fontG3_HeaderTitulos" min="7" max="16" step="0.5" oninput="highlightPreviewPart('grupo-3'); onAjusteInput('fontG3_HeaderTitulos', this.value)" class="flex-1 cursor-pointer">
-                  <button type="button" onclick="stepAjuste('fontG3_HeaderTitulos', 0.5); highlightPreviewPart('grupo-3');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
-                  <button type="button" id="btn-bold-boldG3_HeaderTitulos" onclick="toggleAjusteBold('boldG3_HeaderTitulos')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
+                  <button type="button" onclick="stepAjuste('fontG3_ReciboCaja', -0.5); highlightPreviewPart('grupo-recibo-caja');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-fontG3_ReciboCaja" min="6" max="18" step="0.5" oninput="highlightPreviewPart('grupo-recibo-caja'); onAjusteInput('fontG3_ReciboCaja', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('fontG3_ReciboCaja', 0.5); highlightPreviewPart('grupo-recibo-caja');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  <button type="button" id="btn-bold-boldG3_ReciboCaja" onclick="toggleAjusteBold('boldG3_ReciboCaja')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRUPO 3.2: Etiquetas Cajetín (Nº RECIBO, FECHA) -->
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-cajetin-lbl')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1.5">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="font-black text-slate-900 text-xs">3.2. Etiquetas Cajetín</span>
+                  <span class="text-[10px] text-slate-400 hidden sm:inline">(Nº RECIBO y FECHA)</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span id="val-fontG3_CajetinLabels" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">8.5 px</span>
+                  <button type="button" onclick="restablecerGrupo('g3_caj')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                <div class="sm:col-span-6">
+                  <select id="ajuste-ffG3_CajetinLabels" onchange="onAjusteFontFamily('ffG3_CajetinLabels', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                </div>
+                <div class="sm:col-span-6 flex items-center gap-1.5">
+                  <button type="button" onclick="stepAjuste('fontG3_CajetinLabels', -0.5); highlightPreviewPart('grupo-cajetin-lbl');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-fontG3_CajetinLabels" min="6" max="14" step="0.5" oninput="highlightPreviewPart('grupo-cajetin-lbl'); onAjusteInput('fontG3_CajetinLabels', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('fontG3_CajetinLabels', 0.5); highlightPreviewPart('grupo-cajetin-lbl');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  <button type="button" id="btn-bold-boldG3_CajetinLabels" onclick="toggleAjusteBold('boldG3_CajetinLabels')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
                 </div>
               </div>
             </div>
@@ -1308,10 +1335,15 @@
     boldG2_TablaLabels: true,
     ffG2_TablaLabels: 'Inter, sans-serif',
 
-    // 3. Encabezado & Títulos (RECIBO DE CAJA, Nº RECIBO etiqueta, FECHA etiqueta)
-    fontG3_HeaderTitulos: 9.5,
-    boldG3_HeaderTitulos: true,
-    ffG3_HeaderTitulos: 'Inter, sans-serif',
+    // 3.1. Título RECIBO DE CAJA (Independiente)
+    fontG3_ReciboCaja: 9.5,
+    boldG3_ReciboCaja: true,
+    ffG3_ReciboCaja: 'Inter, sans-serif',
+
+    // 3.2. Etiquetas Cajetín (Nº RECIBO, FECHA)
+    fontG3_CajetinLabels: 8.5,
+    boldG3_CajetinLabels: true,
+    ffG3_CajetinLabels: 'Inter, sans-serif',
 
     // 4.1. Información Cajetín (Nº Recibo y Fecha datos)
     fontG41_CajetinVal: 9.0,
@@ -1377,10 +1409,20 @@
         parsed.boldG2_TablaLabels = parsed.boldTablaHdr !== undefined ? parsed.boldTablaHdr : true;
         parsed.ffG2_TablaLabels = parsed.ffTablaHdr || 'Inter, sans-serif';
       }
-      if (parsed.fontReciboCaja && !parsed.fontG3_HeaderTitulos) {
-        parsed.fontG3_HeaderTitulos = parsed.fontNumFecha || 9.5;
-        parsed.boldG3_HeaderTitulos = parsed.boldReciboCaja !== undefined ? parsed.boldReciboCaja : true;
-        parsed.ffG3_HeaderTitulos = parsed.ffReciboCaja || 'Inter, sans-serif';
+      if (parsed.fontG3_HeaderTitulos) {
+        if (!parsed.fontG3_ReciboCaja) parsed.fontG3_ReciboCaja = parsed.fontG3_HeaderTitulos;
+        if (!parsed.fontG3_CajetinLabels) parsed.fontG3_CajetinLabels = Math.min(parsed.fontG3_HeaderTitulos, 8.5);
+        if (parsed.boldG3_ReciboCaja === undefined) parsed.boldG3_ReciboCaja = parsed.boldG3_HeaderTitulos !== undefined ? parsed.boldG3_HeaderTitulos : true;
+        if (parsed.boldG3_CajetinLabels === undefined) parsed.boldG3_CajetinLabels = parsed.boldG3_HeaderTitulos !== undefined ? parsed.boldG3_HeaderTitulos : true;
+        if (!parsed.ffG3_ReciboCaja) parsed.ffG3_ReciboCaja = parsed.ffG3_HeaderTitulos || 'Inter, sans-serif';
+        if (!parsed.ffG3_CajetinLabels) parsed.ffG3_CajetinLabels = parsed.ffG3_HeaderTitulos || 'Inter, sans-serif';
+      } else if (parsed.fontReciboCaja) {
+        parsed.fontG3_ReciboCaja = parsed.fontReciboCaja || 9.5;
+        parsed.fontG3_CajetinLabels = parsed.fontNumFecha || 8.5;
+        parsed.boldG3_ReciboCaja = parsed.boldReciboCaja !== undefined ? parsed.boldReciboCaja : true;
+        parsed.boldG3_CajetinLabels = parsed.boldReciboCaja !== undefined ? parsed.boldReciboCaja : true;
+        parsed.ffG3_ReciboCaja = parsed.ffReciboCaja || 'Inter, sans-serif';
+        parsed.ffG3_CajetinLabels = parsed.ffReciboCaja || 'Inter, sans-serif';
       }
       if (parsed.fontNumFechaVal && !parsed.fontG41_CajetinVal) {
         parsed.fontG41_CajetinVal = parsed.fontNumFechaVal;
@@ -1445,7 +1487,8 @@
     const grupos = [
       'ffG1_LabelsContrib',
       'ffG2_TablaLabels',
-      'ffG3_HeaderTitulos',
+      'ffG3_ReciboCaja',
+      'ffG3_CajetinLabels',
       'ffG41_CajetinVal',
       'ffG42_SerieRoja',
       'ffG43_DatosContrib',
@@ -1484,8 +1527,10 @@
       selector = `[data-part="grupo-2"]`;
     } else if (partName === 'tabla-body' || partName === 'tabla-pie') {
       selector = `[data-part="grupo-44"], [data-part="grupo-2"]`;
-    } else if (partName === 'hdr-recibo-caja' || partName === 'hdr-num-fecha-lbl') {
-      selector = `[data-part="grupo-3"]`;
+    } else if (partName === 'hdr-recibo-caja' || partName === 'grupo-recibo-caja') {
+      selector = `[data-part="grupo-recibo-caja"]`;
+    } else if (partName === 'hdr-num-fecha-lbl' || partName === 'grupo-cajetin-lbl') {
+      selector = `[data-part="grupo-cajetin-lbl"]`;
     } else if (partName === 'hdr-num-fecha-val') {
       selector = `[data-part="grupo-41"]`;
     } else if (partName === 'hdr-serie') {
@@ -1675,10 +1720,21 @@
       ajustes.fontG2_TablaLabels = def.fontG2_TablaLabels;
       ajustes.boldG2_TablaLabels = def.boldG2_TablaLabels;
       ajustes.ffG2_TablaLabels = def.ffG2_TablaLabels;
+    } else if (grupo === 'g3_rc') {
+      ajustes.fontG3_ReciboCaja = def.fontG3_ReciboCaja;
+      ajustes.boldG3_ReciboCaja = def.boldG3_ReciboCaja;
+      ajustes.ffG3_ReciboCaja = def.ffG3_ReciboCaja;
+    } else if (grupo === 'g3_caj') {
+      ajustes.fontG3_CajetinLabels = def.fontG3_CajetinLabels;
+      ajustes.boldG3_CajetinLabels = def.boldG3_CajetinLabels;
+      ajustes.ffG3_CajetinLabels = def.ffG3_CajetinLabels;
     } else if (grupo === 'g3') {
-      ajustes.fontG3_HeaderTitulos = def.fontG3_HeaderTitulos;
-      ajustes.boldG3_HeaderTitulos = def.boldG3_HeaderTitulos;
-      ajustes.ffG3_HeaderTitulos = def.ffG3_HeaderTitulos;
+      ajustes.fontG3_ReciboCaja = def.fontG3_ReciboCaja;
+      ajustes.boldG3_ReciboCaja = def.boldG3_ReciboCaja;
+      ajustes.ffG3_ReciboCaja = def.ffG3_ReciboCaja;
+      ajustes.fontG3_CajetinLabels = def.fontG3_CajetinLabels;
+      ajustes.boldG3_CajetinLabels = def.boldG3_CajetinLabels;
+      ajustes.ffG3_CajetinLabels = def.ffG3_CajetinLabels;
     } else if (grupo === 'g41') {
       ajustes.fontG41_CajetinVal = def.fontG41_CajetinVal;
       ajustes.boldG41_CajetinVal = def.boldG41_CajetinVal;
@@ -2349,10 +2405,15 @@
     const fwG2   = a.boldG2_TablaLabels ? '900' : '600';
     const ffG2   = a.ffG2_TablaLabels || 'Inter, sans-serif';
 
-    // 3. Encabezado & Títulos (RECIBO DE CAJA, Nº RECIBO etiqueta, FECHA etiqueta)
-    const fontG3 = a.fontG3_HeaderTitulos || 9.5;
-    const fwG3   = a.boldG3_HeaderTitulos ? '900' : '600';
-    const ffG3   = a.ffG3_HeaderTitulos || 'Inter, sans-serif';
+    // 3.1. Título "RECIBO DE CAJA" (Independiente)
+    const fontG3_RC = a.fontG3_ReciboCaja || a.fontG3_HeaderTitulos || 9.5;
+    const fwG3_RC   = (a.boldG3_ReciboCaja !== undefined ? a.boldG3_ReciboCaja : a.boldG3_HeaderTitulos) ? '900' : '600';
+    const ffG3_RC   = a.ffG3_ReciboCaja || a.ffG3_HeaderTitulos || 'Inter, sans-serif';
+
+    // 3.2. Etiquetas Cajetín (Nº RECIBO, FECHA)
+    const fontG3_Caj = a.fontG3_CajetinLabels || (a.fontG3_HeaderTitulos ? Math.min(a.fontG3_HeaderTitulos, 8.5) : 8.5);
+    const fwG3_Caj   = (a.boldG3_CajetinLabels !== undefined ? a.boldG3_CajetinLabels : a.boldG3_HeaderTitulos) ? '900' : '600';
+    const ffG3_Caj   = a.ffG3_CajetinLabels || a.ffG3_HeaderTitulos || 'Inter, sans-serif';
 
     // 4.1. Información Cajetín (Nº Recibo y Fecha datos)
     const fontG41 = a.fontG41_CajetinVal || 9.0;
@@ -2480,7 +2541,7 @@
           </div>
 
           <!-- Identidad Municipal Centrada (Alineada arriba como Imagen 2 física, con amplio respiro abajo) -->
-          <div style="flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center; padding: 0.2mm 1mm 0 1mm; line-height: 1.15; box-sizing: border-box; overflow: hidden; font-family: ${ffG3};">
+          <div style="flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center; padding: 0.2mm 1mm 0 1mm; line-height: 1.15; box-sizing: border-box; overflow: hidden; font-family: ${ffG3_RC};">
             <div style="font-size: 6.8px; font-weight: 700; text-transform: uppercase; color: #020617; line-height: 1.15; letter-spacing: 0.15px; white-space: nowrap !important;">
               <div>MUNICIPALIDAD PROVINCIAL</div>
               <div>DE CANAS - YANAOCA</div>
@@ -2490,7 +2551,7 @@
               <div>Canas - Yanaoca - Cusco</div>
               <div style="font-weight: 600; margin-top: 0.15mm; color: #0f172a;">R.U.C. 20170325185</div>
             </div>
-            <div data-part="grupo-3" class="rounded px-1 transition-all" style="font-family: ${ffG3}; font-size: ${fontG3}px; font-weight: ${fwG3}; text-transform: uppercase; color: #020617; line-height: 1.1; margin-top: 0.9mm; letter-spacing: 0.8px; white-space: nowrap !important;">
+            <div data-part="grupo-recibo-caja" class="rounded px-1 transition-all" style="font-family: ${ffG3_RC}; font-size: ${fontG3_RC}px; font-weight: ${fwG3_RC}; text-transform: uppercase; color: #020617; line-height: 1.1; margin-top: 0.9mm; letter-spacing: 0.8px; white-space: nowrap !important;">
               RECIBO DE CAJA
             </div>
           </div>
@@ -2499,12 +2560,12 @@
           <div data-part="hdr-cajetin" class="box-num-fecha transition-all" style="width: ${a.wBoxNumFecha}mm; min-width: ${a.wBoxNumFecha}mm; max-width: ${a.wBoxNumFecha}mm; height: ${hHeaderVal}mm; min-height: ${hHeaderVal}mm; max-height: ${hHeaderVal}mm; border: ${bw} solid #0f172a; border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; box-sizing: border-box; background: transparent;">
             <!-- Fila 1: Nº Recibo -->
             <div style="height: ${hFilaNum}mm; min-height: ${hFilaNum}mm; max-height: ${hFilaNum}mm; display: flex; align-items: center; border-bottom: ${bw} solid #0f172a; box-sizing: border-box;">
-              <span data-part="grupo-3" class="lbl-col transition-all" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3}; font-size: ${fontG3}px; font-weight: ${fwG3}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">Nº RECIBO</span>
+              <span data-part="grupo-cajetin-lbl" class="lbl-col transition-all" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3_Caj}; font-size: ${fontG3_Caj}px; font-weight: ${fwG3_Caj}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">Nº RECIBO</span>
               <span data-part="grupo-41" class="transition-all" style="flex: 1; min-width: 0; height: 100%; font-family: ${ffG41}; font-size: ${fontG41}px; font-weight: ${fwG41}; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentNum}</span>
             </div>
             <!-- Fila 2: Fecha -->
             <div style="height: ${hFilaFecha}mm; min-height: ${hFilaFecha}mm; max-height: ${hFilaFecha}mm; display: flex; align-items: center; border-bottom: ${bw} solid #0f172a; box-sizing: border-box;">
-              <span data-part="grupo-3" class="lbl-col transition-all" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3}; font-size: ${fontG3}px; font-weight: ${fwG3}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">FECHA</span>
+              <span data-part="grupo-cajetin-lbl" class="lbl-col transition-all" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3_Caj}; font-size: ${fontG3_Caj}px; font-weight: ${fwG3_Caj}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">FECHA</span>
               <span data-part="grupo-41" class="transition-all" style="flex: 1; min-width: 0; height: 100%; font-family: ${ffG41}; font-size: ${fontG41}px; font-weight: ${fwG41}; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentFecha}</span>
             </div>
             <!-- Fila 3: Nº Serie Rojo (#dc2626) -->
