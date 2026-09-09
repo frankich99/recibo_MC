@@ -414,43 +414,43 @@
         <div class="space-y-2.5">
           <div>
             <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Nombre o Razón Social:</label>
-            <input id="f-nombre" type="text" oninput="onDatoChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none font-normal" value="SABINA USCAMAYTA TACO - 24583755" placeholder="APELLIDOS Y NOMBRES">
+            <textarea id="f-nombre" rows="1" oninput="autoGrowTextarea(this); onDatoChange()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none resize-none overflow-hidden min-h-[34px] leading-snug block transition-all" placeholder="APELLIDOS Y NOMBRES">SABINA USCAMAYTA TACO - 24583755</textarea>
           </div>
           <div>
             <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Domicilio Fiscal (Opcional):</label>
-            <input id="f-domicilio" type="text" oninput="onDatoChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none font-normal" value="JR. SAN MARTÍN S/N - YANAOCA" placeholder="Ej: Plaza de Armas Canas">
+            <textarea id="f-domicilio" rows="1" oninput="autoGrowTextarea(this); onDatoChange()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none resize-none overflow-hidden min-h-[34px] leading-snug block transition-all" placeholder="Ej: Plaza de Armas Canas">JR. SAN MARTÍN S/N - YANAOCA</textarea>
           </div>
           <div>
             <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Observaciones:</label>
-            <input id="f-obs" type="text" oninput="onDatoChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none font-normal" value="CREACION Y/O APERTURA DE CARPETA PREDIAL" placeholder="Observaciones">
+            <textarea id="f-obs" rows="1" oninput="autoGrowTextarea(this); onDatoChange()" class="w-full px-3 py-1.5 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none resize-none overflow-hidden min-h-[34px] leading-snug block transition-all" placeholder="Observaciones">CREACION Y/O APERTURA DE CARPETA PREDIAL</textarea>
           </div>
         </div>
 
-        <!-- Tabla conceptos con overflow horizontal suave para móviles -->
-        <div class="border border-slate-300 rounded-xl overflow-x-auto shadow-2xs w-full">
-          <table class="w-full min-w-[320px] text-left text-xs">
+        <!-- Tabla conceptos con contenedor dinámico que se amplía con el texto -->
+        <div class="border border-slate-300 rounded-xl overflow-x-auto shadow-2xs w-full bg-white">
+          <table class="w-full min-w-[320px] sm:min-w-[380px] text-left text-xs">
             <thead class="bg-slate-100 font-bold border-b border-slate-300 text-slate-800 text-[10px]">
               <tr>
-                <th class="p-1.5 sm:p-2 w-16 text-center">PARTIDA</th>
-                <th class="p-1.5 sm:p-2">DESCRIPCIÓN</th>
-                <th class="p-1.5 sm:p-2 w-24 sm:w-28 text-right">IMPORTE (S/)</th>
+                <th class="p-1.5 sm:p-2 w-16 sm:w-20 text-center">PARTIDA</th>
+                <th class="p-1.5 sm:p-2 min-w-[170px] sm:min-w-[240px]">DESCRIPCIÓN</th>
+                <th class="p-1.5 sm:p-2 w-20 sm:w-28 text-right">IMPORTE (S/)</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 text-xs">
-              <tr>
-                <td class="p-1"><input id="f-p1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs" value="1"></td>
-                <td class="p-1"><input id="f-d1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 uppercase font-receipt text-slate-900 text-xs" value="OTROS DERECHOS ADMINISTRATIVOS GENERALES"></td>
-                <td class="p-1"><input id="f-i1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs" value="10.00" placeholder="0.00"></td>
+              <tr class="align-top">
+                <td class="p-1 w-16 sm:w-20"><input id="f-p1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="1"></td>
+                <td class="p-1 min-w-[170px] sm:min-w-[240px]"><textarea id="f-d1" rows="1" oninput="autoGrowTextarea(this); onDatoChange()" class="w-full border border-slate-300 rounded p-1 sm:p-1.5 uppercase font-receipt text-slate-900 text-xs resize-none overflow-hidden focus:ring-2 focus:ring-sky-500 outline-none leading-snug block min-h-[28px] transition-all" placeholder="DESCRIPCIÓN">OTROS DERECHOS ADMINISTRATIVOS GENERALES</textarea></td>
+                <td class="p-1 w-20 sm:w-28"><input id="f-i1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="10.00" placeholder="0.00"></td>
               </tr>
-              <tr>
-                <td class="p-1"><input id="f-p2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs" value="01.02.04"></td>
-                <td class="p-1"><input id="f-d2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 uppercase font-receipt text-slate-900 text-xs" value="EXPEDICIÓN DE CONSTANCIA Y CERTIFICADO"></td>
-                <td class="p-1"><input id="f-i2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs" value="15.00" placeholder="0.00"></td>
+              <tr class="align-top">
+                <td class="p-1 w-16 sm:w-20"><input id="f-p2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="01.02.04"></td>
+                <td class="p-1 min-w-[170px] sm:min-w-[240px]"><textarea id="f-d2" rows="1" oninput="autoGrowTextarea(this); onDatoChange()" class="w-full border border-slate-300 rounded p-1 sm:p-1.5 uppercase font-receipt text-slate-900 text-xs resize-none overflow-hidden focus:ring-2 focus:ring-sky-500 outline-none leading-snug block min-h-[28px] transition-all" placeholder="DESCRIPCIÓN">EXPEDICIÓN DE CONSTANCIA Y CERTIFICADO</textarea></td>
+                <td class="p-1 w-20 sm:w-28"><input id="f-i2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="15.00" placeholder="0.00"></td>
               </tr>
-              <tr>
-                <td class="p-1"><input id="f-p3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs"></td>
-                <td class="p-1"><input id="f-d3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 uppercase font-receipt text-slate-900 text-xs"></td>
-                <td class="p-1"><input id="f-i3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs" placeholder="0.00"></td>
+              <tr class="align-top">
+                <td class="p-1 w-16 sm:w-20"><input id="f-p3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs focus:ring-2 focus:ring-sky-500 outline-none"></td>
+                <td class="p-1 min-w-[170px] sm:min-w-[240px]"><textarea id="f-d3" rows="1" oninput="autoGrowTextarea(this); onDatoChange()" class="w-full border border-slate-300 rounded p-1 sm:p-1.5 uppercase font-receipt text-slate-900 text-xs resize-none overflow-hidden focus:ring-2 focus:ring-sky-500 outline-none leading-snug block min-h-[28px] transition-all" placeholder="DESCRIPCIÓN"></textarea></td>
+                <td class="p-1 w-20 sm:w-28"><input id="f-i3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs focus:ring-2 focus:ring-sky-500 outline-none" placeholder="0.00"></td>
               </tr>
             </tbody>
           </table>
@@ -465,6 +465,25 @@
           <div class="text-right flex-shrink-0 flex items-center justify-between sm:block border-t sm:border-t-0 border-sky-200 pt-1 sm:pt-0">
             <span class="text-[10px] font-bold text-sky-900 uppercase block">Total</span>
             <div class="text-lg font-black font-receipt text-sky-950">S/ <span id="f-txt-total">25.00</span></div>
+          </div>
+        </div>
+
+        <!-- VISTA PREVIA EN VIVO DEBAJO DEL RECIBO (Auto-escalada 100% responsiva sin desbordes) -->
+        <div id="box-live-preview-step5" class="mt-3.5 bg-slate-950 rounded-2xl border border-slate-800 p-2.5 sm:p-3.5 flex flex-col items-center shadow-lg overflow-hidden w-full">
+          <div class="w-full flex items-center justify-between pb-2 mb-2 border-b border-slate-800 text-xs text-slate-300">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+              <span class="font-bold text-white text-[11px] sm:text-xs truncate">Vista Previa en Vivo:</span>
+              <span id="step5-preview-recibo-lbl" class="text-sky-400 font-receipt font-black text-[11px] sm:text-xs truncate">Nº 098466</span>
+            </div>
+            <div class="flex items-center gap-1 flex-shrink-0">
+              <span class="text-[9.5px] bg-slate-900 text-emerald-400 font-bold px-2 py-0.5 rounded border border-slate-700 flex items-center gap-1">
+                <span>📄</span> <span>Recibo 1:1</span>
+              </span>
+            </div>
+          </div>
+          <div id="step5-live-slip-wrapper" class="w-full flex justify-center items-start overflow-hidden pt-1 pb-2">
+            <div id="step5-live-slip-container" class="origin-top flex justify-center items-center"></div>
           </div>
         </div>
       </section>
@@ -2384,6 +2403,11 @@
     document.getElementById('f-i3').value = rd.i3 || "";
 
     actualizarTotalForm();
+    ['f-nombre', 'f-domicilio', 'f-obs', 'f-d1', 'f-d2', 'f-d3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.tagName === 'TEXTAREA') autoGrowTextarea(el);
+    });
+    renderStep5LiveSlip();
   }
 
   function guardarFormEnRecibo() {
@@ -2443,6 +2467,7 @@
     actualizarTotalForm();
     renderNavRecibos();
     triggerLivePreview();
+    renderStep5LiveSlip();
   }
 
   function actualizarTotalForm() {
@@ -2697,12 +2722,17 @@
       const rawI = rowI[i] ? String(rowI[i]).trim() : '';
       const safeI = rawI ? rawI.replace(/S\/\s*/g, 'S/&nbsp;') : '';
 
+      let fitFontD = fontG44;
+      if (d && d.length > 34) {
+        fitFontD = Math.max(4.8, +(fontG44 * Math.max(0.65, 34 / d.length)).toFixed(1));
+      }
+
       rowsHTML += `
         <div style="width: 100%; height: ${rowHeightMm}mm; min-height: ${rowHeightMm}mm; max-height: ${rowHeightMm}mm; display: flex; flex-direction: row; align-items: center; box-sizing: border-box; position: relative; z-index: 1; color: #000; font-family: ${ffG44};">
           <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0 0.5mm;">
             ${p || '&nbsp;'}
           </div>
-          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: flex-start; padding: 0 1.5mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box;">
+          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: flex-start; padding: 0 1.5mm; font-size: ${fitFontD}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; line-height: 1.1;">
             ${d || '&nbsp;'}
           </div>
           <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box;">
@@ -2926,6 +2956,109 @@
     if (currentHighlightPart) {
       applyPartHighlight(currentHighlightPart);
     }
+  }
+
+  // ======================== AUTO-EXPANSIÓN DINÁMICA DE CAMPOS DE TEXTO ========================
+  function autoGrowTextarea(el) {
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = Math.max(28, el.scrollHeight) + 'px';
+  }
+
+  // ======================== VISTA PREVIA EN VIVO PASO 5 (DEBAJO DEL FORMULARIO) ========================
+  function renderStep5LiveSlip() {
+    if (modo !== 3) return;
+    const secDatos = document.getElementById('sec-datos');
+    if (!secDatos || secDatos.classList.contains('hidden')) return;
+
+    const container = document.getElementById('step5-live-slip-container');
+    const wrapper = document.getElementById('step5-live-slip-wrapper');
+    const boxWrapper = document.getElementById('box-live-preview-step5');
+    if (!container || !wrapper || !boxWrapper) return;
+
+    const serieActual = serieDesde + reciboEditandoIdx;
+    const serieStr = String(serieActual).padStart(6, '0');
+    const numStr = String(serieActual).padStart(10, '0');
+    const lbl = document.getElementById('step5-preview-recibo-lbl');
+    if (lbl) lbl.textContent = `Nº ${serieStr}`;
+
+    const currentFecha = document.getElementById('f-fecha-global')?.value || fechaGlobal || "01/09/2026";
+    const valNombre = (document.getElementById('f-nombre')?.value || "").toUpperCase();
+    const valDomicilio = (document.getElementById('f-domicilio')?.value || "").toUpperCase();
+    const valObs = (document.getElementById('f-obs')?.value || "").toUpperCase();
+    const valP1 = (document.getElementById('f-p1')?.value || "").toUpperCase();
+    const valD1 = (document.getElementById('f-d1')?.value || "").toUpperCase();
+    const i1Val = parseVal(document.getElementById('f-i1')?.value);
+    const fmtI1 = i1Val > 0 ? `S/ ${i1Val.toFixed(2)}` : (document.getElementById('f-i1')?.value ? `S/ ${document.getElementById('f-i1')?.value}` : "");
+
+    const valP2 = (document.getElementById('f-p2')?.value || "").toUpperCase();
+    const valD2 = (document.getElementById('f-d2')?.value || "").toUpperCase();
+    const i2Val = parseVal(document.getElementById('f-i2')?.value);
+    const fmtI2 = i2Val > 0 ? `S/ ${i2Val.toFixed(2)}` : (document.getElementById('f-i2')?.value ? `S/ ${document.getElementById('f-i2')?.value}` : "");
+
+    const valP3 = (document.getElementById('f-p3')?.value || "").toUpperCase();
+    const valD3 = (document.getElementById('f-d3')?.value || "").toUpperCase();
+    const i3Val = parseVal(document.getElementById('f-i3')?.value);
+    const fmtI3 = i3Val > 0 ? `S/ ${i3Val.toFixed(2)}` : (document.getElementById('f-i3')?.value ? `S/ ${document.getElementById('f-i3')?.value}` : "");
+
+    const tot = i1Val + i2Val + i3Val;
+    let totalStr = tot.toFixed(2);
+    let ent = Math.floor(tot);
+    let cen = Math.round((tot - ent) * 100);
+    let sonStr = tot > 0 ? `${numeroALetras(ent)} CON ${String(cen).padStart(2, '0')}/100 SOLES` : "CERO CON 00/100 SOLES";
+
+    const slipInner = renderSlipContent({
+      boxWidth: '90mm',
+      boxHeight: '92mm',
+      currentNum: numStr,
+      currentFecha,
+      currentSerie: serieStr,
+      valNombre,
+      valDomicilio,
+      valObs,
+      valP1, valD1, fmtI1,
+      valP2, valD2, fmtI2,
+      valP3, valD3, fmtI3,
+      sonStr,
+      totalStr,
+      showEscudo: showEscudo
+    });
+
+    const watermarkSlipHTML = showFiligrana ? `
+      <div data-part="watermark-pattern" class="watermark-horizontal-lines" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0;">
+        <svg style="width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="wm-step5-live" width="141" height="9.6" patternUnits="userSpaceOnUse">
+              <text x="0" y="7.5" textLength="141" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="6.8px" font-weight="700" fill="#0284c7" opacity="${ajustes.filigranaOpacity !== undefined ? ajustes.filigranaOpacity : 0.26}">MUNICIPALIDAD PROVINCIAL DE CANAS </text>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#wm-step5-live)" />
+        </svg>
+      </div>
+    ` : '';
+
+    container.innerHTML = `
+      <div class="receipt-pane shadow-2xl rounded-sm receipt-watermark-bg" style="width: 106mm; min-width: 106mm; max-width: 106mm; height: 102mm; min-height: 102mm; max-height: 102mm; padding: 5mm 8mm 5mm 8mm; box-sizing: border-box; position: relative; background: #ffffff; border: 1px solid #cbd5e1; overflow: hidden;">
+        ${watermarkSlipHTML}
+        <div style="position: relative; z-index: 10; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+          ${slipInner}
+        </div>
+      </div>
+    `;
+
+    // Escalar automáticamente al ancho del contenedor para garantizar que nunca se corte ni rompa
+    const slipWidthPx = 106 * 96 / 25.4; // ~400.6px
+    const slipHeightPx = 102 * 96 / 25.4; // ~385.5px
+    const availableWidth = Math.max(50, boxWrapper.clientWidth - 28);
+    let scale = 1.0;
+    if (availableWidth < slipWidthPx) {
+      scale = (availableWidth / slipWidthPx) * 0.985;
+      scale = Math.floor(scale * 100) / 100;
+      scale = Math.max(0.35, Math.min(1.0, scale));
+    }
+    container.style.transform = `scale(${scale})`;
+    container.style.transformOrigin = 'top center';
+    wrapper.style.height = `${Math.round(slipHeightPx * scale) + 6}px`;
   }
 
   // ======================== GENERADOR HTML TIRA ========================
@@ -3326,6 +3459,7 @@
     if (modalAjustes && !modalAjustes.classList.contains('hidden')) {
       autoAjustarZoomSlip();
     }
+    renderStep5LiveSlip();
   });
 
   // ======================== DESCARGA PDF DIRECTO ========================
@@ -3536,6 +3670,8 @@
   window.restablecerAjustesPredeterminados = restablecerAjustesPredeterminados;
   window.highlightPreviewPart = highlightPreviewPart;
   window.unhighlightPreviewPart = unhighlightPreviewPart;
+  window.autoGrowTextarea = autoGrowTextarea;
+  window.renderStep5LiveSlip = renderStep5LiveSlip;
 
   // ======================== INIT ========================
   setModo(3);
@@ -3544,6 +3680,7 @@
   setLayoutMode(layoutMode);
   sincronizarValoresAjustesUI();
   actualizarEstadoLockUI();
+  renderStep5LiveSlip();
 
 })();
 </script>
