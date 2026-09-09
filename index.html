@@ -183,18 +183,18 @@
 <!-- ================================================================= -->
 <!-- HEADER GLOBAL SUPERIOR CON SELECTOR DE MODO DE PANTALLA           -->
 <!-- ================================================================= -->
-<header class="w-full bg-slate-900/95 border-b border-slate-800 sticky top-0 z-50 backdrop-blur px-3 sm:px-5 py-2.5 shadow-xl">
-  <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-3">
+<header class="w-full bg-slate-900/95 border-b border-slate-800 sticky top-0 z-50 backdrop-blur px-2.5 sm:px-5 py-2 sm:py-2.5 shadow-xl">
+  <div class="max-w-[1920px] mx-auto flex items-center justify-between gap-2 sm:gap-3">
     
     <!-- Logo e Identidad Municipal -->
-    <div class="flex items-center gap-3">
-      <img src="logo/sin_fondo.png" alt="Escudo de Canas" class="w-10 h-10 object-contain filter drop-shadow">
-      <div>
-        <div class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span class="text-[10px] font-black tracking-widest text-sky-400 uppercase">MUNICIPALIDAD PROVINCIAL DE CANAS - YANAOCA</span>
+    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+      <img src="logo/sin_fondo.png" alt="Escudo de Canas" class="w-8 h-8 sm:w-10 sm:h-10 object-contain filter drop-shadow flex-shrink-0">
+      <div class="min-w-0">
+        <div class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+          <span class="text-[8.5px] sm:text-[10px] font-black tracking-wider sm:tracking-widest text-sky-400 uppercase truncate">MUNICIPALIDAD DE CANAS - YANAOCA</span>
         </div>
-        <h1 class="text-sm font-black text-white leading-tight">Generador Oficial de Recibos de Caja</h1>
+        <h1 class="text-xs sm:text-sm font-black text-white leading-tight truncate">Generador de Recibos de Caja</h1>
       </div>
     </div>
 
@@ -211,15 +211,15 @@
     </div>
 
     <!-- Acción Rápida y Ajustes -->
-    <div class="flex items-center gap-2">
-      <button type="button" onclick="abrirModalAjustes()" class="py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs rounded-xl border border-slate-700 shadow transition flex items-center gap-1.5 cursor-pointer" title="Calibración fina de medidas y tamaños de texto">
-        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-        <span>Ajustes</span>
+    <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+      <button type="button" onclick="abrirModalAjustes()" class="py-1.5 sm:py-2 px-2.5 sm:px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs rounded-xl border border-slate-700 shadow transition flex items-center gap-1 sm:gap-1.5 cursor-pointer" title="Calibración fina de medidas y tamaños de texto">
+        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        <span class="hidden xs:inline sm:inline">Ajustes</span>
       </button>
 
-      <button type="button" id="btn-header-preview" onclick="irAVistaPrevia()" class="py-2 px-3.5 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5 cursor-pointer">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="2"></path></svg>
-        <span>Ver Vista Previa</span>
+      <button type="button" id="btn-header-preview" onclick="irAVistaPrevia()" class="py-1.5 sm:py-2 px-2.5 sm:px-3.5 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1 sm:gap-1.5 cursor-pointer">
+        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="2"></path></svg>
+        <span>Vista Previa</span>
       </button>
     </div>
 
@@ -229,7 +229,7 @@
 <!-- ================================================================= -->
 <!-- CONTENEDOR PRINCIPAL (#main-container)                            -->
 <!-- ================================================================= -->
-<main id="main-container" class="w-full max-w-[1260px] mx-auto p-4 sm:p-6 flex flex-col gap-5">
+<main id="main-container" class="w-full max-w-[1260px] mx-auto p-2.5 sm:p-4 md:p-6 flex flex-col gap-4 sm:gap-5">
 
   <!-- ======================== PANEL FORMULARIO (#view-form) ======================== -->
   <div id="view-form" class="w-full flex flex-col gap-5">
@@ -348,29 +348,29 @@
         </div>
 
         <!-- Fecha -->
-        <div class="flex items-center justify-between gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
+        <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 p-3 bg-slate-50 rounded-xl border border-slate-200">
           <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-800">
             <input type="checkbox" id="chk-fecha" onchange="onChkFechaChange()" checked class="w-4 h-4 text-sky-600 rounded">
             <span>Imprimir Fecha:</span>
           </label>
-          <div id="box-fecha-input" class="flex items-center gap-2">
-            <input id="f-fecha-global" type="text" oninput="triggerLivePreview()" class="w-36 px-3 py-1.5 border border-slate-300 rounded-lg font-receipt font-bold text-xs text-slate-900 focus:ring-2 focus:ring-sky-500 outline-none" value="01/09/2026" placeholder="DD/MM/AAAA">
+          <div id="box-fecha-input" class="flex items-center gap-2 w-full sm:w-auto">
+            <input id="f-fecha-global" type="text" oninput="triggerLivePreview()" class="w-full sm:w-36 px-3 py-1.5 border border-slate-300 rounded-lg font-receipt font-bold text-xs text-slate-900 focus:ring-2 focus:ring-sky-500 outline-none" value="01/09/2026" placeholder="DD/MM/AAAA">
           </div>
         </div>
 
         <!-- Opciones visuales -->
-        <div class="grid grid-cols-3 gap-2.5 text-xs">
-          <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer">
-            <input type="checkbox" id="chk-num-recibo" onchange="triggerLivePreview()" checked class="w-4 h-4 text-sky-600 rounded">
-            <span class="font-medium text-slate-800">Nº Recibo</span>
+        <div class="grid grid-cols-3 gap-1.5 sm:gap-2.5 text-xs">
+          <label class="flex items-center gap-1.5 sm:gap-2 p-2 sm:p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer text-[11px] sm:text-xs">
+            <input type="checkbox" id="chk-num-recibo" onchange="triggerLivePreview()" checked class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-600 rounded flex-shrink-0">
+            <span class="font-medium text-slate-800 truncate">Nº Recibo</span>
           </label>
-          <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer">
-            <input type="checkbox" id="chk-filigrana" onchange="triggerLivePreview()" checked class="w-4 h-4 text-sky-600 rounded">
-            <span class="font-medium text-slate-800">Filigrana</span>
+          <label class="flex items-center gap-1.5 sm:gap-2 p-2 sm:p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer text-[11px] sm:text-xs">
+            <input type="checkbox" id="chk-filigrana" onchange="triggerLivePreview()" checked class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-600 rounded flex-shrink-0">
+            <span class="font-medium text-slate-800 truncate">Filigrana</span>
           </label>
-          <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer">
-            <input type="checkbox" id="chk-escudo" onchange="triggerLivePreview()" checked class="w-4 h-4 text-sky-600 rounded">
-            <span class="font-medium text-slate-800">Escudo agua</span>
+          <label class="flex items-center gap-1.5 sm:gap-2 p-2 sm:p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer text-[11px] sm:text-xs">
+            <input type="checkbox" id="chk-escudo" onchange="triggerLivePreview()" checked class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-600 rounded flex-shrink-0">
+            <span class="font-medium text-slate-800 truncate">Escudo</span>
           </label>
         </div>
       </section>
@@ -378,22 +378,22 @@
     </div>
 
     <!-- ==================== COLUMNA DERECHA: DATOS / RESUMEN EN PARALELO ==================== -->
-    <div class="flex flex-col gap-5">
+    <div class="flex flex-col gap-4 sm:gap-5">
 
       <!-- PASO 5: DATOS POR RECIBO (Modo 3) -->
-      <section id="sec-datos" class="bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 p-4 sm:p-5 space-y-3 hidden">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
-          <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs font-black">5</span>
-            <h2 class="text-sm font-black text-slate-900 uppercase">Datos · <span id="lbl-recibo-editando" class="text-sky-700">Nº 098466</span></h2>
+      <section id="sec-datos" class="bg-white text-slate-900 rounded-2xl shadow-xl border border-slate-200 p-3.5 sm:p-5 space-y-3 hidden">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs font-black flex-shrink-0">5</span>
+            <h2 class="text-xs sm:text-sm font-black text-slate-900 uppercase truncate">Datos · <span id="lbl-recibo-editando" class="text-sky-700">Nº 098466</span></h2>
           </div>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 flex-shrink-0">
             <span id="badge-sincronizado" class="hidden text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-md">
               Sincronizado
             </span>
-            <button type="button" onclick="abrirModalCompartir()" class="flex items-center gap-1.5 text-xs font-bold text-sky-900 bg-sky-50 hover:bg-sky-100 px-2.5 py-1.5 rounded-lg border border-sky-300 transition shadow-xs cursor-pointer">
-              <svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
-              <span>Replicar / Compartir</span>
+            <button type="button" onclick="abrirModalCompartir()" class="flex items-center gap-1 text-xs font-bold text-sky-900 bg-sky-50 hover:bg-sky-100 px-2 sm:px-2.5 py-1.5 rounded-lg border border-sky-300 transition shadow-xs cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-sky-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+              <span>Replicar</span>
             </button>
           </div>
         </div>
@@ -401,14 +401,14 @@
         <!-- Leyenda de estado y selector de recibos -->
         <div class="flex items-center justify-between text-[11px] text-slate-500 font-semibold px-0.5">
           <span>Seleccionar recibo a editar:</span>
-          <div class="flex items-center gap-2.5 text-[10px]">
+          <div class="flex items-center gap-2 text-[10px]">
             <span class="flex items-center gap-1 text-emerald-700 font-bold"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Con datos</span>
             <span class="flex items-center gap-1 text-rose-600 font-medium"><span class="w-2 h-2 rounded-full bg-rose-400"></span> Vacío</span>
           </div>
         </div>
 
         <!-- Selector de recibo con colores verde / rojo suave -->
-        <div class="flex items-center gap-1.5 flex-wrap" id="nav-recibos"></div>
+        <div class="flex items-center gap-1.5 flex-wrap max-h-32 overflow-y-auto py-1" id="nav-recibos"></div>
 
         <!-- Campos de entrada -->
         <div class="space-y-2.5">
@@ -426,14 +426,14 @@
           </div>
         </div>
 
-        <!-- Tabla conceptos -->
-        <div class="border border-slate-300 rounded-xl overflow-hidden shadow-2xs">
-          <table class="w-full text-left text-xs">
+        <!-- Tabla conceptos con overflow horizontal suave para móviles -->
+        <div class="border border-slate-300 rounded-xl overflow-x-auto shadow-2xs w-full">
+          <table class="w-full min-w-[320px] text-left text-xs">
             <thead class="bg-slate-100 font-bold border-b border-slate-300 text-slate-800 text-[10px]">
               <tr>
-                <th class="p-2 w-16 text-center">PARTIDA</th>
-                <th class="p-2">DESCRIPCIÓN</th>
-                <th class="p-2 w-28 text-right">IMPORTE (S/)</th>
+                <th class="p-1.5 sm:p-2 w-16 text-center">PARTIDA</th>
+                <th class="p-1.5 sm:p-2">DESCRIPCIÓN</th>
+                <th class="p-1.5 sm:p-2 w-24 sm:w-28 text-right">IMPORTE (S/)</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 text-xs">
@@ -457,12 +457,12 @@
         </div>
 
         <!-- Total y Son -->
-        <div class="bg-sky-50 rounded-xl p-3 border border-sky-200 flex items-center justify-between">
-          <div class="flex-1 min-w-0 pr-3">
+        <div class="bg-sky-50 rounded-xl p-3 border border-sky-200 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
+          <div class="flex-1 min-w-0">
             <span class="text-[10px] font-bold text-sky-900 uppercase block">Son:</span>
             <div id="f-txt-son" class="font-receipt font-bold text-xs text-sky-950 uppercase truncate">VEINTICINCO CON 00/100 SOLES</div>
           </div>
-          <div class="text-right flex-shrink-0">
+          <div class="text-right flex-shrink-0 flex items-center justify-between sm:block border-t sm:border-t-0 border-sky-200 pt-1 sm:pt-0">
             <span class="text-[10px] font-bold text-sky-900 uppercase block">Total</span>
             <div class="text-lg font-black font-receipt text-sky-950">S/ <span id="f-txt-total">25.00</span></div>
           </div>
@@ -691,31 +691,41 @@
 </div>
 
 <!-- ======================== MODAL DE AJUSTES Y CALIBRACIÓN EN PARALELO ======================== -->
-<div id="modal-ajustes" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[999999] items-center justify-center p-2 sm:p-3 select-none">
-  <div class="bg-white text-slate-900 border border-slate-700 w-full max-w-[1580px] h-[95vh] max-h-[95vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-150">
+<div id="modal-ajustes" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[999999] items-center justify-center p-1 sm:p-3 select-none">
+  <div class="bg-white text-slate-900 border border-slate-700 w-full max-w-[1580px] h-[98vh] sm:h-[95vh] max-h-[98vh] sm:max-h-[95vh] rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-150">
     
     <!-- Top Header -->
-    <div class="bg-slate-900 text-white px-4 sm:px-6 py-3 flex items-center justify-between flex-shrink-0 border-b border-slate-800">
-      <div class="flex items-center gap-3">
-        <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
-        <div>
-          <h3 class="text-sm font-black uppercase tracking-wide flex items-center gap-2">
-            <span>Ajustes y Calibrador Visual</span>
-            <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded-full font-bold">Vista Paralela en Vivo 1:1</span>
+    <div class="bg-slate-900 text-white px-3 sm:px-6 py-2 sm:py-3 flex items-center justify-between flex-shrink-0 border-b border-slate-800 gap-2">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+        <div class="min-w-0">
+          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
+            <span class="truncate">Ajustes & Calibrador</span>
+            <span class="text-[9px] sm:text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-1.5 sm:px-2 py-0.5 rounded-full font-bold hidden xs:inline sm:inline">1:1 Vivo</span>
           </h3>
-          <p class="text-[10px] text-slate-400">Edita tamaños, negritas, tipografía y dimensiones con previsualización simultánea y resaltado verde interactivo</p>
+          <p class="text-[9px] sm:text-[10px] text-slate-400 truncate hidden sm:block">Edita tamaños, negritas, tipografía y dimensiones en vivo</p>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <button type="button" onclick="fijarComoPredeterminado()" class="px-3 py-1.5 rounded-lg text-xs font-black bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1.5 cursor-pointer transition" title="Guardar ajustes actuales como el valor predeterminado al restablecer">
-          <span>⭐</span> Guardar como Predeterminado
+      <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+        <button type="button" onclick="fijarComoPredeterminado()" class="px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-black bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1 cursor-pointer transition whitespace-nowrap" title="Guardar ajustes actuales como el valor predeterminado al restablecer">
+          <span>⭐</span> <span class="hidden sm:inline">Guardar </span><span>Predeterminado</span>
         </button>
-        <button type="button" id="btn-toggle-lock" onclick="toggleLockAjustes()" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white">
+        <button type="button" id="btn-toggle-lock" onclick="toggleLockAjustes()" class="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white whitespace-nowrap">
           <span id="lock-icon">🔓</span>
           <span id="lock-text">Desbloqueado</span>
         </button>
-        <button type="button" onclick="cerrarModalAjustes()" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer p-1">✕</button>
+        <button type="button" onclick="cerrarModalAjustes()" class="text-slate-400 hover:text-white text-base sm:text-lg font-bold cursor-pointer p-1">✕</button>
       </div>
+    </div>
+
+    <!-- Barra de Selección de Vista para Móvil / Tablet (< 1024px) -->
+    <div class="flex lg:hidden bg-slate-900 border-b border-slate-800 p-1.5 gap-1.5 flex-shrink-0">
+      <button type="button" id="btn-modal-view-controls" onclick="setModalMobileView('controls')" class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-black bg-sky-600 text-white flex items-center justify-center gap-1.5 shadow transition">
+        <span>⚙️</span> <span>Controles</span>
+      </button>
+      <button type="button" id="btn-modal-view-preview" onclick="setModalMobileView('preview')" class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center gap-1.5 transition">
+        <span>👁️</span> <span>Ver Recibo 1:1</span>
+      </button>
     </div>
 
     <!-- Body: 2 Columns Side-by-Side (Desktop / Tablet) -->
@@ -724,21 +734,27 @@
       <!-- Columna Izquierda: Panel de Controles Amplio y Estructurado -->
       <div class="w-full lg:w-[640px] xl:w-[710px] 2xl:w-[760px] flex-shrink-0 flex flex-col bg-slate-50 border-r border-slate-200 overflow-hidden" id="ajustes-inputs-container">
         
+        <!-- Banner de Advertencia de Modo Bloqueado -->
+        <div id="banner-ajustes-locked" class="hidden mx-3 mt-2.5 p-2.5 bg-amber-500/15 border border-amber-500/40 rounded-xl text-amber-900 text-xs flex items-center gap-2 flex-shrink-0">
+          <span class="text-base">🔒</span>
+          <span class="font-medium text-[11px] leading-tight"><strong>Ajustes Bloqueados:</strong> Los controles están protegidos. Haz clic en el botón <strong>"Bloqueado"</strong> arriba para editarlos.</span>
+        </div>
+
         <!-- Pestañas Superiores (3 Pestañas Claras) -->
         <div class="flex items-center border-b border-slate-200 bg-white px-2 pt-2 gap-1 flex-shrink-0 overflow-x-auto">
-          <button type="button" id="tab-btn-tipografia" onclick="setAjustesTab('tipografia')" class="ajustes-tab-btn px-3 py-1.5 font-black text-xs rounded-t-lg border-b-2 border-sky-600 text-sky-600 flex items-center gap-1.5 transition cursor-pointer bg-sky-50/50 whitespace-nowrap">
-            <span>🎨</span> Tipografía & Tamaños
+          <button type="button" id="tab-btn-tipografia" onclick="setAjustesTab('tipografia')" class="ajustes-tab-btn px-2.5 sm:px-3 py-1.5 font-black text-xs rounded-t-lg border-b-2 border-sky-600 text-sky-600 flex items-center gap-1 transition cursor-pointer bg-sky-50/50 whitespace-nowrap">
+            <span>🎨</span> <span>Tipografía & Tamaños</span>
           </button>
-          <button type="button" id="tab-btn-medidas" onclick="setAjustesTab('medidas')" class="ajustes-tab-btn px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition cursor-pointer whitespace-nowrap">
-            <span>📏</span> Medidas & Espacios
+          <button type="button" id="tab-btn-medidas" onclick="setAjustesTab('medidas')" class="ajustes-tab-btn px-2.5 sm:px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1 transition cursor-pointer whitespace-nowrap">
+            <span>📏</span> <span>Medidas & Espacios</span>
           </button>
-          <button type="button" id="tab-btn-logos" onclick="setAjustesTab('logos')" class="ajustes-tab-btn px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition cursor-pointer whitespace-nowrap">
-            <span>🖼️</span> Logo & Filigrana
+          <button type="button" id="tab-btn-logos" onclick="setAjustesTab('logos')" class="ajustes-tab-btn px-2.5 sm:px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1 transition cursor-pointer whitespace-nowrap">
+            <span>🖼️</span> <span>Logo & Filigrana</span>
           </button>
         </div>
 
         <!-- Contenido de las pestañas scrolleable -->
-        <div class="flex-1 overflow-y-auto p-3.5 space-y-3 text-xs">
+        <div class="flex-1 overflow-y-auto p-2.5 sm:p-3.5 space-y-3 text-xs">
           
           <!-- TAB 1: Tipografía & Tamaños (7 Grupos Unificados con Steppers - / +) -->
           <div id="tab-content-tipografia" class="space-y-2.5">
@@ -1245,32 +1261,30 @@
       </div>
 
       <!-- Columna Derecha: Vista Previa Paralela de 1 Solo Recibo en Grande -->
-      <div class="flex-1 bg-slate-950 flex flex-col overflow-hidden relative">
+      <div id="ajustes-preview-side" class="hidden lg:flex flex-1 bg-slate-950 flex-col overflow-hidden relative">
         
         <!-- Mini barra de estado y zoom del slip individual -->
-        <div class="bg-slate-900/95 px-4 py-2 flex items-center justify-between border-b border-slate-800 text-xs text-slate-300 flex-shrink-0">
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-white flex items-center gap-1.5">
-              <span>📄</span> Recibo Individual (10.6 × 10.2 cm)
+        <div class="bg-slate-900/95 px-3 sm:px-4 py-2 flex items-center justify-between border-b border-slate-800 text-xs text-slate-300 flex-shrink-0 gap-2">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="font-bold text-white flex items-center gap-1.5 truncate">
+              <span>📄</span> <span class="hidden sm:inline">Recibo Individual </span><span>(10.6 × 10.2 cm)</span>
             </span>
-            <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded border border-slate-700 hidden sm:inline">Caja útil 9.0 × 9.2 cm</span>
-            <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 bg-emerald-950/50 border border-emerald-800/60 px-2 py-0.5 rounded-full">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> En Tiempo Real
+            <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 bg-emerald-950/50 border border-emerald-800/60 px-2 py-0.5 rounded-full flex-shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> <span>En Vivo</span>
             </span>
           </div>
           
-          <div class="flex items-center gap-1.5">
-            <span class="text-[10px] font-bold text-slate-400 uppercase hidden sm:inline">Zoom:</span>
-            <button type="button" onclick="setZoomSlipAjustes(-0.15)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold text-xs cursor-pointer transition" title="Alejar">➖</button>
-            <span id="ajustes-zoom-val" class="font-receipt font-bold text-xs text-amber-300 w-14 text-center bg-slate-950 px-1 py-1 rounded-lg border border-slate-800">165%</span>
-            <button type="button" onclick="setZoomSlipAjustes(0.15)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold text-xs cursor-pointer transition" title="Acercar">➕</button>
-            <button type="button" onclick="autoAjustarZoomSlip()" class="px-2.5 py-1 bg-sky-700 hover:bg-sky-600 text-white text-xs font-bold rounded-lg cursor-pointer transition flex items-center gap-1" title="Ajustar automáticamente al tamaño de la pantalla">📐 Auto-Ajustar</button>
-            <button type="button" onclick="setZoomSlipAjustes(0)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded-lg cursor-pointer transition" title="Restablecer zoom a 100%">Reset</button>
+          <div class="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
+            <button type="button" onclick="setZoomSlipAjustes(-0.15)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold text-xs cursor-pointer transition" title="Alejar">➖</button>
+            <span id="ajustes-zoom-val" class="font-receipt font-bold text-[11px] sm:text-xs text-amber-300 w-12 sm:w-14 text-center bg-slate-950 px-1 py-1 rounded-lg border border-slate-800">165%</span>
+            <button type="button" onclick="setZoomSlipAjustes(0.15)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold text-xs cursor-pointer transition" title="Acercar">➕</button>
+            <button type="button" onclick="autoAjustarZoomSlip()" class="px-2 sm:px-2.5 py-1 bg-sky-700 hover:bg-sky-600 text-white text-[11px] sm:text-xs font-bold rounded-lg cursor-pointer transition flex items-center gap-1" title="Ajustar automáticamente al tamaño de la pantalla">📐 Auto</button>
+            <button type="button" onclick="setZoomSlipAjustes(0)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] sm:text-xs rounded-lg cursor-pointer transition" title="Restablecer zoom a 100%">1:1</button>
           </div>
         </div>
 
         <!-- Canvas de previsualización centrado -->
-        <div id="ajustes-live-slip-wrapper" class="flex-1 overflow-auto flex items-center justify-center p-6 sm:p-10 select-none bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]">
+        <div id="ajustes-live-slip-wrapper" class="flex-1 overflow-auto flex items-center justify-center p-3 sm:p-8 select-none bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]">
           <div id="ajustes-single-slip-wrapper" style="transform: scale(1.65); transform-origin: center center; transition: transform 0.15s ease; flex-shrink: 0;">
             <div id="ajustes-live-slip-container">
               <!-- Renderizado dinámico de 1 slip grande -->
@@ -1283,25 +1297,22 @@
     </div>
 
     <!-- Footer Modal -->
-    <div class="bg-slate-100 px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 flex-shrink-0">
-      <div class="flex items-center gap-2">
-        <button type="button" onclick="fijarComoPredeterminado()" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-xl shadow-xs transition cursor-pointer text-xs flex items-center gap-1.5" title="Guardar esta configuración para que sea la predeterminada al restablecer">
-          <span>⭐</span> Guardar como Predeterminado
+    <div class="bg-slate-100 px-3 sm:px-6 py-2 sm:py-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 flex-shrink-0">
+      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+        <button type="button" onclick="fijarComoPredeterminado()" class="px-2.5 sm:px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-xl shadow-xs transition cursor-pointer text-xs flex items-center gap-1" title="Guardar esta configuración para que sea la predeterminada al restablecer">
+          <span>⭐</span> <span class="hidden sm:inline">Guardar </span><span>Predeterminado</span>
         </button>
-        <button type="button" onclick="restablecerAjustesPredeterminados()" class="px-3 py-1.5 bg-white hover:bg-slate-200 text-slate-800 font-bold rounded-xl border border-slate-300 transition cursor-pointer text-xs flex items-center gap-1" title="Restablecer a tu configuración predeterminada guardada">
-          <span>↺</span> Restablecer Predeterminado
+        <button type="button" onclick="restablecerAjustesPredeterminados()" class="px-2.5 sm:px-3 py-1.5 bg-white hover:bg-slate-200 text-slate-800 font-bold rounded-xl border border-slate-300 transition cursor-pointer text-xs flex items-center gap-1" title="Restablecer a tu configuración predeterminada guardada">
+          <span>↺</span> <span>Restablecer</span>
         </button>
-        <button type="button" onclick="restablecerAjustesFabrica()" class="px-2.5 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-600 font-semibold rounded-xl transition cursor-pointer text-xs flex items-center gap-1" title="Restablecer a los valores originales de fábrica">
-          <span>🏭</span> Fábrica
+        <button type="button" onclick="restablecerAjustesFabrica()" class="px-2 sm:px-2.5 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-600 font-semibold rounded-xl transition cursor-pointer text-xs flex items-center gap-1" title="Restablecer a los valores originales de fábrica">
+          <span>🏭</span> <span class="hidden xs:inline sm:inline">Fábrica</span>
         </button>
       </div>
 
-      <div class="flex items-center gap-3">
-        <span id="notif-ajustes-feedback" class="hidden text-xs font-bold text-emerald-700 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-lg"></span>
-        <span class="text-[11px] text-slate-500 hidden sm:inline flex items-center gap-1">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Resaltado verde al editar
-        </span>
-        <button type="button" onclick="cerrarModalAjustes()" class="px-5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white font-black rounded-xl shadow transition cursor-pointer text-xs">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <span id="notif-ajustes-feedback" class="hidden text-[11px] sm:text-xs font-bold text-emerald-700 bg-emerald-100 border border-emerald-300 px-2 py-0.5 sm:py-1 rounded-lg"></span>
+        <button type="button" onclick="cerrarModalAjustes()" class="px-4 sm:px-5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white font-black rounded-xl shadow transition cursor-pointer text-xs">
           Listo / Aplicar
         </button>
       </div>
@@ -1467,6 +1478,7 @@
     try {
       localStorage.setItem('recibo_mc_ajustes_custom_default', JSON.stringify(ajustes));
       localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
+      localStorage.setItem('recibo_mc_ajustes_locked', String(ajustesLocked));
       mostrarNotificacionAjustes("⭐ ¡Ajustes guardados como PREDETERMINADO!");
     } catch(e) {
       alert("No se pudo guardar como predeterminado: " + e.message);
@@ -1656,7 +1668,7 @@
     if (delta === 0) {
       zoomSlipAjustes = 1.0;
     } else {
-      zoomSlipAjustes = Math.max(0.8, Math.min(2.8, parseFloat((zoomSlipAjustes + delta).toFixed(2))));
+      zoomSlipAjustes = Math.max(0.4, Math.min(2.8, parseFloat((zoomSlipAjustes + delta).toFixed(2))));
     }
     applyZoomSlipUI();
   }
@@ -1664,13 +1676,13 @@
   function autoAjustarZoomSlip() {
     const wrapper = document.getElementById('ajustes-live-slip-wrapper');
     if (!wrapper) return;
-    const w = wrapper.clientWidth - 40;
-    const h = wrapper.clientHeight - 40;
+    const w = wrapper.clientWidth - 24;
+    const h = wrapper.clientHeight - 24;
     const baseW = 106 * (96 / 25.4);
     const baseH = 102 * (96 / 25.4);
-    if (w > 100 && h > 100) {
+    if (w > 50 && h > 50) {
       let ideal = Math.min(w / baseW, h / baseH) * 0.96;
-      ideal = Math.max(0.9, Math.min(2.6, Math.floor(ideal * 20) / 20));
+      ideal = Math.max(0.40, Math.min(2.6, Math.floor(ideal * 20) / 20));
       zoomSlipAjustes = ideal;
       applyZoomSlipUI();
     }
@@ -1690,16 +1702,53 @@
       const content = document.getElementById('tab-content-' + t);
       if (t === tabId) {
         if (btn) {
-          btn.className = "ajustes-tab-btn px-3 py-1.5 font-black text-xs rounded-t-lg border-b-2 border-sky-600 text-sky-600 flex items-center gap-1.5 transition cursor-pointer bg-sky-50/50 whitespace-nowrap";
+          btn.className = "ajustes-tab-btn px-2.5 sm:px-3 py-1.5 font-black text-xs rounded-t-lg border-b-2 border-sky-600 text-sky-600 flex items-center gap-1 transition cursor-pointer bg-sky-50/50 whitespace-nowrap";
         }
         if (content) content.classList.remove('hidden');
       } else {
         if (btn) {
-          btn.className = "ajustes-tab-btn px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition cursor-pointer whitespace-nowrap";
+          btn.className = "ajustes-tab-btn px-2.5 sm:px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1 transition cursor-pointer whitespace-nowrap";
         }
         if (content) content.classList.add('hidden');
       }
     });
+    actualizarEstadoLockUI();
+  }
+
+  let currentModalMobileView = 'controls';
+  function setModalMobileView(view) {
+    currentModalMobileView = view;
+    const btnCtrl = document.getElementById('btn-modal-view-controls');
+    const btnPrev = document.getElementById('btn-modal-view-preview');
+    const colCtrl = document.getElementById('ajustes-inputs-container');
+    const colPrev = document.getElementById('ajustes-preview-side');
+
+    if (view === 'controls') {
+      if (btnCtrl) btnCtrl.className = "flex-1 py-1.5 px-2.5 rounded-lg text-xs font-black bg-sky-600 text-white flex items-center justify-center gap-1.5 shadow transition";
+      if (btnPrev) btnPrev.className = "flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center gap-1.5 transition";
+      if (colCtrl) {
+        colCtrl.classList.remove('hidden');
+        colCtrl.classList.add('flex');
+      }
+      if (colPrev) {
+        colPrev.classList.add('hidden');
+        colPrev.classList.remove('flex');
+      }
+    } else {
+      if (btnCtrl) btnCtrl.className = "flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center gap-1.5 transition";
+      if (btnPrev) btnPrev.className = "flex-1 py-1.5 px-2.5 rounded-lg text-xs font-black bg-sky-600 text-white flex items-center justify-center gap-1.5 shadow transition";
+      if (colCtrl) {
+        colCtrl.classList.add('hidden');
+        colCtrl.classList.remove('flex');
+      }
+      if (colPrev) {
+        colPrev.classList.remove('hidden');
+        colPrev.classList.add('flex');
+      }
+      setTimeout(() => {
+        autoAjustarZoomSlip();
+      }, 60);
+    }
   }
 
   function onAjusteInput(key, val) {
@@ -1801,26 +1850,34 @@
     const icon = document.getElementById('lock-icon');
     const text = document.getElementById('lock-text');
     const container = document.getElementById('ajustes-inputs-container');
+    const banner = document.getElementById('banner-ajustes-locked');
 
     if (btn && icon && text) {
       if (ajustesLocked) {
-        btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold border flex items-center gap-1.5 cursor-pointer transition bg-amber-500/20 border-amber-500 text-amber-300 hover:bg-amber-500/30";
+        btn.className = "px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-amber-500/20 border-amber-500 text-amber-300 hover:bg-amber-500/30 whitespace-nowrap";
         icon.textContent = "🔒";
         text.textContent = "Bloqueado";
       } else {
-        btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold border flex items-center gap-1.5 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white";
+        btn.className = "px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white whitespace-nowrap";
         icon.textContent = "🔓";
         text.textContent = "Desbloqueado";
       }
     }
+    if (banner) {
+      if (ajustesLocked) {
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
     if (container) {
-      const inputs = container.querySelectorAll('input, select, button[id^="btn-bold-"], button[onclick^="restablecerGrupo"], button[onclick^="stepAjuste"]');
+      const inputs = container.querySelectorAll('input, select, button[id^="btn-bold-"], button[onclick*="restablecerGrupo"], button[onclick*="stepAjuste"], button[onclick*="setAjusteDirecto"]');
       inputs.forEach(inp => {
         inp.disabled = ajustesLocked;
         if (ajustesLocked) {
-          inp.classList.add('opacity-50', 'cursor-not-allowed');
+          inp.classList.add('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
         } else {
-          inp.classList.remove('opacity-50', 'cursor-not-allowed');
+          inp.classList.remove('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
         }
       });
     }
@@ -1931,9 +1988,17 @@
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     }
-    setTimeout(() => {
-      autoAjustarZoomSlip();
-    }, 60);
+    if (window.innerWidth < 1024) {
+      setModalMobileView('controls');
+    } else {
+      const colCtrl = document.getElementById('ajustes-inputs-container');
+      const colPrev = document.getElementById('ajustes-preview-side');
+      if (colCtrl) { colCtrl.classList.remove('hidden'); colCtrl.classList.add('flex'); }
+      if (colPrev) { colPrev.classList.remove('hidden'); colPrev.classList.add('flex'); }
+      setTimeout(() => {
+        autoAjustarZoomSlip();
+      }, 60);
+    }
   }
 
   function cerrarModalAjustes() {
@@ -3447,6 +3512,7 @@
   window.toggleLockAjustes = toggleLockAjustes;
   window.restablecerAjustesFabrica = restablecerAjustesFabrica;
   window.setAjustesTab = setAjustesTab;
+  window.setModalMobileView = setModalMobileView;
   window.toggleAjusteBold = toggleAjusteBold;
   window.onAjusteFontFamily = onAjusteFontFamily;
   window.setZoomSlipAjustes = setZoomSlipAjustes;
