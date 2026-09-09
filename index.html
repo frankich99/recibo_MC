@@ -26,12 +26,12 @@
   }
 
   :root {
-    --strip-width: 216mm;
-    --slip-width: 108mm;
+    --strip-width: 215mm;
+    --slip-width: 107.5mm;
     --strip-height: 102mm;
     --content-box-width: 90mm;
     --content-box-height: 92mm;
-    --page-width: 216mm;
+    --page-width: 215mm;
   }
 
   body {
@@ -119,11 +119,11 @@
     background: transparent;
   }
   .pane-left {
-    padding: 5mm 9mm 5mm 7mm;
+    padding: 5mm 8.75mm 5mm 8.75mm;
     border-right: 1.5px dashed #94a3b8;
   }
   .pane-right {
-    padding: 5mm 7mm 5mm 9mm;
+    padding: 5mm 8.75mm 5mm 8.75mm;
   }
 
   .inner-box-9cm {
@@ -199,7 +199,7 @@
         </div>
         <div class="flex items-center gap-2">
           <h1 class="text-xs sm:text-sm font-black text-white leading-tight truncate">Generador de Recibos de Caja</h1>
-          <span class="text-[9px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">v2.7 (Oficio 21.6×33cm · Tira 21.6×10.2cm)</span>
+          <span class="text-[9px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">v2.8 (Oficio 21.5×33cm · Tira 21.5×10.2cm)</span>
         </div>
       </div>
     </div>
@@ -287,13 +287,13 @@
             <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs font-black">2</span>
             <h2 class="text-sm font-black text-slate-900 uppercase">Formato de Hoja (Papel)</h2>
           </div>
-          <span id="badge-tipo-hoja" class="text-[10px] font-black bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded">Oficio: 21.6 × 33.0 cm</span>
+          <span id="badge-tipo-hoja" class="text-[10px] font-black bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded">Oficio: 21.5 × 33.0 cm</span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
           <button type="button" id="btn-papel-oficio" onclick="setTipoHoja('oficio')" class="papel-btn p-2.5 rounded-xl border-2 text-left transition border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-400/30 cursor-pointer">
             <span class="block text-[11px] font-black text-indigo-950 uppercase leading-tight truncate">Hoja Oficio</span>
-            <span class="block text-[10px] font-bold text-indigo-800 mt-0.5 whitespace-nowrap">21.6 × 33.0 cm</span>
+            <span class="block text-[10px] font-bold text-indigo-800 mt-0.5 whitespace-nowrap">21.5 × 33.0 cm</span>
             <span class="block text-[8.5px] text-slate-500 mt-1 leading-tight">3 tiras + corte 2.4 cm sobrante</span>
           </button>
 
@@ -305,7 +305,7 @@
 
           <button type="button" id="btn-papel-tira" onclick="setTipoHoja('tira')" class="papel-btn p-2.5 rounded-xl border-2 text-left transition border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer">
             <span class="block text-[11px] font-black text-slate-900 uppercase leading-tight truncate">Tira Suelta</span>
-            <span class="block text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap">21.6 × 10.2 cm</span>
+            <span class="block text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap">21.5 × 10.2 cm</span>
             <span class="block text-[8.5px] text-slate-500 mt-1 leading-tight">1 tira exacta (recibo individual)</span>
           </button>
         </div>
@@ -489,7 +489,7 @@
           </div>
           <div class="flex justify-between items-center py-1 border-b border-slate-200">
             <span class="text-slate-500 font-medium">Formato de hoja:</span>
-            <span id="resumen-papel" class="font-bold text-indigo-700">Hoja Oficio (21.6 × 33.0 cm)</span>
+            <span id="resumen-papel" class="font-bold text-indigo-700">Hoja Oficio (21.5 × 33.0 cm)</span>
           </div>
           <div class="flex justify-between items-center py-1 border-b border-slate-200">
             <span class="text-slate-500 font-medium">Distribución:</span>
@@ -1107,7 +1107,7 @@
               </div>
 
               <!-- 9. Grosor de Líneas y Bordes de Cajetines -->
-              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs col-span-1 sm:col-span-2" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
                 <div class="flex items-center justify-between mb-1">
                   <span class="font-bold text-slate-800 text-[10.5px]">Grosor de Líneas y Bordes:</span>
                   <span id="val-borderWidth" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">1.0 px</span>
@@ -1116,6 +1116,45 @@
                   <button type="button" onclick="stepAjuste('borderWidth', -0.1); highlightPreviewPart('hdr-cajetin');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
                   <input type="range" id="ajuste-borderWidth" min="0.6" max="2.2" step="0.1" oninput="highlightPreviewPart('hdr-cajetin'); onAjusteInput('borderWidth', this.value)" class="flex-1 cursor-pointer">
                   <button type="button" onclick="stepAjuste('borderWidth', 0.1); highlightPreviewPart('hdr-cajetin');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
+              </div>
+
+              <!-- 10. Ancho Marco Recibo (Contenido 9.0 cm) -->
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-slip-box')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-slate-800 text-[10.5px]">Ancho Marco Recibo:</span>
+                  <span id="val-boxWidthMm" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">90.00 mm (9.00 cm)</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('boxWidthMm', -0.5); highlightPreviewPart('grupo-slip-box');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-boxWidthMm" min="80.0" max="100.0" step="0.5" oninput="highlightPreviewPart('grupo-slip-box'); onAjusteInput('boxWidthMm', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('boxWidthMm', 0.5); highlightPreviewPart('grupo-slip-box');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
+              </div>
+
+              <!-- 11. Margen Exterior Lateral de la Tira (Izquierda / Derecha) -->
+              <div class="p-2.5 bg-sky-50/80 rounded-xl border border-sky-300 hover:border-sky-500 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-slip-box')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-black text-sky-950 text-[10.5px]">Margen Lateral Exterior:</span>
+                  <span id="val-margenLateral" class="font-receipt font-black bg-sky-200 px-1.5 py-0.5 rounded text-[10px] text-sky-950">8.75 mm (0.88 cm)</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('margenLateral', -0.25); highlightPreviewPart('grupo-slip-box');" class="w-6 h-6 rounded-md bg-white hover:bg-sky-100 active:bg-sky-200 text-sky-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-sky-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-margenLateral" min="3.0" max="18.0" step="0.25" oninput="highlightPreviewPart('grupo-slip-box'); onAjusteInput('margenLateral', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('margenLateral', 0.25); highlightPreviewPart('grupo-slip-box');" class="w-6 h-6 rounded-md bg-white hover:bg-sky-100 active:bg-sky-200 text-sky-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-sky-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
+              </div>
+
+              <!-- 12. Margen Corte Central (Entre Original y Copia) -->
+              <div class="p-2.5 bg-sky-50/80 rounded-xl border border-sky-300 hover:border-sky-500 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-slip-box')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-black text-sky-950 text-[10.5px]">Margen Corte Central:</span>
+                  <span id="val-margenCorteCentral" class="font-receipt font-black bg-sky-200 px-1.5 py-0.5 rounded text-[10px] text-sky-950">8.75 mm (0.88 cm)</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('margenCorteCentral', -0.25); highlightPreviewPart('grupo-slip-box');" class="w-6 h-6 rounded-md bg-white hover:bg-sky-100 active:bg-sky-200 text-sky-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-sky-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-margenCorteCentral" min="3.0" max="18.0" step="0.25" oninput="highlightPreviewPart('grupo-slip-box'); onAjusteInput('margenCorteCentral', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('margenCorteCentral', 0.25); highlightPreviewPart('grupo-slip-box');" class="w-6 h-6 rounded-md bg-white hover:bg-sky-100 active:bg-sky-200 text-sky-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-sky-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
                 </div>
               </div>
             </div>
@@ -1340,7 +1379,7 @@
 
   // ======================== ESTADO ========================
   let modo = 3;            // 1=blanco, 2=solo correlativo, 3=con datos
-  let tipoHoja = "oficio"; // "oficio" (216x330mm), "a4" (210x297mm), "tira" (216x102mm)
+  let tipoHoja = "oficio"; // "oficio" (215x330mm), "a4" (210x297mm), "tira" (215x102mm)
   let serieDesde = 98466;
   let serieHasta = 98468;
   let fechaGlobal = "01/09/2026";
@@ -1437,6 +1476,9 @@
     wBoxNumFecha: 41.0,   // 41.0 mm ancho cajetín
     hHeader: 16.0,        // 16.0 mm alto encabezado
     borderWidth: 1.0,     // px espesor bordes
+    margenLateral: 8.75,      // mm margen lateral exterior (simetría perfecta con la derecha)
+    margenCorteCentral: 8.75, // mm margen de corte central entre original y copia
+    boxWidthMm: 90.0,         // mm ancho de marco del recibo
 
     // Controles de Logo MC (logo/mc.png)
     logoSize: 15.0,       // mm
@@ -1579,6 +1621,15 @@
       if (parsed.gapCampos === undefined) {
         parsed.gapCampos = 2.0;
       }
+      if (parsed.margenLateral === undefined) {
+        parsed.margenLateral = baseDefaults.margenLateral || 8.75;
+      }
+      if (parsed.margenCorteCentral === undefined) {
+        parsed.margenCorteCentral = baseDefaults.margenCorteCentral || 8.75;
+      }
+      if (parsed.boxWidthMm === undefined) {
+        parsed.boxWidthMm = baseDefaults.boxWidthMm || 90.0;
+      }
       ajustes = { ...baseDefaults, ...parsed };
     }
   } catch(e) {
@@ -1681,7 +1732,7 @@
     if (!wrapper) return;
     const w = wrapper.clientWidth - 24;
     const h = wrapper.clientHeight - 24;
-    const baseW = 108 * (96 / 25.4);
+    const baseW = 107.5 * (96 / 25.4);
     const baseH = 102 * (96 / 25.4);
     if (w > 50 && h > 50) {
       let ideal = Math.min(w / baseW, h / baseH) * 0.96;
@@ -1769,6 +1820,9 @@
         lbl.textContent = `${Math.round(num * 100)}%`;
       } else if (key === 'borderWidth') {
         lbl.textContent = `${num.toFixed(1)} px`;
+      } else if (key.startsWith('margen') || key.startsWith('boxWidth')) {
+        const cm = (num / 10).toFixed(2);
+        lbl.textContent = `${num.toFixed(2)} mm (${cm} cm)`;
       } else if (key.startsWith('h') || key.startsWith('w') || key.startsWith('logo') || key.startsWith('escudo') || key.startsWith('gap')) {
         const cm = (num / 10).toFixed(2);
         lbl.textContent = `${num.toFixed(1)} mm (${cm} cm)`;
@@ -1943,6 +1997,9 @@
       ajustes.wBoxNumFecha = def.wBoxNumFecha;
       ajustes.hHeader = def.hHeader;
       ajustes.borderWidth = def.borderWidth;
+      ajustes.margenLateral = def.margenLateral !== undefined ? def.margenLateral : 8.75;
+      ajustes.margenCorteCentral = def.margenCorteCentral !== undefined ? def.margenCorteCentral : 8.75;
+      ajustes.boxWidthMm = def.boxWidthMm !== undefined ? def.boxWidthMm : 90.0;
     } else if (grupo === 'logos') {
       ajustes.logoSize = def.logoSize;
       ajustes.logoOffsetX = def.logoOffsetX;
@@ -2023,6 +2080,9 @@
           lbl.textContent = `${Math.round(val * 100)}%`;
         } else if (key === 'borderWidth') {
           lbl.textContent = `${Number(val).toFixed(1)} px`;
+        } else if (key.startsWith('margen') || key.startsWith('boxWidth')) {
+          const cm = (val / 10).toFixed(2);
+          lbl.textContent = `${Number(val).toFixed(2)} mm (${cm} cm)`;
         } else if (key.startsWith('h') || key.startsWith('w') || key.startsWith('logo') || key.startsWith('escudo') || key.startsWith('gap')) {
           const cm = (val / 10).toFixed(2);
           lbl.textContent = `${Number(val).toFixed(1)} mm (${cm} cm)`;
@@ -2046,13 +2106,13 @@
 
   function getPageDimensions(tirasEnPag) {
     // Medidas físicas exactas:
-    // Tira base: 21.6 cm × 10.2 cm (216 × 102 mm)
-    // Slip: 10.8 cm (108 mm) mitad exacta
+    // Tira base: 21.5 cm × 10.2 cm (215 × 102 mm)
+    // Slip: 10.75 cm (107.5 mm) mitad exacta
     // Caja contenido: 9.0 cm × 9.2 cm (90 × 92 mm)
-    const STRIP_W   = 216;   // mm - ancho físico real de la tira (21.6 cm)
+    const STRIP_W   = 215;   // mm - ancho físico real de la tira (21.5 cm)
     const STRIP_H   = 102;   // mm - alto exacto 1 tira (10.2 cm)
-    const SLIP_W    = 108;   // mm - mitad exacta (10.8 cm)
-    const BOX_W     = "90mm";
+    const SLIP_W    = 107.5; // mm - mitad exacta (10.75 cm)
+    const BOX_W     = (ajustes && ajustes.boxWidthMm) ? `${ajustes.boxWidthMm}mm` : "90mm";
     const BOX_H     = "92mm";
     const STRIP_H_S = "102mm";
 
@@ -2086,9 +2146,9 @@
         nombreCorto: "Tira"
       };
     } else { // "oficio" default
-      const pageW = 216; // 21.6 cm (estándar latinoamérica 21.5 - 21.6 cm)
+      const pageW = 215; // 21.5 cm
       const pageH = 330; // 33.0 cm
-      const slipW = 108; // 10.8 cm (mitad exacta)
+      const slipW = 107.5; // 10.75 cm (mitad exacta)
       return {
         widthMm: pageW,
         heightMm: pageH,
@@ -2244,16 +2304,16 @@
     const rDistrib = document.getElementById('resumen-distrib');
 
     if (th === 'oficio') {
-      if (badge) badge.textContent = "Oficio: 21.6 × 33.0 cm";
-      if (rPapel) rPapel.textContent = "Hoja Oficio (21.6 × 33.0 cm)";
+      if (badge) badge.textContent = "Oficio: 21.5 × 33.0 cm";
+      if (rPapel) rPapel.textContent = "Hoja Oficio (21.5 × 33.0 cm)";
       if (rDistrib) rDistrib.textContent = "3 tiras de 10.2 cm + 2.4 cm corte";
     } else if (th === 'a4') {
       if (badge) badge.textContent = "A4: 21.0 × 29.7 cm";
       if (rPapel) rPapel.textContent = "A4 Estándar (21.0 × 29.7 cm)";
       if (rDistrib) rDistrib.textContent = "2 tiras de 10.2 cm + 9.3 cm corte";
     } else if (th === 'tira') {
-      if (badge) badge.textContent = "Tira Suelta: 21.6 × 10.2 cm";
-      if (rPapel) rPapel.textContent = "Tira Individual (21.6 × 10.2 cm)";
+      if (badge) badge.textContent = "Tira Suelta: 21.5 × 10.2 cm";
+      if (rPapel) rPapel.textContent = "Tira Individual (21.5 × 10.2 cm)";
       if (rDistrib) rDistrib.textContent = "1 tira de 10.2 cm exacta al ras";
     }
 
@@ -2581,7 +2641,7 @@
   // ======================== GENERADOR SLIP BOX INDIVIDUAL (FUENTE ÚNICA DE VERDAD) ========================
   function renderSlipContent(params = {}) {
     const a = ajustes;
-    const boxWidth = params.boxWidth || '90mm';
+    const boxWidth = params.boxWidth || ((a && a.boxWidthMm) ? `${a.boxWidthMm}mm` : '90mm');
     const boxHeight = params.boxHeight || '92mm';
     const currentNum = params.currentNum !== undefined ? params.currentNum : '';
     const currentFecha = params.currentFecha !== undefined ? params.currentFecha : '';
@@ -2924,7 +2984,7 @@
     ` : '';
 
     container.innerHTML = `
-      <div class="receipt-pane shadow-2xl rounded-sm receipt-watermark-bg" style="width: 108mm; min-width: 108mm; max-width: 108mm; height: 102mm; min-height: 102mm; max-height: 102mm; padding: 5mm 9mm 5mm 9mm; box-sizing: border-box; position: relative; background: #ffffff; border: 1px solid #cbd5e1; overflow: hidden;">
+      <div class="receipt-pane shadow-2xl rounded-sm receipt-watermark-bg" style="width: 107.5mm; min-width: 107.5mm; max-width: 107.5mm; height: 102mm; min-height: 102mm; max-height: 102mm; padding: 5mm 8.75mm 5mm 8.75mm; box-sizing: border-box; position: relative; background: #ffffff; border: 1px solid #cbd5e1; overflow: hidden;">
         ${watermarkSlipHTML}
         <div style="position: relative; z-index: 10; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
           ${slipInner}
@@ -2951,7 +3011,7 @@
   }
 
   // ======================== GENERADOR HTML TIRA ========================
-  function buildStripHTML(serieNum, forceBlank, stripWidth = '216mm', slipWidth = '108mm', boxWidth = '90mm', boxHeight = '92mm', stripHeight = '102mm') {
+  function buildStripHTML(serieNum, forceBlank, stripWidth = '215mm', slipWidth = '107.5mm', boxWidth = '90mm', boxHeight = '92mm', stripHeight = '102mm') {
     const serieStr = String(serieNum).padStart(6, '0');
     const numStr = String(serieNum).padStart(10, '0');
     const isBlank = (modo === 1 || forceBlank);
@@ -3019,11 +3079,15 @@
     });
 
     const isA4 = (stripWidth === '210mm');
-    let pLeft = 'padding: 5mm 10mm 5mm 8mm;';
-    let pRight = 'padding: 5mm 8mm 5mm 10mm;';
+    const mExt = (ajustes && ajustes.margenLateral !== undefined) ? Number(ajustes.margenLateral) : 8.75;
+    const mCut = (ajustes && ajustes.margenCorteCentral !== undefined) ? Number(ajustes.margenCorteCentral) : 8.75;
+    let pLeft, pRight;
     if (isA4) {
-      pLeft = 'padding: 5mm 8mm 5mm 7mm;';
-      pRight = 'padding: 5mm 7mm 5mm 8mm;';
+      pLeft = 'padding: 5mm 7.5mm 5mm 7.5mm;';
+      pRight = 'padding: 5mm 7.5mm 5mm 7.5mm;';
+    } else {
+      pLeft = `padding: 5mm ${mCut}mm 5mm ${mExt}mm;`;
+      pRight = `padding: 5mm ${mExt}mm 5mm ${mCut}mm;`;
     }
 
     return `
@@ -3318,7 +3382,7 @@
     wrappers.forEach((w) => {
       const page = w.querySelector('.sheet-page');
       if (!page) return;
-      const wMm = parseFloat(w.getAttribute('data-w-mm')) || 216;
+      const wMm = parseFloat(w.getAttribute('data-w-mm')) || 215;
       const hMm = parseFloat(w.getAttribute('data-h-mm')) || 330;
       const wPx = wMm * 96 / 25.4;
       const hPx = hMm * 96 / 25.4;
