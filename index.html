@@ -2290,10 +2290,23 @@
       fitFontSon = Math.max(5.5, +(fontG44 * Math.max(0.72, 42 / sonStr.length)).toFixed(1));
     }
 
-    let fontTotalMonto = fontG44;
-    if (totalStr && totalStr.length >= 10) {
-      fontTotalMonto = Math.max(5.5, +(fontG44 * 0.85).toFixed(1));
+    // Unificar y respetar el tamaño completo configurado (fontG44) para todos los importes
+    // Solo si el monto excede 12 caracteres (ej: montos gigantes >100,000) se reduce proporcionalmente
+    const allImportes = [fmtI1, fmtI2, fmtI3, totalStr].filter(Boolean);
+    let maxImporteLen = 0;
+    allImportes.forEach(s => {
+      const len = String(s).trim().length;
+      if (len > maxImporteLen) maxImporteLen = len;
+    });
+
+    let fSizeImporte = fontG44;
+    if (maxImporteLen > 14) {
+      fSizeImporte = Math.max(5.8, +(fontG44 * 0.82).toFixed(1));
+    } else if (maxImporteLen > 12) {
+      fSizeImporte = Math.max(6.5, +(fontG44 * 0.90).toFixed(1));
     }
+
+    let fontTotalMonto = fSizeImporte;
 
     // Renderizado seguro y sincronizado de filas de la tabla anti-desborde
     const rowP = [valP1, valP2, valP3];
@@ -2318,15 +2331,9 @@
       colDescHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em;">${d}</div>`;
 
       if (rawI) {
-        // Asegurar que S/ y el monto NUNCA se separen en 2 líneas
+        // Asegurar que S/ y el monto NUNCA se separen en 2 líneas con el tamaño completo unificado
         const safeI = rawI.replace(/S\/\s*/g, 'S/&nbsp;');
-        let fSizeI = fontG44;
-        if (rawI.length >= 13) {
-          fSizeI = Math.max(5.2, +(fontG44 * 0.78).toFixed(1));
-        } else if (rawI.length >= 10) {
-          fSizeI = Math.max(5.8, +(fontG44 * 0.88).toFixed(1));
-        }
-        colImporteHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em; font-size: ${fSizeI}px; text-align: right;">${safeI}</div>`;
+        colImporteHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em; font-size: ${fSizeImporte}px; text-align: right;">${safeI}</div>`;
       } else {
         colImporteHTML += `<div style="line-height: 1.25; height: 1.25em;">&nbsp;</div>`;
       }
