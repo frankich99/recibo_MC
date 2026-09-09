@@ -2708,13 +2708,13 @@
 
       rowsHTML += `
         <div style="width: 100%; display: flex; flex-direction: row; align-items: flex-start; box-sizing: border-box; position: relative; z-index: 1; color: #000; font-family: ${ffG44}; margin: 0; padding: 0;">
-          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; display: flex; align-items: flex-start; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0.4mm 0.5mm 0.2mm 0.5mm; line-height: 1.15;">
+          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; display: flex; align-items: flex-start; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0.6mm 0.8mm 0.4mm 0.8mm; line-height: 1.15;">
             ${p || '&nbsp;'}
           </div>
-          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; display: flex; align-items: flex-start; justify-content: flex-start; padding: 0.4mm 1.5mm 0.2mm 1.5mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; white-space: normal; word-break: break-word; line-height: 1.15; box-sizing: border-box;">
+          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; display: flex; align-items: flex-start; justify-content: flex-start; padding: 0.6mm 1.5mm 0.4mm 2.2mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; white-space: normal; word-break: break-word; line-height: 1.15; box-sizing: border-box;">
             ${d || '&nbsp;'}
           </div>
-          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; display: flex; align-items: flex-start; justify-content: flex-end; padding: 0.4mm 1.2mm 0.2mm 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box; line-height: 1.15;">
+          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; display: flex; align-items: flex-start; justify-content: flex-end; padding: 0.6mm 2.2mm 0.4mm 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box; line-height: 1.15;">
             ${safeI || '&nbsp;'}
           </div>
         </div>
@@ -2807,7 +2807,7 @@
           </div>
 
           <!-- Cuerpo de Tabla (${a.hTablaBody}mm de alto) con Escudo Gris de fondo -->
-          <div data-part="grupo-44" class="transition-all" style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; flex-direction: column; justify-content: flex-start; position: relative; box-sizing: border-box; overflow: hidden; font-family: ${ffG44};">
+          <div data-part="grupo-44" class="transition-all" style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; flex-direction: column; justify-content: flex-start; position: relative; box-sizing: border-box; overflow: hidden; font-family: ${ffG44}; padding-top: 1.0mm;">
             ${escudoHTML}
             <!-- Guías verticales continuas de columnas (13mm, 59mm, 18mm) de borde a borde -->
             <div style="position: absolute; inset: 0; display: flex; flex-direction: row; pointer-events: none; z-index: 0; box-sizing: border-box;">
@@ -2821,7 +2821,7 @@
           <!-- Pie de Tabla: Son / TOTAL / Monto (6mm de alto: Son 59mm, TOTAL 13mm, Monto 18mm) -->
           <div class="transition-all text-black relative z-[2]" style="height: 6mm; min-height: 6mm; max-height: 6mm; display: flex; border-top: ${bw} solid #0f172a; align-items: center; background: transparent; box-sizing: border-box;">
             <!-- Son (59mm) -->
-            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 0 1.5mm; display: flex; align-items: center; gap: 1mm; overflow: hidden; box-sizing: border-box; line-height: 1;">
+            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 0 2.2mm; display: flex; align-items: center; gap: 1.2mm; overflow: hidden; box-sizing: border-box; line-height: 1;">
               <span data-part="grupo-2" style="font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; flex-shrink: 0; line-height: 1; white-space: nowrap;">Son:</span>
               <span data-part="grupo-44" style="font-family: ${ffG44}; text-transform: uppercase; font-size: ${fitFontSon}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1;">${sonStr}</span>
             </div>
@@ -2830,7 +2830,7 @@
               TOTAL
             </div>
             <!-- Monto (18mm) -->
-            <div data-part="grupo-44" style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-family: ${ffG44}; font-weight: ${fwG44Val}; font-size: ${fontTotalMonto}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis;">
+            <div data-part="grupo-44" style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 2.2mm; font-family: ${ffG44}; font-weight: ${fwG44Val}; font-size: ${fontTotalMonto}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis;">
               ${totalStr}
             </div>
           </div>
