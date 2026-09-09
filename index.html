@@ -26,12 +26,12 @@
   }
 
   :root {
-    --strip-width: 212mm;
-    --slip-width: 106mm;
+    --strip-width: 216mm;
+    --slip-width: 108mm;
     --strip-height: 102mm;
     --content-box-width: 90mm;
     --content-box-height: 92mm;
-    --page-width: 212mm;
+    --page-width: 216mm;
   }
 
   body {
@@ -199,7 +199,7 @@
         </div>
         <div class="flex items-center gap-2">
           <h1 class="text-xs sm:text-sm font-black text-white leading-tight truncate">Generador de Recibos de Caja</h1>
-          <span class="text-[9px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">v2.6 (Oficio 21.6×33cm)</span>
+          <span class="text-[9px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">v2.7 (Oficio 21.6×33cm · Tira 21.6×10.2cm)</span>
         </div>
       </div>
     </div>
@@ -290,7 +290,7 @@
           <span id="badge-tipo-hoja" class="text-[10px] font-black bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded">Oficio: 21.6 × 33.0 cm</span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
           <button type="button" id="btn-papel-oficio" onclick="setTipoHoja('oficio')" class="papel-btn p-2.5 rounded-xl border-2 text-left transition border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-400/30 cursor-pointer">
             <span class="block text-[11px] font-black text-indigo-950 uppercase leading-tight truncate">Hoja Oficio</span>
             <span class="block text-[10px] font-bold text-indigo-800 mt-0.5 whitespace-nowrap">21.6 × 33.0 cm</span>
@@ -303,15 +303,9 @@
             <span class="block text-[8.5px] text-slate-500 mt-1 leading-tight">2 tiras + corte 9.3 cm sobrante</span>
           </button>
 
-          <button type="button" id="btn-papel-ajustado" onclick="setTipoHoja('ajustado')" class="papel-btn p-2.5 rounded-xl border-2 text-left transition border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer">
-            <span class="block text-[11px] font-black text-slate-900 uppercase leading-tight truncate">Ajustado (3 Tiras)</span>
-            <span class="block text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap">21.2 × 30.6 cm</span>
-            <span class="block text-[8.5px] text-slate-500 mt-1 leading-tight">3 tiras de 10.2 cm al ras (sin corte)</span>
-          </button>
-
           <button type="button" id="btn-papel-tira" onclick="setTipoHoja('tira')" class="papel-btn p-2.5 rounded-xl border-2 text-left transition border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer">
             <span class="block text-[11px] font-black text-slate-900 uppercase leading-tight truncate">Tira Suelta</span>
-            <span class="block text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap">21.2 × 10.2 cm</span>
+            <span class="block text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap">21.6 × 10.2 cm</span>
             <span class="block text-[8.5px] text-slate-500 mt-1 leading-tight">1 tira exacta (recibo individual)</span>
           </button>
         </div>
@@ -495,11 +489,11 @@
           </div>
           <div class="flex justify-between items-center py-1 border-b border-slate-200">
             <span class="text-slate-500 font-medium">Formato de hoja:</span>
-            <span id="resumen-papel" class="font-bold text-indigo-700">Ajustado (21.2 × 30.6 cm)</span>
+            <span id="resumen-papel" class="font-bold text-indigo-700">Hoja Oficio (21.6 × 33.0 cm)</span>
           </div>
           <div class="flex justify-between items-center py-1 border-b border-slate-200">
             <span class="text-slate-500 font-medium">Distribución:</span>
-            <span id="resumen-distrib" class="font-bold text-slate-800">3 tiras de 10.2 cm exactas al ras</span>
+            <span id="resumen-distrib" class="font-bold text-slate-800">3 tiras de 10.2 cm + 2.4 cm corte</span>
           </div>
           <div class="flex justify-between items-center py-1 border-b border-slate-200">
             <span class="text-slate-500 font-medium">Línea de corte:</span>
@@ -581,7 +575,6 @@
           <span class="text-[10px] font-bold text-slate-400 uppercase px-1 hidden md:inline">Papel:</span>
           <button type="button" onclick="setTipoHoja('oficio')" id="preview-papel-oficio" class="preview-papel-btn flex-1 sm:flex-none px-2 sm:px-2.5 py-1 rounded font-bold bg-sky-600 text-white text-[11px] sm:text-xs cursor-pointer transition shadow text-center whitespace-nowrap">Oficio</button>
           <button type="button" onclick="setTipoHoja('a4')" id="preview-papel-a4" class="preview-papel-btn flex-1 sm:flex-none px-2 sm:px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-[11px] sm:text-xs cursor-pointer transition text-center whitespace-nowrap">A4</button>
-          <button type="button" onclick="setTipoHoja('ajustado')" id="preview-papel-ajustado" class="preview-papel-btn flex-1 sm:flex-none px-2 sm:px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-[11px] sm:text-xs cursor-pointer transition text-center whitespace-nowrap">Ajustado</button>
           <button type="button" onclick="setTipoHoja('tira')" id="preview-papel-tira" class="preview-papel-btn flex-1 sm:flex-none px-2 sm:px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-[11px] sm:text-xs cursor-pointer transition text-center whitespace-nowrap">Tira</button>
         </div>
 
@@ -1347,7 +1340,7 @@
 
   // ======================== ESTADO ========================
   let modo = 3;            // 1=blanco, 2=solo correlativo, 3=con datos
-  let tipoHoja = "ajustado"; // "ajustado" (212x306mm), "a4" (210x297mm), "tira" (212x102mm)
+  let tipoHoja = "oficio"; // "oficio" (216x330mm), "a4" (210x297mm), "tira" (216x102mm)
   let serieDesde = 98466;
   let serieHasta = 98468;
   let fechaGlobal = "01/09/2026";
@@ -1688,7 +1681,7 @@
     if (!wrapper) return;
     const w = wrapper.clientWidth - 24;
     const h = wrapper.clientHeight - 24;
-    const baseW = 106 * (96 / 25.4);
+    const baseW = 108 * (96 / 25.4);
     const baseH = 102 * (96 / 25.4);
     if (w > 50 && h > 50) {
       let ideal = Math.min(w / baseW, h / baseH) * 0.96;
@@ -2048,38 +2041,22 @@
   function getTirasPorPagina() {
     if (tipoHoja === "a4") return 2;
     if (tipoHoja === "tira") return 1;
-    return 3; // "oficio" y "ajustado" tienen 3 tiras por página
+    return 3; // "oficio" default (3 tiras por página)
   }
 
   function getPageDimensions(tirasEnPag) {
     // Medidas físicas exactas:
-    // Tira base: 21.2 cm × 10.2 cm (212 × 102 mm)
-    // Slip: 10.6 cm (106 mm)
+    // Tira base: 21.6 cm × 10.2 cm (216 × 102 mm)
+    // Slip: 10.8 cm (108 mm) mitad exacta
     // Caja contenido: 9.0 cm × 9.2 cm (90 × 92 mm)
-    const STRIP_W   = 212;   // mm
+    const STRIP_W   = 216;   // mm - ancho físico real de la tira (21.6 cm)
     const STRIP_H   = 102;   // mm - alto exacto 1 tira (10.2 cm)
-    const SLIP_W    = 106;   // mm
+    const SLIP_W    = 108;   // mm - mitad exacta (10.8 cm)
     const BOX_W     = "90mm";
     const BOX_H     = "92mm";
     const STRIP_H_S = "102mm";
 
-    if (tipoHoja === "oficio") {
-      const pageW = 216; // 21.6 cm (estándar latinoamérica 21.5 - 21.6 cm)
-      const pageH = 330; // 33.0 cm
-      const slipW = 108; // 10.8 cm (mitad exacta)
-      return {
-        widthMm: pageW,
-        heightMm: pageH,
-        stripWidth: `${pageW}mm`,
-        slipWidth: `${slipW}mm`,
-        boxWidth: BOX_W,
-        boxHeight: BOX_H,
-        stripHeight: STRIP_H_S,
-        sobranteMm: Math.max(0, pageH - (tirasEnPag * STRIP_H)), // 330 - 306 = 24mm (2.4 cm)
-        nombrePapel: `Oficio (${(pageW/10).toFixed(1)} × ${(pageH/10).toFixed(1)} cm)`,
-        nombreCorto: "Oficio"
-      };
-    } else if (tipoHoja === "a4") {
+    if (tipoHoja === "a4") {
       const pageW = 210;
       const pageH = 297;
       const slipW = 105;
@@ -2108,19 +2085,21 @@
         nombrePapel: `Tira Individual (${(STRIP_W/10).toFixed(1)} × ${(STRIP_H/10).toFixed(1)} cm)`,
         nombreCorto: "Tira"
       };
-    } else { // "ajustado" - 3 tiras al ras
-      const pageH = Math.round(tirasEnPag * STRIP_H * 10) / 10;
+    } else { // "oficio" default
+      const pageW = 216; // 21.6 cm (estándar latinoamérica 21.5 - 21.6 cm)
+      const pageH = 330; // 33.0 cm
+      const slipW = 108; // 10.8 cm (mitad exacta)
       return {
-        widthMm: STRIP_W,
+        widthMm: pageW,
         heightMm: pageH,
-        stripWidth: `${STRIP_W}mm`,
-        slipWidth: `${SLIP_W}mm`,
+        stripWidth: `${pageW}mm`,
+        slipWidth: `${slipW}mm`,
         boxWidth: BOX_W,
         boxHeight: BOX_H,
         stripHeight: STRIP_H_S,
-        sobranteMm: 0,
-        nombrePapel: `Ajustado (${(STRIP_W/10).toFixed(1)} × ${(pageH/10).toFixed(1)} cm)`,
-        nombreCorto: "Ajustado"
+        sobranteMm: Math.max(0, pageH - (tirasEnPag * STRIP_H)), // 330 - 306 = 24mm (2.4 cm)
+        nombrePapel: `Oficio (${(pageW/10).toFixed(1)} × ${(pageH/10).toFixed(1)} cm)`,
+        nombreCorto: "Oficio"
       };
     }
   }
@@ -2235,7 +2214,7 @@
 
   // ======================== FORMATO DE HOJA ========================
   function setTipoHoja(th) {
-    if (!['oficio', 'ajustado', 'a4', 'tira'].includes(th)) th = 'oficio';
+    if (!['oficio', 'a4', 'tira'].includes(th)) th = 'oficio';
     tipoHoja = th;
 
     document.querySelectorAll('.papel-btn').forEach(b => {
@@ -2273,13 +2252,9 @@
       if (rPapel) rPapel.textContent = "A4 Estándar (21.0 × 29.7 cm)";
       if (rDistrib) rDistrib.textContent = "2 tiras de 10.2 cm + 9.3 cm corte";
     } else if (th === 'tira') {
-      if (badge) badge.textContent = "Tira Suelta: 21.2 × 10.2 cm";
-      if (rPapel) rPapel.textContent = "Tira Individual (21.2 × 10.2 cm)";
+      if (badge) badge.textContent = "Tira Suelta: 21.6 × 10.2 cm";
+      if (rPapel) rPapel.textContent = "Tira Individual (21.6 × 10.2 cm)";
       if (rDistrib) rDistrib.textContent = "1 tira de 10.2 cm exacta al ras";
-    } else {
-      if (badge) badge.textContent = "Ajustado: 21.2 × 30.6 cm";
-      if (rPapel) rPapel.textContent = "Ajustado (21.2 × 30.6 cm)";
-      if (rDistrib) rDistrib.textContent = "3 tiras de 10.2 cm exactas (sin corte)";
     }
 
     if (isAutoZoom) {
@@ -2949,7 +2924,7 @@
     ` : '';
 
     container.innerHTML = `
-      <div class="receipt-pane shadow-2xl rounded-sm receipt-watermark-bg" style="width: 106mm; min-width: 106mm; max-width: 106mm; height: 102mm; min-height: 102mm; max-height: 102mm; padding: 5mm 8mm 5mm 8mm; box-sizing: border-box; position: relative; background: #ffffff; border: 1px solid #cbd5e1; overflow: hidden;">
+      <div class="receipt-pane shadow-2xl rounded-sm receipt-watermark-bg" style="width: 108mm; min-width: 108mm; max-width: 108mm; height: 102mm; min-height: 102mm; max-height: 102mm; padding: 5mm 9mm 5mm 9mm; box-sizing: border-box; position: relative; background: #ffffff; border: 1px solid #cbd5e1; overflow: hidden;">
         ${watermarkSlipHTML}
         <div style="position: relative; z-index: 10; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
           ${slipInner}
@@ -2976,7 +2951,7 @@
   }
 
   // ======================== GENERADOR HTML TIRA ========================
-  function buildStripHTML(serieNum, forceBlank, stripWidth = '212mm', slipWidth = '106mm', boxWidth = '90mm', boxHeight = '92mm', stripHeight = '102mm') {
+  function buildStripHTML(serieNum, forceBlank, stripWidth = '216mm', slipWidth = '108mm', boxWidth = '90mm', boxHeight = '92mm', stripHeight = '102mm') {
     const serieStr = String(serieNum).padStart(6, '0');
     const numStr = String(serieNum).padStart(10, '0');
     const isBlank = (modo === 1 || forceBlank);
@@ -3044,16 +3019,11 @@
     });
 
     const isA4 = (stripWidth === '210mm');
-    const isOficio = (stripWidth === '216mm' || stripWidth === '215mm');
-    let pLeft = 'padding: 5mm 9mm 5mm 7mm;';
-    let pRight = 'padding: 5mm 7mm 5mm 9mm;';
+    let pLeft = 'padding: 5mm 10mm 5mm 8mm;';
+    let pRight = 'padding: 5mm 8mm 5mm 10mm;';
     if (isA4) {
       pLeft = 'padding: 5mm 8mm 5mm 7mm;';
       pRight = 'padding: 5mm 7mm 5mm 8mm;';
-    } else if (isOficio) {
-      // Hoja Oficio 216mm: 108mm por slip (90mm caja + 8mm exterior + 10mm corte central)
-      pLeft = 'padding: 5mm 10mm 5mm 8mm;';
-      pRight = 'padding: 5mm 8mm 5mm 10mm;';
     }
 
     return `
