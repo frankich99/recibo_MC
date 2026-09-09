@@ -718,8 +718,8 @@
     <!-- Body: 2 Columns Side-by-Side (Desktop / Tablet) -->
     <div class="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
       
-      <!-- Columna Izquierda: Panel de Controles Compacto -->
-      <div class="w-full lg:w-[520px] xl:w-[560px] flex-shrink-0 flex flex-col bg-slate-50 border-r border-slate-200 overflow-hidden" id="ajustes-inputs-container">
+      <!-- Columna Izquierda: Panel de Controles Amplio y Estructurado -->
+      <div class="w-full lg:w-[640px] xl:w-[710px] 2xl:w-[760px] flex-shrink-0 flex flex-col bg-slate-50 border-r border-slate-200 overflow-hidden" id="ajustes-inputs-container">
         
         <!-- Pestañas Superiores (3 Pestañas Claras) -->
         <div class="flex items-center border-b border-slate-200 bg-white px-2 pt-2 gap-1 flex-shrink-0 overflow-x-auto">
@@ -737,266 +737,332 @@
         <!-- Contenido de las pestañas scrolleable -->
         <div class="flex-1 overflow-y-auto p-3.5 space-y-3 text-xs">
           
-          <!-- TAB 1: Tipografía & Tamaños (7 Grupos Unificados con Reset y Negrita) -->
-          <div id="tab-content-tipografia" class="space-y-3">
+          <!-- TAB 1: Tipografía & Tamaños (7 Grupos Unificados con Steppers - / +) -->
+          <div id="tab-content-tipografia" class="space-y-2.5">
             <div class="text-[11px] text-slate-600 bg-slate-100/90 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between">
-              <span>7 grupos funcionales unificados. Pasa el cursor para ver el resaltado verde en el recibo.</span>
+              <span>7 grupos funcionales unificados. Usa <strong>− / +</strong> para ajuste fino o desliza la barra.</span>
               <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">En Vivo</span>
             </div>
 
             <!-- GRUPO 1: Etiquetas Contribuyente -->
-            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-1')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-1')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                   <span class="font-black text-slate-900 text-xs">1. Etiquetas Contribuyente</span>
+                  <span class="text-[10px] text-slate-400 hidden sm:inline">(Nombre, Domicilio, Obs)</span>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5">
                   <span id="val-fontG1_LabelsContrib" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">8.0 px</span>
                   <button type="button" onclick="restablecerGrupo('g1')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
                 </div>
               </div>
-              <div class="text-[10px] text-slate-500 mb-2">Nombre o Razón Social:, Domicilio Fiscal:, Observaciones:</div>
-              <div class="space-y-2">
-                <select id="ajuste-ffG1_LabelsContrib" onchange="onAjusteFontFamily('ffG1_LabelsContrib', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
-                  <input type="range" id="ajuste-fontG1_LabelsContrib" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('fontG1_LabelsContrib', this.value)" class="flex-1">
-                  <button type="button" id="btn-bold-boldG1_LabelsContrib" onclick="toggleAjusteBold('boldG1_LabelsContrib')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                <div class="sm:col-span-6">
+                  <select id="ajuste-ffG1_LabelsContrib" onchange="onAjusteFontFamily('ffG1_LabelsContrib', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                </div>
+                <div class="sm:col-span-6 flex items-center gap-1.5">
+                  <button type="button" onclick="stepAjuste('fontG1_LabelsContrib', -0.5); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-fontG1_LabelsContrib" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('fontG1_LabelsContrib', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('fontG1_LabelsContrib', 0.5); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  <button type="button" id="btn-bold-boldG1_LabelsContrib" onclick="toggleAjusteBold('boldG1_LabelsContrib')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
                 </div>
               </div>
             </div>
 
             <!-- GRUPO 2: Cabecera Tabla & Totales -->
-            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-2')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-2')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                   <span class="font-black text-slate-900 text-xs">2. Cabecera Tabla & Totales</span>
+                  <span class="text-[10px] text-slate-400 hidden sm:inline">(PARTIDA, DESCRIPCIÓN, IMPORTE, Son, TOTAL)</span>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5">
                   <span id="val-fontG2_TablaLabels" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">8.0 px</span>
                   <button type="button" onclick="restablecerGrupo('g2')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
                 </div>
               </div>
-              <div class="text-[10px] text-slate-500 mb-2">PARTIDA, DESCRIPCIÓN, IMPORTE, Son:, TOTAL</div>
-              <div class="space-y-2">
-                <select id="ajuste-ffG2_TablaLabels" onchange="onAjusteFontFamily('ffG2_TablaLabels', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
-                  <input type="range" id="ajuste-fontG2_TablaLabels" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-2'); onAjusteInput('fontG2_TablaLabels', this.value)" class="flex-1">
-                  <button type="button" id="btn-bold-boldG2_TablaLabels" onclick="toggleAjusteBold('boldG2_TablaLabels')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                <div class="sm:col-span-6">
+                  <select id="ajuste-ffG2_TablaLabels" onchange="onAjusteFontFamily('ffG2_TablaLabels', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                </div>
+                <div class="sm:col-span-6 flex items-center gap-1.5">
+                  <button type="button" onclick="stepAjuste('fontG2_TablaLabels', -0.5); highlightPreviewPart('grupo-2');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-fontG2_TablaLabels" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-2'); onAjusteInput('fontG2_TablaLabels', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('fontG2_TablaLabels', 0.5); highlightPreviewPart('grupo-2');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  <button type="button" id="btn-bold-boldG2_TablaLabels" onclick="toggleAjusteBold('boldG2_TablaLabels')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
                 </div>
               </div>
             </div>
 
             <!-- GRUPO 3: Encabezado & Títulos -->
-            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-3')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-3')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                   <span class="font-black text-slate-900 text-xs">3. Encabezado & Títulos</span>
+                  <span class="text-[10px] text-slate-400 hidden sm:inline">(RECIBO DE CAJA, Nº RECIBO, FECHA)</span>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5">
                   <span id="val-fontG3_HeaderTitulos" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">9.5 px</span>
                   <button type="button" onclick="restablecerGrupo('g3')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
                 </div>
               </div>
-              <div class="text-[10px] text-slate-500 mb-2">RECIBO DE CAJA, Nº RECIBO (etiqueta), FECHA (etiqueta)</div>
-              <div class="space-y-2">
-                <select id="ajuste-ffG3_HeaderTitulos" onchange="onAjusteFontFamily('ffG3_HeaderTitulos', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
-                  <input type="range" id="ajuste-fontG3_HeaderTitulos" min="7" max="16" step="0.5" oninput="highlightPreviewPart('grupo-3'); onAjusteInput('fontG3_HeaderTitulos', this.value)" class="flex-1">
-                  <button type="button" id="btn-bold-boldG3_HeaderTitulos" onclick="toggleAjusteBold('boldG3_HeaderTitulos')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                <div class="sm:col-span-6">
+                  <select id="ajuste-ffG3_HeaderTitulos" onchange="onAjusteFontFamily('ffG3_HeaderTitulos', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                </div>
+                <div class="sm:col-span-6 flex items-center gap-1.5">
+                  <button type="button" onclick="stepAjuste('fontG3_HeaderTitulos', -0.5); highlightPreviewPart('grupo-3');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-fontG3_HeaderTitulos" min="7" max="16" step="0.5" oninput="highlightPreviewPart('grupo-3'); onAjusteInput('fontG3_HeaderTitulos', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('fontG3_HeaderTitulos', 0.5); highlightPreviewPart('grupo-3');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  <button type="button" id="btn-bold-boldG3_HeaderTitulos" onclick="toggleAjusteBold('boldG3_HeaderTitulos')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
                 </div>
               </div>
             </div>
 
             <!-- GRUPO 4.1: Datos Cajetín -->
-            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-41')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-41')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                   <span class="font-black text-slate-900 text-xs">4.1. Datos Cajetín (Valores)</span>
+                  <span class="text-[10px] text-slate-400 hidden sm:inline">(Correlativo y Fecha)</span>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5">
                   <span id="val-fontG41_CajetinVal" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">9.0 px</span>
                   <button type="button" onclick="restablecerGrupo('g41')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
                 </div>
               </div>
-              <div class="text-[10px] text-slate-500 mb-2">Número correlativo (00000098466) y Fecha (01/09/2026)</div>
-              <div class="space-y-2">
-                <select id="ajuste-ffG41_CajetinVal" onchange="onAjusteFontFamily('ffG41_CajetinVal', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
-                  <input type="range" id="ajuste-fontG41_CajetinVal" min="6" max="14" step="0.5" oninput="highlightPreviewPart('grupo-41'); onAjusteInput('fontG41_CajetinVal', this.value)" class="flex-1">
-                  <button type="button" id="btn-bold-boldG41_CajetinVal" onclick="toggleAjusteBold('boldG41_CajetinVal')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                <div class="sm:col-span-6">
+                  <select id="ajuste-ffG41_CajetinVal" onchange="onAjusteFontFamily('ffG41_CajetinVal', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                </div>
+                <div class="sm:col-span-6 flex items-center gap-1.5">
+                  <button type="button" onclick="stepAjuste('fontG41_CajetinVal', -0.5); highlightPreviewPart('grupo-41');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-fontG41_CajetinVal" min="6" max="14" step="0.5" oninput="highlightPreviewPart('grupo-41'); onAjusteInput('fontG41_CajetinVal', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('fontG41_CajetinVal', 0.5); highlightPreviewPart('grupo-41');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  <button type="button" id="btn-bold-boldG41_CajetinVal" onclick="toggleAjusteBold('boldG41_CajetinVal')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
                 </div>
               </div>
             </div>
 
             <!-- GRUPO 4.2: Serie Roja Correlativa -->
-            <div class="p-3 bg-white rounded-xl border border-red-200 hover:border-red-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-42')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
+            <div class="p-2.5 bg-white rounded-xl border border-red-200 hover:border-red-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-42')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-red-600"></span>
                   <span class="font-black text-red-700 text-xs">4.2. Serie Roja Correlativa</span>
+                  <span class="text-[10px] text-red-400 hidden sm:inline">(Nº 098466 #dc2626)</span>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5">
                   <span id="val-fontG42_SerieRoja" class="font-receipt font-bold bg-red-50 text-red-700 px-2 py-0.5 rounded text-[11px]">16.5 px</span>
                   <button type="button" onclick="restablecerGrupo('g42')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
                 </div>
               </div>
-              <div class="text-[10px] text-red-600 mb-2 font-medium">Nº 098466 (Rojo muy rojo de fábrica #dc2626)</div>
-              <div class="space-y-2">
-                <select id="ajuste-ffG42_SerieRoja" onchange="onAjusteFontFamily('ffG42_SerieRoja', this.value)" class="w-full bg-red-50/50 border border-red-200 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-red-500"></select>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
-                  <input type="range" id="ajuste-fontG42_SerieRoja" min="10" max="24" step="0.5" oninput="highlightPreviewPart('grupo-42'); onAjusteInput('fontG42_SerieRoja', this.value)" class="flex-1">
-                  <button type="button" id="btn-bold-boldG42_SerieRoja" onclick="toggleAjusteBold('boldG42_SerieRoja')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                <div class="sm:col-span-6">
+                  <select id="ajuste-ffG42_SerieRoja" onchange="onAjusteFontFamily('ffG42_SerieRoja', this.value)" class="w-full bg-red-50/50 border border-red-200 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-red-500"></select>
+                </div>
+                <div class="sm:col-span-6 flex items-center gap-1.5">
+                  <button type="button" onclick="stepAjuste('fontG42_SerieRoja', -0.5); highlightPreviewPart('grupo-42');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-fontG42_SerieRoja" min="10" max="24" step="0.5" oninput="highlightPreviewPart('grupo-42'); onAjusteInput('fontG42_SerieRoja', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('fontG42_SerieRoja', 0.5); highlightPreviewPart('grupo-42');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  <button type="button" id="btn-bold-boldG42_SerieRoja" onclick="toggleAjusteBold('boldG42_SerieRoja')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
                 </div>
               </div>
             </div>
 
             <!-- GRUPO 4.3: Datos Contribuyente -->
-            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                   <span class="font-black text-slate-900 text-xs">4.3. Datos Contribuyente (Inputs)</span>
+                  <span class="text-[10px] text-slate-400 hidden sm:inline">(Nombre, Domicilio, Obs)</span>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5">
                   <span id="val-fontG43_DatosContrib" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">8.5 px</span>
                   <button type="button" onclick="restablecerGrupo('g43')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
                 </div>
               </div>
-              <div class="text-[10px] text-slate-500 mb-2">Valores escritos de Nombre, Domicilio y Obs (SIEMPRE EN MAYÚSCULAS)</div>
-              <div class="space-y-2">
-                <select id="ajuste-ffG43_DatosContrib" onchange="onAjusteFontFamily('ffG43_DatosContrib', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
-                  <input type="range" id="ajuste-fontG43_DatosContrib" min="6" max="14" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('fontG43_DatosContrib', this.value)" class="flex-1">
-                  <button type="button" id="btn-bold-boldG43_DatosContrib" onclick="toggleAjusteBold('boldG43_DatosContrib')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                <div class="sm:col-span-6">
+                  <select id="ajuste-ffG43_DatosContrib" onchange="onAjusteFontFamily('ffG43_DatosContrib', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                </div>
+                <div class="sm:col-span-6 flex items-center gap-1.5">
+                  <button type="button" onclick="stepAjuste('fontG43_DatosContrib', -0.5); highlightPreviewPart('grupo-43');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-fontG43_DatosContrib" min="6" max="14" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('fontG43_DatosContrib', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('fontG43_DatosContrib', 0.5); highlightPreviewPart('grupo-43');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  <button type="button" id="btn-bold-boldG43_DatosContrib" onclick="toggleAjusteBold('boldG43_DatosContrib')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
                 </div>
               </div>
             </div>
 
             <!-- GRUPO 4.4: Datos Tabla, Son & Total -->
-            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-44')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-xs transition" onmouseenter="highlightPreviewPart('grupo-44')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                   <span class="font-black text-slate-900 text-xs">4.4. Datos Tabla, Son & Total</span>
+                  <span class="text-[10px] text-slate-400 hidden sm:inline">(Ítems, Montos S/, Son y Total)</span>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5">
                   <span id="val-fontG44_TablaDatos" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">7.5 px</span>
                   <button type="button" onclick="restablecerGrupo('g44')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
                 </div>
               </div>
-              <div class="text-[10px] text-slate-500 mb-2">Partidas, descripciones, importes S/, texto Son y total numérico</div>
-              <div class="space-y-2">
-                <select id="ajuste-ffG44_TablaDatos" onchange="onAjusteFontFamily('ffG44_TablaDatos', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
-                  <input type="range" id="ajuste-fontG44_TablaDatos" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('fontG44_TablaDatos', this.value)" class="flex-1">
-                  <button type="button" id="btn-bold-boldG44_TablaDatos" onclick="toggleAjusteBold('boldG44_TablaDatos')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                <div class="sm:col-span-6">
+                  <select id="ajuste-ffG44_TablaDatos" onchange="onAjusteFontFamily('ffG44_TablaDatos', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                </div>
+                <div class="sm:col-span-6 flex items-center gap-1.5">
+                  <button type="button" onclick="stepAjuste('fontG44_TablaDatos', -0.5); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-fontG44_TablaDatos" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('fontG44_TablaDatos', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('fontG44_TablaDatos', 0.5); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  <button type="button" id="btn-bold-boldG44_TablaDatos" onclick="toggleAjusteBold('boldG44_TablaDatos')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
                 </div>
               </div>
             </div>
 
           </div>
 
-          <!-- TAB 2: Medidas & Espacios -->
+          <!-- TAB 2: Medidas & Espacios (Cuadrícula 2 Columnas con Steppers - / +) -->
           <div id="tab-content-medidas" class="hidden space-y-2.5">
             <div class="text-[11px] text-slate-600 bg-slate-100/90 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between">
-              <span>Calibra las dimensiones milimétricas para evitar solapamientos.</span>
+              <span>Calibra dimensiones milimétricas. Usa <strong>− / +</strong> para paso fino de 0.1 o 0.5 mm.</span>
               <button type="button" onclick="restablecerGrupo('medidas')" class="text-[11px] px-2 py-0.5 rounded bg-white hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer medidas de fábrica">↺ Reset Medidas</button>
             </div>
             
-            <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-300 hover:border-emerald-500 transition" onmouseenter="highlightPreviewPart('grupo-1')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
-                <span class="font-black text-emerald-900 text-[11px]">Distancia Etiqueta a Cajetín (Seguridad Anti-Solape):</span>
-                <span id="val-gapLabelBox" class="font-receipt font-black bg-emerald-200 px-2 py-0.5 rounded text-[10px] text-emerald-950">1.5 mm (0.15 cm)</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <!-- 1. Distancia Etiqueta a Cajetín -->
+              <div class="p-2.5 bg-emerald-50/80 rounded-xl border border-emerald-300 hover:border-emerald-500 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-1')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-black text-emerald-950 text-[10.5px]">Distancia Etiqueta a Cajetín:</span>
+                  <span id="val-gapLabelBox" class="font-receipt font-black bg-emerald-200 px-1.5 py-0.5 rounded text-[10px] text-emerald-950">1.5 mm (0.15 cm)</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('gapLabelBox', -0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-gapLabelBox" min="-1.5" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapLabelBox', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('gapLabelBox', 0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
               </div>
-              <input type="range" id="ajuste-gapLabelBox" min="-1.5" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapLabelBox', this.value)" class="w-full">
-              <span class="text-[9.5px] text-emerald-800 mt-0.5 block">Separación vertical entre la etiqueta de texto y la línea superior del cajetín</span>
-            </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-1')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-slate-800 text-[11px]">Separación entre Bloques de Campos:</span>
-                <span id="val-gapCampos" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">2.2 mm (0.22 cm)</span>
+              <!-- 2. Separación entre Bloques de Campos -->
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-1')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-slate-800 text-[10.5px]">Separación entre Bloques:</span>
+                  <span id="val-gapCampos" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">2.2 mm (0.22 cm)</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('gapCampos', -0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-gapCampos" min="-2.0" max="5.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapCampos', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('gapCampos', 0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
               </div>
-              <input type="range" id="ajuste-gapCampos" min="-2.0" max="5.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapCampos', this.value)" class="w-full">
-            </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-slate-800 text-[11px]">Espesor Cajetín Nombre o Razón Social:</span>
-                <span id="val-hNombre" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">5.5 mm (0.55 cm)</span>
+              <!-- 3. Espesor Cajetín Nombre o Razón Social -->
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-slate-800 text-[10.5px]">Espesor Nombre / Razón:</span>
+                  <span id="val-hNombre" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">5.5 mm</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('hNombre', -0.5); highlightPreviewPart('grupo-43');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-hNombre" min="4" max="10" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('hNombre', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('hNombre', 0.5); highlightPreviewPart('grupo-43');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
               </div>
-              <input type="range" id="ajuste-hNombre" min="4" max="10" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('hNombre', this.value)" class="w-full">
-            </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-slate-800 text-[11px]">Espesor Cajetín Domicilio Fiscal:</span>
-                <span id="val-hDomicilio" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">5.5 mm (0.55 cm)</span>
+              <!-- 4. Espesor Cajetín Domicilio Fiscal -->
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-slate-800 text-[10.5px]">Espesor Domicilio Fiscal:</span>
+                  <span id="val-hDomicilio" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">5.5 mm</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('hDomicilio', -0.5); highlightPreviewPart('grupo-43');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-hDomicilio" min="4" max="10" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('hDomicilio', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('hDomicilio', 0.5); highlightPreviewPart('grupo-43');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
               </div>
-              <input type="range" id="ajuste-hDomicilio" min="4" max="10" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('hDomicilio', this.value)" class="w-full">
-            </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-slate-800 text-[11px]">Espesor Cajetín Observaciones:</span>
-                <span id="val-hObs" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">8.5 mm (0.85 cm)</span>
+              <!-- 5. Espesor Cajetín Observaciones -->
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-slate-800 text-[10.5px]">Espesor Observaciones:</span>
+                  <span id="val-hObs" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">8.5 mm</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('hObs', -0.5); highlightPreviewPart('grupo-43');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-hObs" min="5" max="14" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('hObs', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('hObs', 0.5); highlightPreviewPart('grupo-43');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
               </div>
-              <input type="range" id="ajuste-hObs" min="5" max="14" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('hObs', this.value)" class="w-full">
-            </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-44')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-slate-800 text-[11px]">Alto Cuerpo de Tabla (Conceptos/Partidas):</span>
-                <span id="val-hTablaBody" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">18.0 mm (1.80 cm)</span>
+              <!-- 6. Alto Cuerpo de Tabla -->
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-44')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-slate-800 text-[10.5px]">Alto Cuerpo Tabla:</span>
+                  <span id="val-hTablaBody" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">18.0 mm</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('hTablaBody', -0.5); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-hTablaBody" min="10" max="48" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('hTablaBody', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('hTablaBody', 0.5); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
               </div>
-              <input type="range" id="ajuste-hTablaBody" min="10" max="48" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('hTablaBody', this.value)" class="w-full">
-            </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-slate-800 text-[11px]">Ancho Cajetín Nº / Fecha / Serie:</span>
-                <span id="val-wBoxNumFecha" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">41.0 mm (4.10 cm)</span>
+              <!-- 7. Ancho Cajetín Nº / Fecha / Serie -->
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-slate-800 text-[10.5px]">Ancho Cajetín Nº/Fecha:</span>
+                  <span id="val-wBoxNumFecha" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">41.0 mm</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('wBoxNumFecha', -0.5); highlightPreviewPart('hdr-cajetin');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-wBoxNumFecha" min="35" max="48" step="0.5" oninput="highlightPreviewPart('hdr-cajetin'); onAjusteInput('wBoxNumFecha', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('wBoxNumFecha', 0.5); highlightPreviewPart('hdr-cajetin');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
               </div>
-              <input type="range" id="ajuste-wBoxNumFecha" min="35" max="48" step="0.5" oninput="highlightPreviewPart('hdr-cajetin'); onAjusteInput('wBoxNumFecha', this.value)" class="w-full">
-            </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('hdr-general')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-slate-800 text-[11px]">Alto Encabezado Oficial:</span>
-                <span id="val-hHeader" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">16.0 mm (1.60 cm)</span>
+              <!-- 8. Alto Encabezado Oficial -->
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('hdr-general')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-slate-800 text-[10.5px]">Alto Encabezado:</span>
+                  <span id="val-hHeader" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">16.0 mm</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('hHeader', -0.5); highlightPreviewPart('hdr-general');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-hHeader" min="14" max="22" step="0.5" oninput="highlightPreviewPart('hdr-general'); onAjusteInput('hHeader', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('hHeader', 0.5); highlightPreviewPart('hdr-general');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
               </div>
-              <input type="range" id="ajuste-hHeader" min="14" max="22" step="0.5" oninput="highlightPreviewPart('hdr-general'); onAjusteInput('hHeader', this.value)" class="w-full">
-            </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
-              <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-slate-800 text-[11px]">Grosor de Líneas y Bordes de Cajetines:</span>
-                <span id="val-borderWidth" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">1.0 px</span>
+              <!-- 9. Grosor de Líneas y Bordes de Cajetines -->
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs col-span-1 sm:col-span-2" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-slate-800 text-[10.5px]">Grosor de Líneas y Bordes:</span>
+                  <span id="val-borderWidth" class="font-receipt font-bold bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">1.0 px</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('borderWidth', -0.1); highlightPreviewPart('hdr-cajetin');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-borderWidth" min="0.6" max="2.2" step="0.1" oninput="highlightPreviewPart('hdr-cajetin'); onAjusteInput('borderWidth', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('borderWidth', 0.1); highlightPreviewPart('hdr-cajetin');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
               </div>
-              <input type="range" id="ajuste-borderWidth" min="0.6" max="2.2" step="0.1" oninput="highlightPreviewPart('hdr-cajetin'); onAjusteInput('borderWidth', this.value)" class="w-full">
             </div>
-
           </div>
 
-          <!-- TAB 3: Logo Municipal & Escudo Gris -->
+          <!-- TAB 3: Logo Municipal & Escudo Gris (Con Steppers - / +) -->
           <div id="tab-content-logos" class="hidden space-y-2.5">
             <div class="text-[11px] text-slate-600 bg-slate-100/90 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between">
-              <span>Posición, tamaño y visibilidad de símbolos oficiales.</span>
+              <span>Posición, tamaño y visibilidad de símbolos oficiales. Usa <strong>− / +</strong> para precisión.</span>
               <button type="button" onclick="restablecerGrupo('logos')" class="text-[11px] px-2 py-0.5 rounded bg-white hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer logos de fábrica">↺ Reset Logos</button>
             </div>
             
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('hdr-logo')" onmouseleave="unhighlightPreviewPart()">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('hdr-logo')" onmouseleave="unhighlightPreviewPart()">
               <div class="font-bold text-slate-900 text-xs mb-1 flex items-center gap-1.5">
                 <span>🛡️</span> Logo Oficial Canas (`logo/mc.png`):
               </div>
@@ -1006,7 +1072,11 @@
                     <span class="text-[11px] font-semibold text-slate-700">Tamaño del Logo:</span>
                     <span id="val-logoSize" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">15.0 mm (1.50 cm)</span>
                   </div>
-                  <input type="range" id="ajuste-logoSize" min="10" max="26" step="0.5" oninput="highlightPreviewPart('hdr-logo'); onAjusteInput('logoSize', this.value)" class="w-full">
+                  <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="stepAjuste('logoSize', -0.5); highlightPreviewPart('hdr-logo');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                    <input type="range" id="ajuste-logoSize" min="10" max="26" step="0.5" oninput="highlightPreviewPart('hdr-logo'); onAjusteInput('logoSize', this.value)" class="flex-1 cursor-pointer">
+                    <button type="button" onclick="stepAjuste('logoSize', 0.5); highlightPreviewPart('hdr-logo');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                   <div>
@@ -1014,20 +1084,28 @@
                       <span class="text-[10px] font-semibold text-slate-700">Mover X (Horiz):</span>
                       <span id="val-logoOffsetX" class="font-receipt font-bold bg-slate-100 px-1 py-0.5 rounded text-[9.5px] text-slate-700">0.0 mm</span>
                     </div>
-                    <input type="range" id="ajuste-logoOffsetX" min="-8" max="8" step="0.5" oninput="highlightPreviewPart('hdr-logo'); onAjusteInput('logoOffsetX', this.value)" class="w-full">
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" onclick="stepAjuste('logoOffsetX', -0.5); highlightPreviewPart('hdr-logo');" class="w-5 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-xs flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                      <input type="range" id="ajuste-logoOffsetX" min="-8" max="8" step="0.5" oninput="highlightPreviewPart('hdr-logo'); onAjusteInput('logoOffsetX', this.value)" class="flex-1 cursor-pointer">
+                      <button type="button" onclick="stepAjuste('logoOffsetX', 0.5); highlightPreviewPart('hdr-logo');" class="w-5 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-xs flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                    </div>
                   </div>
                   <div>
                     <div class="flex items-center justify-between mb-0.5">
                       <span class="text-[10px] font-semibold text-slate-700">Mover Y (Vert):</span>
                       <span id="val-logoOffsetY" class="font-receipt font-bold bg-slate-100 px-1 py-0.5 rounded text-[9.5px] text-slate-700">0.0 mm</span>
                     </div>
-                    <input type="range" id="ajuste-logoOffsetY" min="-8" max="8" step="0.5" oninput="highlightPreviewPart('hdr-logo'); onAjusteInput('logoOffsetY', this.value)" class="w-full">
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" onclick="stepAjuste('logoOffsetY', -0.5); highlightPreviewPart('hdr-logo');" class="w-5 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-xs flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                      <input type="range" id="ajuste-logoOffsetY" min="-8" max="8" step="0.5" oninput="highlightPreviewPart('hdr-logo'); onAjusteInput('logoOffsetY', this.value)" class="flex-1 cursor-pointer">
+                      <button type="button" onclick="stepAjuste('logoOffsetY', 0.5); highlightPreviewPart('hdr-logo');" class="w-5 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-xs flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('filigrana')" onmouseleave="unhighlightPreviewPart()">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('filigrana')" onmouseleave="unhighlightPreviewPart()">
               <div class="font-bold text-slate-900 text-xs mb-1 flex items-center gap-1.5">
                 <span>⚔️</span> Escudo Gris Central (`datos/escudo_gris.png`):
               </div>
@@ -1037,7 +1115,11 @@
                     <span class="text-[11px] font-semibold text-slate-700">Tamaño del Escudo:</span>
                     <span id="val-escudoSize" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">22.0 mm (2.20 cm)</span>
                   </div>
-                  <input type="range" id="ajuste-escudoSize" min="14" max="45" step="1.0" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoSize', this.value)" class="w-full">
+                  <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="stepAjuste('escudoSize', -1.0); highlightPreviewPart('filigrana');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                    <input type="range" id="ajuste-escudoSize" min="14" max="45" step="1.0" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoSize', this.value)" class="flex-1 cursor-pointer">
+                    <button type="button" onclick="stepAjuste('escudoSize', 1.0); highlightPreviewPart('filigrana');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                   <div>
@@ -1045,14 +1127,22 @@
                       <span class="text-[10px] font-semibold text-slate-700">Mover X (Horiz):</span>
                       <span id="val-escudoOffsetX" class="font-receipt font-bold bg-slate-100 px-1 py-0.5 rounded text-[9.5px] text-slate-700">0.0 mm</span>
                     </div>
-                    <input type="range" id="ajuste-escudoOffsetX" min="-15" max="15" step="0.5" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOffsetX', this.value)" class="w-full">
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" onclick="stepAjuste('escudoOffsetX', -0.5); highlightPreviewPart('filigrana');" class="w-5 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-xs flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                      <input type="range" id="ajuste-escudoOffsetX" min="-15" max="15" step="0.5" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOffsetX', this.value)" class="flex-1 cursor-pointer">
+                      <button type="button" onclick="stepAjuste('escudoOffsetX', 0.5); highlightPreviewPart('filigrana');" class="w-5 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-xs flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                    </div>
                   </div>
                   <div>
                     <div class="flex items-center justify-between mb-0.5">
                       <span class="text-[10px] font-semibold text-slate-700">Mover Y (Vert):</span>
                       <span id="val-escudoOffsetY" class="font-receipt font-bold bg-slate-100 px-1 py-0.5 rounded text-[9.5px] text-slate-700">0.0 mm</span>
                     </div>
-                    <input type="range" id="ajuste-escudoOffsetY" min="-15" max="15" step="0.5" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOffsetY', this.value)" class="w-full">
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" onclick="stepAjuste('escudoOffsetY', -0.5); highlightPreviewPart('filigrana');" class="w-5 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-xs flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                      <input type="range" id="ajuste-escudoOffsetY" min="-15" max="15" step="0.5" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOffsetY', this.value)" class="flex-1 cursor-pointer">
+                      <button type="button" onclick="stepAjuste('escudoOffsetY', 0.5); highlightPreviewPart('filigrana');" class="w-5 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-xs flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                    </div>
                   </div>
                 </div>
                 <div>
@@ -1060,17 +1150,25 @@
                     <span class="text-[11px] font-semibold text-slate-700">Opacidad del Escudo Gris:</span>
                     <span id="val-escudoOpacity" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">12%</span>
                   </div>
-                  <input type="range" id="ajuste-escudoOpacity" min="0.02" max="0.50" step="0.01" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOpacity', this.value)" class="w-full">
+                  <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="stepAjuste('escudoOpacity', -0.02); highlightPreviewPart('filigrana');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                    <input type="range" id="ajuste-escudoOpacity" min="0.02" max="0.50" step="0.01" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOpacity', this.value)" class="flex-1 cursor-pointer">
+                    <button type="button" onclick="stepAjuste('escudoOpacity', 0.02); highlightPreviewPart('filigrana');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('watermark-pattern')" onmouseleave="unhighlightPreviewPart()">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('watermark-pattern')" onmouseleave="unhighlightPreviewPart()">
               <div class="flex items-center justify-between mb-1">
                 <span class="font-bold text-slate-800 text-[11px]">Opacidad Filigrana Azul de Seguridad:</span>
                 <span id="val-filigranaOpacity" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">26%</span>
               </div>
-              <input type="range" id="ajuste-filigranaOpacity" min="0.05" max="0.50" step="0.01" oninput="highlightPreviewPart('watermark-pattern'); onAjusteInput('filigranaOpacity', this.value)" class="w-full">
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="stepAjuste('filigranaOpacity', -0.02); highlightPreviewPart('watermark-pattern');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                <input type="range" id="ajuste-filigranaOpacity" min="0.05" max="0.50" step="0.01" oninput="highlightPreviewPart('watermark-pattern'); onAjusteInput('filigranaOpacity', this.value)" class="flex-1 cursor-pointer">
+                <button type="button" onclick="stepAjuste('filigranaOpacity', 0.02); highlightPreviewPart('watermark-pattern');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+              </div>
               <span class="text-[9.5px] text-slate-500 mt-1 block">Ajusta el tono de las líneas con el texto azul "MUNICIPALIDAD PROVINCIAL DE CANAS"</span>
             </div>
 
@@ -1469,6 +1567,24 @@
     triggerLivePreview();
   }
 
+  function stepAjuste(key, delta) {
+    if (ajustesLocked) return;
+    const input = document.getElementById('ajuste-' + key);
+    if (!input) return;
+    const min = input.min !== '' ? parseFloat(input.min) : -9999;
+    const max = input.max !== '' ? parseFloat(input.max) : 9999;
+    const step = parseFloat(input.step) || 0.1;
+    let cur = parseFloat(ajustes[key] !== undefined ? ajustes[key] : input.value);
+    if (isNaN(cur)) cur = 0;
+    let next = cur + delta;
+    next = Math.max(min, Math.min(max, next));
+    const stepStr = step.toString();
+    const decimals = stepStr.includes('.') ? stepStr.split('.')[1].length : (delta.toString().includes('.') ? delta.toString().split('.')[1].length : 1);
+    next = parseFloat(next.toFixed(Math.max(1, decimals)));
+    input.value = next;
+    onAjusteInput(key, next);
+  }
+
   function toggleAjusteBold(key) {
     if (ajustesLocked) return;
     ajustes[key] = !ajustes[key];
@@ -1527,7 +1643,7 @@
       }
     }
     if (container) {
-      const inputs = container.querySelectorAll('input, select, button[id^="btn-bold-"], button[onclick^="restablecerGrupo"]');
+      const inputs = container.querySelectorAll('input, select, button[id^="btn-bold-"], button[onclick^="restablecerGrupo"], button[onclick^="stepAjuste"]');
       inputs.forEach(inp => {
         inp.disabled = ajustesLocked;
         if (ajustesLocked) {
