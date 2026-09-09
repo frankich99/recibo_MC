@@ -972,7 +972,7 @@
                 </div>
                 <div class="flex items-center gap-1.5 mt-1">
                   <button type="button" onclick="stepAjuste('gapLabelBox', -0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
-                  <input type="range" id="ajuste-gapLabelBox" min="-1.5" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapLabelBox', this.value)" class="flex-1 cursor-pointer">
+                  <input type="range" id="ajuste-gapLabelBox" min="0.4" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapLabelBox', this.value)" class="flex-1 cursor-pointer">
                   <button type="button" onclick="stepAjuste('gapLabelBox', 0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
                 </div>
               </div>
@@ -985,7 +985,7 @@
                 </div>
                 <div class="flex items-center gap-1.5 mt-1">
                   <button type="button" onclick="stepAjuste('gapCampos', -0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
-                  <input type="range" id="ajuste-gapCampos" min="-2.0" max="5.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapCampos', this.value)" class="flex-1 cursor-pointer">
+                  <input type="range" id="ajuste-gapCampos" min="0.8" max="5.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapCampos', this.value)" class="flex-1 cursor-pointer">
                   <button type="button" onclick="stepAjuste('gapCampos', 0.1); highlightPreviewPart('grupo-1');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
                 </div>
               </div>
@@ -2450,9 +2450,11 @@
     const escudoY = a.escudoOffsetY || 0.0;
     const escudoOp = a.escudoOpacity !== undefined ? a.escudoOpacity : 0.12;
 
-    // Espaciados calibrados para ajuste milimétrico continuo (admite valores reducidos y negativos)
-    const gapLbl = a.gapLabelBox !== undefined ? Number(a.gapLabelBox) : 1.5; // Separación etiqueta a borde superior
-    const gapCmp = a.gapCampos !== undefined ? Number(a.gapCampos) : 2.2;     // Separación entre bloques de campos
+    // Espaciados calibrados para ajuste milimétrico continuo (nunca colisionan)
+    const rawGapLbl = a.gapLabelBox !== undefined ? Number(a.gapLabelBox) : 1.2;
+    const gapLbl = Math.max(0.6, rawGapLbl);
+    const rawGapCmp = a.gapCampos !== undefined ? Number(a.gapCampos) : 2.0;
+    const gapCmp = Math.max(1.0, rawGapCmp);
 
     // Ajuste responsive preventivo contra desbordes en textos de contribuyente
     let fitFontNombre = fontG43;
@@ -2493,35 +2495,34 @@
 
     let fontTotalMonto = fSizeImporte;
 
-    // Renderizado seguro y sincronizado de filas de la tabla anti-desborde
+    // Renderizado seguro de filas de la tabla: 3 filas métricas exactas en flexbox
     const rowP = [valP1, valP2, valP3];
     const rowD = [valD1, valD2, valD3];
     const rowI = [fmtI1, fmtI2, fmtI3];
 
-    let maxFilas = 0;
+    const hBodyVal = Number(a.hTablaBody || 18.0);
+    const rowHeightMm = (hBodyVal / 3).toFixed(2);
+
+    let rowsHTML = '';
     for (let i = 0; i < 3; i++) {
-      if (rowP[i] || rowD[i] || rowI[i]) maxFilas = i + 1;
-    }
-
-    let colPartidaHTML = '';
-    let colDescHTML = '';
-    let colImporteHTML = '';
-
-    for (let i = 0; i < maxFilas; i++) {
-      const p = rowP[i] ? rowP[i].trim() : '&nbsp;';
-      const d = rowD[i] ? rowD[i].trim() : '&nbsp;';
+      const p = rowP[i] ? rowP[i].trim() : '';
+      const d = rowD[i] ? rowD[i].trim() : '';
       const rawI = rowI[i] ? rowI[i].trim() : '';
+      const safeI = rawI ? rawI.replace(/S\/\s*/g, 'S/&nbsp;') : '';
 
-      colPartidaHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em;">${p}</div>`;
-      colDescHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em;">${d}</div>`;
-
-      if (rawI) {
-        // Asegurar que S/ y el monto NUNCA se separen en 2 líneas con el tamaño completo unificado
-        const safeI = rawI.replace(/S\/\s*/g, 'S/&nbsp;');
-        colImporteHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; text-align: right;">${safeI}</div>`;
-      } else {
-        colImporteHTML += `<div style="line-height: 1.25; height: 1.25em;">&nbsp;</div>`;
-      }
+      rowsHTML += `
+        <div style="width: 100%; height: ${rowHeightMm}mm; min-height: ${rowHeightMm}mm; max-height: ${rowHeightMm}mm; display: flex; flex-direction: row; align-items: center; box-sizing: border-box; position: relative; z-index: 1;">
+          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0 0.5mm;">
+            ${p || '&nbsp;'}
+          </div>
+          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: flex-start; padding: 0 1.5mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; text-transform: uppercase; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box;">
+            ${d || '&nbsp;'}
+          </div>
+          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; overflow: hidden; white-space: nowrap; box-sizing: border-box;">
+            ${safeI || '&nbsp;'}
+          </div>
+        </div>
+      `;
     }
 
     const escudoHTML = showEscudoFlag ? `
@@ -2610,20 +2611,9 @@
           </div>
 
           <!-- Cuerpo de Tabla (${a.hTablaBody}mm de alto) con Escudo Gris de fondo -->
-          <div data-part="grupo-44" class="transition-all" style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; position: relative; box-sizing: border-box; overflow: hidden; font-family: ${ffG44};">
+          <div data-part="grupo-44" class="transition-all" style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; flex-direction: column; justify-content: flex-start; position: relative; box-sizing: border-box; overflow: hidden; font-family: ${ffG44};">
             ${escudoHTML}
-            <!-- Columna Partida (13mm) -->
-            <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 1mm 0.5mm; text-align: center; line-height: 1.25; color: #000; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; overflow: hidden;">
-              ${colPartidaHTML}
-            </div>
-            <!-- Columna Descripción (59mm) -->
-            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 1mm 1.5mm; text-align: left; line-height: 1.25; color: #000; text-transform: uppercase; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; overflow: hidden;">
-              ${colDescHTML}
-            </div>
-            <!-- Columna Importe (18mm) - Anti-quiebre y anti-desborde -->
-            <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; padding: 1mm 1.2mm; text-align: right; line-height: 1.25; color: #000; position: relative; z-index: 1; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44Val}; overflow: hidden;">
-              ${colImporteHTML}
-            </div>
+            ${rowsHTML}
           </div>
 
           <!-- Pie de Tabla: Son / TOTAL / Monto (6mm de alto: Son 59mm, TOTAL 13mm, Monto 18mm) -->
@@ -3260,9 +3250,13 @@
           onclone: (doc) => {
             const el = doc.getElementById('pdf-sandbox');
             if (el) el.style.opacity = '1';
+            const link = doc.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap';
+            doc.head.appendChild(link);
             const style = doc.createElement('style');
             style.textContent = `
-              * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+              * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; }
               img { display: inline-block !important; vertical-align: middle !important; }
             `;
             doc.head.appendChild(style);
