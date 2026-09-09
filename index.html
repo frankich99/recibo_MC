@@ -2670,23 +2670,9 @@
       fitFontSon = Math.max(5.5, +(fontG44 * Math.max(0.72, 42 / sonStr.length)).toFixed(1));
     }
 
-    // Unificar y respetar el tamaño completo configurado (fontG44) para todos los importes
-    // Solo si el monto excede 12 caracteres (ej: montos gigantes >100,000) se reduce proporcionalmente
-    const allImportes = [fmtI1, fmtI2, fmtI3, totalStr].filter(Boolean);
-    let maxImporteLen = 0;
-    allImportes.forEach(s => {
-      const len = String(s).trim().length;
-      if (len > maxImporteLen) maxImporteLen = len;
-    });
-
+    // Tamaños exactos e independientes: fontG44 para tabla e importes sin reducción
     let fSizeImporte = fontG44;
-    if (maxImporteLen > 14) {
-      fSizeImporte = Math.max(5.8, +(fontG44 * 0.82).toFixed(1));
-    } else if (maxImporteLen > 12) {
-      fSizeImporte = Math.max(6.5, +(fontG44 * 0.90).toFixed(1));
-    }
-
-    let fontTotalMonto = fSizeImporte;
+    let fontTotalMonto = fontG44;
 
     // Renderizado seguro de filas de la tabla: 3 filas métricas exactas en flexbox
     const rowP = [valP1, valP2, valP3];
@@ -2695,34 +2681,8 @@
 
     const hBodyVal = Number(a.hTablaBody || 18.0);
 
-    // Altura dinámica y flujo natural según contenido real:
-    // Al inicio compactos arriba ("texto siempre encima"), y si el texto crece aumenta hacia abajo
-    // mostrando TODO el texto completo sin límites artificiales ni cortes
-    function estimarLineas(txt) {
-      if (!txt) return 0;
-      const str = String(txt).trim();
-      if (!str) return 0;
-      const words = str.split(/\s+/);
-      let lines = 1;
-      let curLen = 0;
-      const maxChars = 30;
-      for (const w of words) {
-        if (w.length > maxChars) {
-          if (curLen > 0) lines++;
-          lines += Math.floor(w.length / maxChars);
-          curLen = w.length % maxChars;
-        } else if (curLen === 0) {
-          curLen = w.length;
-        } else if (curLen + 1 + w.length <= maxChars) {
-          curLen += 1 + w.length;
-        } else {
-          lines++;
-          curLen = w.length;
-        }
-      }
-      return lines;
-    }
-
+    // Flujo natural hacia abajo sin alterar los tamaños configurados:
+    // Los tamaños de texto (fontG44) e Importe (fSizeImporte) son estrictamente independientes y exactos
     const activeRows = [];
     for (let i = 0; i < 3; i++) {
       const p = rowP[i] ? String(rowP[i]).trim() : '';
@@ -2732,27 +2692,7 @@
 
       if (!p && !d && !safeI) continue;
 
-      const lines = estimarLineas(d);
-      activeRows.push({ p, d, safeI, lines });
-    }
-
-    const totalLines = activeRows.reduce((acc, r) => acc + Math.max(1, r.lines), 0);
-
-    let effFontG44 = fontG44;
-    let effFontVal = fSizeImporte;
-    let effLineHeight = 1.15;
-    let effPadTop = 0.4;
-    let effPadBottom = 0.3;
-
-    // Si el texto total supera la capacidad normal (~6 líneas), auto-escalar suavemente
-    // para garantizar que TODO el texto sea visible sin truncarse y dentro de los 18mm
-    if (totalLines > 6) {
-      const scale = Math.max(0.65, 6.0 / totalLines);
-      effFontG44 = +(fontG44 * scale).toFixed(1);
-      effFontVal = +(fSizeImporte * scale).toFixed(1);
-      effLineHeight = +(1.15 * Math.max(0.85, scale)).toFixed(2);
-      effPadTop = +(0.4 * scale).toFixed(2);
-      effPadBottom = +(0.3 * scale).toFixed(2);
+      activeRows.push({ p, d, safeI });
     }
 
     let rowsHTML = '';
@@ -2761,13 +2701,13 @@
 
       rowsHTML += `
         <div style="width: 100%; display: flex; flex-direction: row; align-items: flex-start; box-sizing: border-box; position: relative; z-index: 1; color: #000; font-family: ${ffG44}; margin: 0; padding: 0;">
-          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; display: flex; align-items: flex-start; justify-content: center; font-size: ${effFontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: ${effPadTop}mm 0.5mm ${effPadBottom}mm 0.5mm; line-height: ${effLineHeight};">
+          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; display: flex; align-items: flex-start; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0.4mm 0.5mm 0.2mm 0.5mm; line-height: 1.15;">
             ${p || '&nbsp;'}
           </div>
-          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; display: flex; align-items: flex-start; justify-content: flex-start; padding: ${effPadTop}mm 1.5mm ${effPadBottom}mm 1.5mm; font-size: ${effFontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; white-space: normal; word-break: break-word; line-height: ${effLineHeight}; box-sizing: border-box;">
+          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; display: flex; align-items: flex-start; justify-content: flex-start; padding: 0.4mm 1.5mm 0.2mm 1.5mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; white-space: normal; word-break: break-word; line-height: 1.15; box-sizing: border-box;">
             ${d || '&nbsp;'}
           </div>
-          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; display: flex; align-items: flex-start; justify-content: flex-end; padding: ${effPadTop}mm 1.2mm ${effPadBottom}mm 1.2mm; font-size: ${effFontVal}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box; line-height: ${effLineHeight};">
+          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; display: flex; align-items: flex-start; justify-content: flex-end; padding: 0.4mm 1.2mm 0.2mm 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box; line-height: 1.15;">
             ${safeI || '&nbsp;'}
           </div>
         </div>
