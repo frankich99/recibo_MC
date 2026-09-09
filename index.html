@@ -707,7 +707,10 @@
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <button type="button" id="btn-toggle-lock" onclick="toggleLockAjustes()" class="px-2.5 py-1 rounded-lg text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white">
+        <button type="button" onclick="fijarComoPredeterminado()" class="px-3 py-1.5 rounded-lg text-xs font-black bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1.5 cursor-pointer transition" title="Guardar ajustes actuales como el valor predeterminado al restablecer">
+          <span>⭐</span> Guardar como Predeterminado
+        </button>
+        <button type="button" id="btn-toggle-lock" onclick="toggleLockAjustes()" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white">
           <span id="lock-icon">🔓</span>
           <span id="lock-text">Desbloqueado</span>
         </button>
@@ -1042,6 +1045,19 @@
                 </div>
               </div>
 
+              <!-- 6b. Alto de Fila de Tabla (Separación entre Ítems) -->
+              <div class="p-2.5 bg-emerald-50/80 rounded-xl border border-emerald-300 hover:border-emerald-500 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-44')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-black text-emerald-950 text-[10.5px]">Alto Fila Tabla (Ítems):</span>
+                  <span id="val-hFilaTabla" class="font-receipt font-black bg-emerald-200 px-1.5 py-0.5 rounded text-[10px] text-emerald-950">4.2 mm</span>
+                </div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <button type="button" onclick="stepAjuste('hFilaTabla', -0.2); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
+                  <input type="range" id="ajuste-hFilaTabla" min="3.0" max="8.0" step="0.2" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('hFilaTabla', this.value)" class="flex-1 cursor-pointer">
+                  <button type="button" onclick="stepAjuste('hFilaTabla', 0.2); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
+              </div>
+
               <!-- 7. Ancho Cajetín Nº / Fecha / Serie -->
               <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
                 <div class="flex items-center justify-between mb-1">
@@ -1245,14 +1261,23 @@
     </div>
 
     <!-- Footer Modal -->
-    <div class="bg-slate-100 px-5 py-2.5 flex items-center justify-between border-t border-slate-200 flex-shrink-0">
-      <button type="button" onclick="restablecerAjustesFabrica()" class="px-3.5 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition cursor-pointer text-xs flex items-center gap-1">
-        <span>🔄</span> Restablecer Fábrica
-      </button>
+    <div class="bg-slate-100 px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 flex-shrink-0">
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="fijarComoPredeterminado()" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-xl shadow-xs transition cursor-pointer text-xs flex items-center gap-1.5" title="Guardar esta configuración para que sea la predeterminada al restablecer">
+          <span>⭐</span> Guardar como Predeterminado
+        </button>
+        <button type="button" onclick="restablecerAjustesPredeterminados()" class="px-3 py-1.5 bg-white hover:bg-slate-200 text-slate-800 font-bold rounded-xl border border-slate-300 transition cursor-pointer text-xs flex items-center gap-1" title="Restablecer a tu configuración predeterminada guardada">
+          <span>↺</span> Restablecer Predeterminado
+        </button>
+        <button type="button" onclick="restablecerAjustesFabrica()" class="px-2.5 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-600 font-semibold rounded-xl transition cursor-pointer text-xs flex items-center gap-1" title="Restablecer a los valores originales de fábrica">
+          <span>🏭</span> Fábrica
+        </button>
+      </div>
 
       <div class="flex items-center gap-3">
+        <span id="notif-ajustes-feedback" class="hidden text-xs font-bold text-emerald-700 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-lg"></span>
         <span class="text-[11px] text-slate-500 hidden sm:inline flex items-center gap-1">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Resaltado verde al pasar el cursor o editar
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Resaltado verde al editar
         </span>
         <button type="button" onclick="cerrarModalAjustes()" class="px-5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white font-black rounded-xl shadow transition cursor-pointer text-xs">
           Listo / Aplicar
@@ -1323,7 +1348,6 @@
   let reciboEditandoIdx = 0;
 
   // ======================== CONFIGURACIÓN Y CALIBRADOR VISUAL ========================
-  // ======================== CONFIGURACIÓN Y CALIBRADOR VISUAL ========================
   const AJUSTES_DEFAULT = {
     // 1. Etiquetas Contribuyente (Nombre o Razón Social:, Domicilio Fiscal:, Observaciones:)
     fontG1_LabelsContrib: 8.0,
@@ -1364,15 +1388,16 @@
     fontG44_TablaDatos: 7.5,
     boldG44_TablaDatos: false, // Negrita General (partidas, descripciones, texto Son)
     boldG44_Valores: true,     // Negrita Solo Datos / Valores (importes numéricos y total)
-    ffG44_TablaDatos: "'Courier Prime', Courier, monospace",
+    ffG44_TablaDatos: "Inter, sans-serif",
 
     // Dimensiones y espaciados (mm) - Calibrados para NUNCA colisionar ni solaparse
-    gapLabelBox: 1.5,     // 1.5 mm espacio limpio entre etiqueta y borde superior de caja
-    gapCampos: 2.2,       // 2.2 mm separación entre bloques de campos
+    gapLabelBox: 1.2,     // 1.2 mm espacio limpio entre etiqueta y borde superior de caja
+    gapCampos: 2.0,       // 2.0 mm separación entre bloques de campos
     hNombre: 5.5,         // 5.5 mm alto caja Nombre
     hDomicilio: 5.5,      // 5.5 mm alto caja Domicilio
     hObs: 8.5,            // 8.5 mm alto caja Observaciones
     hTablaBody: 18.0,     // 18.0 mm alto cuerpo tabla
+    hFilaTabla: 4.2,      // 4.2 mm alto de fila compacta (sin separación excesiva entre ítems)
     wBoxNumFecha: 41.0,   // 41.0 mm ancho cajetín
     hHeader: 16.0,        // 16.0 mm alto encabezado
     borderWidth: 1.0,     // px espesor bordes
@@ -1392,8 +1417,69 @@
     filigranaOpacity: 0.26 // 0.05 - 0.50
   };
 
+  function getPredeterminados() {
+    try {
+      const custom = localStorage.getItem('recibo_mc_ajustes_custom_default');
+      if (custom) {
+        return { ...AJUSTES_DEFAULT, ...JSON.parse(custom) };
+      }
+    } catch(e) {}
+    return { ...AJUSTES_DEFAULT };
+  }
+
+  function mostrarNotificacionAjustes(msg) {
+    const el = document.getElementById('notif-ajustes-feedback');
+    if (el) {
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      clearTimeout(window._notifAjustesTimer);
+      window._notifAjustesTimer = setTimeout(() => {
+        el.classList.add('hidden');
+      }, 4000);
+    } else {
+      alert(msg);
+    }
+  }
+
+  function fijarComoPredeterminado() {
+    try {
+      localStorage.setItem('recibo_mc_ajustes_custom_default', JSON.stringify(ajustes));
+      localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
+      mostrarNotificacionAjustes("⭐ ¡Ajustes guardados como PREDETERMINADO!");
+    } catch(e) {
+      alert("No se pudo guardar como predeterminado: " + e.message);
+    }
+  }
+
+  function restablecerAjustesPredeterminados() {
+    if (ajustesLocked) {
+      alert("Los ajustes están bloqueados. Desbloquéalos primero con el botón 🔒.");
+      return;
+    }
+    const def = getPredeterminados();
+    ajustes = { ...def };
+    try {
+      localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
+    } catch(e) {}
+    sincronizarValoresAjustesUI();
+    renderAjustesLiveSlip();
+    triggerLivePreview();
+    mostrarNotificacionAjustes("↺ Restablecido a tu configuración predeterminada.");
+  }
+
   let ajustesLocked = localStorage.getItem('recibo_mc_ajustes_locked') === 'true';
-  let ajustes = { ...AJUSTES_DEFAULT };
+
+  // Si el usuario ya tenía ajustes personalizados guardados previamente en el navegador, adoptarlos como predeterminado
+  try {
+    const savedPrev = localStorage.getItem('recibo_mc_ajustes');
+    const customDef = localStorage.getItem('recibo_mc_ajustes_custom_default');
+    if (savedPrev && !customDef) {
+      localStorage.setItem('recibo_mc_ajustes_custom_default', savedPrev);
+    }
+  } catch(e) {}
+
+  const baseDefaults = getPredeterminados();
+  let ajustes = { ...baseDefaults };
   try {
     const savedAjustes = localStorage.getItem('recibo_mc_ajustes');
     if (savedAjustes) {
@@ -1442,18 +1528,21 @@
       if (parsed.fontTablaDesc && !parsed.fontG44_TablaDatos) {
         parsed.fontG44_TablaDatos = parsed.fontTablaDesc;
         parsed.boldG44_TablaDatos = parsed.boldTablaDesc !== undefined ? parsed.boldTablaDesc : false;
-        parsed.ffG44_TablaDatos = parsed.ffTablaNums || "'Courier Prime', Courier, monospace";
+        parsed.ffG44_TablaDatos = parsed.ffTablaNums || "Inter, sans-serif";
       }
       if (parsed.boldG44_Valores === undefined) {
         parsed.boldG44_Valores = true;
       }
+      if (parsed.hFilaTabla === undefined) {
+        parsed.hFilaTabla = baseDefaults.hFilaTabla || 4.2;
+      }
       if (parsed.gapLabelBox === undefined) {
-        parsed.gapLabelBox = 1.5;
+        parsed.gapLabelBox = 1.2;
       }
       if (parsed.gapCampos === undefined) {
-        parsed.gapCampos = 2.2;
+        parsed.gapCampos = 2.0;
       }
-      ajustes = { ...AJUSTES_DEFAULT, ...parsed };
+      ajustes = { ...baseDefaults, ...parsed };
     }
   } catch(e) {
     console.warn("Error cargando ajustes:", e);
@@ -1711,7 +1800,7 @@
       alert("Los ajustes están bloqueados. Desbloquéalos primero.");
       return;
     }
-    const def = AJUSTES_DEFAULT;
+    const def = getPredeterminados();
     if (grupo === 'g1') {
       ajustes.fontG1_LabelsContrib = def.fontG1_LabelsContrib;
       ajustes.boldG1_LabelsContrib = def.boldG1_LabelsContrib;
@@ -1759,6 +1848,7 @@
       ajustes.hDomicilio = def.hDomicilio;
       ajustes.hObs = def.hObs;
       ajustes.hTablaBody = def.hTablaBody;
+      ajustes.hFilaTabla = def.hFilaTabla !== undefined ? def.hFilaTabla : 4.2;
       ajustes.wBoxNumFecha = def.wBoxNumFecha;
       ajustes.hHeader = def.hHeader;
       ajustes.borderWidth = def.borderWidth;
@@ -1778,6 +1868,7 @@
     sincronizarValoresAjustesUI();
     renderAjustesLiveSlip();
     triggerLivePreview();
+    mostrarNotificacionAjustes(`↺ Grupo "${grupo}" restablecido a su predeterminado.`);
   }
 
   function restablecerAjustesFabrica() {
@@ -1785,13 +1876,18 @@
       alert("Los ajustes están bloqueados. Desbloquéalos primero con el botón 🔒.");
       return;
     }
+    if (!confirm("¿Deseas restablecer todos los ajustes a los valores iniciales originales de FÁBRICA?")) {
+      return;
+    }
     ajustes = { ...AJUSTES_DEFAULT };
     try {
       localStorage.removeItem('recibo_mc_ajustes');
+      localStorage.removeItem('recibo_mc_ajustes_custom_default');
     } catch(e) {}
     sincronizarValoresAjustesUI();
     renderAjustesLiveSlip();
     triggerLivePreview();
+    mostrarNotificacionAjustes("🏭 Ajustes restablecidos a fábrica original.");
   }
 
   function abrirModalAjustes() {
@@ -2499,7 +2595,7 @@
     const rowI = [fmtI1, fmtI2, fmtI3];
 
     const hBodyVal = Number(a.hTablaBody || 18.0);
-    const rowHeightMm = (hBodyVal / 3).toFixed(2);
+    const rowHeightMm = Number(a.hFilaTabla || 4.2).toFixed(2);
 
     let rowsHTML = '';
     for (let i = 0; i < 3; i++) {
@@ -2611,6 +2707,12 @@
           <!-- Cuerpo de Tabla (${a.hTablaBody}mm de alto) con Escudo Gris de fondo -->
           <div data-part="grupo-44" class="transition-all" style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; flex-direction: column; justify-content: flex-start; position: relative; box-sizing: border-box; overflow: hidden; font-family: ${ffG44};">
             ${escudoHTML}
+            <!-- Guías verticales continuas de columnas (13mm, 59mm, 18mm) de borde a borde -->
+            <div style="position: absolute; inset: 0; display: flex; flex-direction: row; pointer-events: none; z-index: 0; box-sizing: border-box;">
+              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; box-sizing: border-box;"></div>
+              <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; box-sizing: border-box;"></div>
+              <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; box-sizing: border-box;"></div>
+            </div>
             ${rowsHTML}
           </div>
 
@@ -3318,6 +3420,8 @@
   window.setZoomSlipAjustes = setZoomSlipAjustes;
   window.autoAjustarZoomSlip = autoAjustarZoomSlip;
   window.restablecerGrupo = restablecerGrupo;
+  window.fijarComoPredeterminado = fijarComoPredeterminado;
+  window.restablecerAjustesPredeterminados = restablecerAjustesPredeterminados;
   window.highlightPreviewPart = highlightPreviewPart;
   window.unhighlightPreviewPart = unhighlightPreviewPart;
 
