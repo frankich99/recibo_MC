@@ -533,47 +533,47 @@
   <!-- ================================================================= -->
   <div id="view-preview" class="w-full min-h-screen pt-1 px-2 pb-8 hidden flex-col items-center bg-slate-900 rounded-2xl border border-slate-800">
     
-    <!-- Toolbar de Vista Previa Compacta (2 Filas Lineales sin Select) -->
-    <div class="w-full bg-slate-800/95 backdrop-blur border border-slate-700 text-white rounded-xl shadow-md p-2 mb-2 flex flex-col gap-1.5 sticky top-0 z-40">
+    <!-- Toolbar de Vista Previa Compacta Responsiva -->
+    <div class="w-full bg-slate-800/95 backdrop-blur border border-slate-700 text-white rounded-xl shadow-md p-2 mb-2 flex flex-col gap-2 sticky top-0 z-40">
       
-      <!-- Fila 1: Encabezado, Info y Descarga Directa -->
+      <!-- Fila 1: Back, Info, Ajustes y Descarga Directa -->
       <div class="flex items-center justify-between gap-2 w-full">
-        <div class="flex items-center gap-2">
-          <button type="button" id="preview-back-btn" onclick="volverAFormulario()" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-xs font-bold text-white rounded-lg border border-slate-600 transition flex items-center gap-1 cursor-pointer">
+        <div class="flex items-center gap-1.5 min-w-0">
+          <button type="button" id="preview-back-btn" onclick="volverAFormulario()" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-bold text-white rounded-lg border border-slate-600 transition flex items-center gap-1 cursor-pointer flex-shrink-0">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-            <span class="hidden sm:inline">Volver</span>
+            <span class="hidden xs:inline sm:inline">Volver</span>
           </button>
-          <div class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="text-xs font-black text-sky-400 uppercase tracking-tight whitespace-nowrap">VISTA PREVIA</span>
-            <span class="text-[10px] text-slate-300 font-bold bg-slate-900 px-2 py-0.5 rounded border border-slate-700 whitespace-nowrap" id="preview-info"></span>
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+            <span class="text-xs font-black text-sky-400 uppercase tracking-tight truncate hidden sm:inline">VISTA PREVIA</span>
+            <span class="text-[10px] text-slate-300 font-bold bg-slate-900 px-2 py-0.5 rounded border border-slate-700 truncate" id="preview-info"></span>
           </div>
         </div>
 
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="abrirModalAjustes()" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 font-bold text-xs text-amber-300 hover:text-white rounded-lg border border-slate-600 shadow transition flex items-center gap-1.5 cursor-pointer flex-shrink-0 whitespace-nowrap" title="Calibrar fuentes y medidas">
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          <button type="button" onclick="abrirModalAjustes()" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 font-bold text-xs text-amber-300 hover:text-white rounded-lg border border-slate-600 shadow transition flex items-center gap-1 cursor-pointer" title="Calibrar fuentes y medidas">
             <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-            <span>Ajustes</span>
+            <span class="hidden xs:inline sm:inline">Ajustes</span>
           </button>
-          <button type="button" onclick="descargarPDF()" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 font-black text-xs text-white rounded-lg shadow transition flex items-center gap-1.5 border border-emerald-400 cursor-pointer flex-shrink-0 whitespace-nowrap">
+          <button type="button" onclick="descargarPDF()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 font-black text-xs text-white rounded-lg shadow transition flex items-center gap-1.5 border border-emerald-400 cursor-pointer">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            <span>DESCARGAR PDF</span>
+            <span>PDF</span><span class="hidden sm:inline"> DESCARGAR</span>
           </button>
         </div>
       </div>
 
-      <!-- Fila 2: Selector Lineal de Papel (Sin select) y Zoom -->
-      <div class="flex items-center justify-between gap-2 w-full pt-1.5 border-t border-slate-700/60 overflow-x-auto">
+      <!-- Fila 2: Selector Lineal de Papel y Zoom Responsivo -->
+      <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-1.5 w-full pt-1.5 border-t border-slate-700/60">
         <!-- Papeles Lineales en Botones -->
-        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-700 text-xs flex-shrink-0">
-          <span class="text-[10px] font-bold text-slate-400 uppercase px-1.5 hidden md:inline">Papel:</span>
-          <button type="button" onclick="setTipoHoja('ajustado')" id="preview-papel-ajustado" class="preview-papel-btn px-2.5 py-1 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer transition shadow">Ajustado (21.2×30.6 cm)</button>
-          <button type="button" onclick="setTipoHoja('a4')" id="preview-papel-a4" class="preview-papel-btn px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer transition">A4 (21.0×29.7 cm)</button>
-          <button type="button" onclick="setTipoHoja('tira')" id="preview-papel-tira" class="preview-papel-btn px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer transition">Tira (21.2×10.2 cm)</button>
+        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-700 text-xs flex-1 sm:flex-initial overflow-x-auto">
+          <span class="text-[10px] font-bold text-slate-400 uppercase px-1 hidden md:inline">Papel:</span>
+          <button type="button" onclick="setTipoHoja('ajustado')" id="preview-papel-ajustado" class="preview-papel-btn flex-1 sm:flex-none px-2 sm:px-2.5 py-1 rounded font-bold bg-sky-600 text-white text-[11px] sm:text-xs cursor-pointer transition shadow text-center whitespace-nowrap">Ajustado</button>
+          <button type="button" onclick="setTipoHoja('a4')" id="preview-papel-a4" class="preview-papel-btn flex-1 sm:flex-none px-2 sm:px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-[11px] sm:text-xs cursor-pointer transition text-center whitespace-nowrap">A4</button>
+          <button type="button" onclick="setTipoHoja('tira')" id="preview-papel-tira" class="preview-papel-btn flex-1 sm:flex-none px-2 sm:px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-[11px] sm:text-xs cursor-pointer transition text-center whitespace-nowrap">Tira</button>
         </div>
 
         <!-- Controles de Zoom Lineales -->
-        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-700 text-xs flex-shrink-0">
+        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-700 text-xs flex-shrink-0 ml-auto">
           <span class="text-[10px] font-bold text-slate-400 uppercase px-1 hidden sm:inline">Zoom:</span>
           <button type="button" onclick="setZoom('auto')" class="zoom-btn px-2 py-0.5 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer" id="zoom-auto" title="Ajuste automático a ancho completo">Auto</button>
           <button type="button" onclick="setZoom(1.0)" class="zoom-btn px-1.5 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer" id="zoom-100">100%</button>
@@ -695,24 +695,24 @@
   <div class="bg-white text-slate-900 border border-slate-700 w-full max-w-[1580px] h-[98vh] sm:h-[95vh] max-h-[98vh] sm:max-h-[95vh] rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-150">
     
     <!-- Top Header -->
-    <div class="bg-slate-900 text-white px-3 sm:px-6 py-2 sm:py-3 flex items-center justify-between flex-shrink-0 border-b border-slate-800 gap-2">
-      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-        <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+    <div class="bg-slate-900 text-white px-2.5 sm:px-6 py-2 sm:py-3 flex items-center justify-between flex-shrink-0 border-b border-slate-800 gap-1.5">
+      <div class="flex items-center gap-1.5 sm:gap-3 min-w-0">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
         <div class="min-w-0">
-          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wide flex items-center gap-1.5 sm:gap-2">
-            <span class="truncate">Ajustes & Calibrador</span>
-            <span class="text-[9px] sm:text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-1.5 sm:px-2 py-0.5 rounded-full font-bold hidden xs:inline sm:inline">1:1 Vivo</span>
+          <h3 class="text-xs sm:text-sm font-black uppercase tracking-wide flex items-center gap-1.5">
+            <span class="truncate">Ajustes</span>
+            <span class="text-[9px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-1.5 py-0.5 rounded-full font-bold hidden xs:inline sm:inline">1:1 Vivo</span>
           </h3>
-          <p class="text-[9px] sm:text-[10px] text-slate-400 truncate hidden sm:block">Edita tamaños, negritas, tipografía y dimensiones en vivo</p>
+          <p class="text-[9px] text-slate-400 truncate hidden sm:block">Calibración de medidas y fuentes</p>
         </div>
       </div>
-      <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+      <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
         <button type="button" onclick="fijarComoPredeterminado()" class="px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-black bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1 cursor-pointer transition whitespace-nowrap" title="Guardar ajustes actuales como el valor predeterminado al restablecer">
-          <span>⭐</span> <span class="hidden sm:inline">Guardar </span><span>Predeterminado</span>
+          <span>⭐</span> <span class="hidden sm:inline">Guardar </span><span>Predet.</span>
         </button>
         <button type="button" id="btn-toggle-lock" onclick="toggleLockAjustes()" class="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white whitespace-nowrap">
           <span id="lock-icon">🔓</span>
-          <span id="lock-text">Desbloqueado</span>
+          <span id="lock-text" class="hidden xs:inline sm:inline">Desbloqueado</span>
         </button>
         <button type="button" onclick="cerrarModalAjustes()" class="text-slate-400 hover:text-white text-base sm:text-lg font-bold cursor-pointer p-1">✕</button>
       </div>
@@ -720,10 +720,10 @@
 
     <!-- Barra de Selección de Vista para Móvil / Tablet (< 1024px) -->
     <div class="flex lg:hidden bg-slate-900 border-b border-slate-800 p-1.5 gap-1.5 flex-shrink-0">
-      <button type="button" id="btn-modal-view-controls" onclick="setModalMobileView('controls')" class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-black bg-sky-600 text-white flex items-center justify-center gap-1.5 shadow transition">
+      <button type="button" id="btn-modal-view-controls" onclick="setModalMobileView('controls')" class="flex-1 py-1.5 px-2 rounded-lg text-xs font-black bg-sky-600 text-white flex items-center justify-center gap-1.5 shadow transition">
         <span>⚙️</span> <span>Controles</span>
       </button>
-      <button type="button" id="btn-modal-view-preview" onclick="setModalMobileView('preview')" class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center gap-1.5 transition">
+      <button type="button" id="btn-modal-view-preview" onclick="setModalMobileView('preview')" class="flex-1 py-1.5 px-2 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center gap-1.5 transition">
         <span>👁️</span> <span>Ver Recibo 1:1</span>
       </button>
     </div>
@@ -740,16 +740,16 @@
           <span class="font-medium text-[11px] leading-tight"><strong>Ajustes Bloqueados:</strong> Los controles están protegidos. Haz clic en el botón <strong>"Bloqueado"</strong> arriba para editarlos.</span>
         </div>
 
-        <!-- Pestañas Superiores (3 Pestañas Claras) -->
-        <div class="flex items-center border-b border-slate-200 bg-white px-2 pt-2 gap-1 flex-shrink-0 overflow-x-auto">
-          <button type="button" id="tab-btn-tipografia" onclick="setAjustesTab('tipografia')" class="ajustes-tab-btn px-2.5 sm:px-3 py-1.5 font-black text-xs rounded-t-lg border-b-2 border-sky-600 text-sky-600 flex items-center gap-1 transition cursor-pointer bg-sky-50/50 whitespace-nowrap">
-            <span>🎨</span> <span>Tipografía & Tamaños</span>
+        <!-- Pestañas Superiores (3 Pestañas en Grid para adaptarse a todo ancho móvil) -->
+        <div class="grid grid-cols-3 border-b border-slate-200 bg-white p-1 gap-1 flex-shrink-0">
+          <button type="button" id="tab-btn-tipografia" onclick="setAjustesTab('tipografia')" class="ajustes-tab-btn py-1.5 px-1 font-black text-[11px] sm:text-xs rounded-lg border-b-2 border-sky-600 text-sky-600 flex items-center justify-center gap-1 transition cursor-pointer bg-sky-50/50 truncate">
+            <span>🎨</span> <span class="truncate">Tipos</span>
           </button>
-          <button type="button" id="tab-btn-medidas" onclick="setAjustesTab('medidas')" class="ajustes-tab-btn px-2.5 sm:px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1 transition cursor-pointer whitespace-nowrap">
-            <span>📏</span> <span>Medidas & Espacios</span>
+          <button type="button" id="tab-btn-medidas" onclick="setAjustesTab('medidas')" class="ajustes-tab-btn py-1.5 px-1 font-bold text-[11px] sm:text-xs text-slate-500 hover:text-slate-900 flex items-center justify-center gap-1 transition cursor-pointer truncate">
+            <span>📏</span> <span class="truncate">Medidas</span>
           </button>
-          <button type="button" id="tab-btn-logos" onclick="setAjustesTab('logos')" class="ajustes-tab-btn px-2.5 sm:px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1 transition cursor-pointer whitespace-nowrap">
-            <span>🖼️</span> <span>Logo & Filigrana</span>
+          <button type="button" id="tab-btn-logos" onclick="setAjustesTab('logos')" class="ajustes-tab-btn py-1.5 px-1 font-bold text-[11px] sm:text-xs text-slate-500 hover:text-slate-900 flex items-center justify-center gap-1 transition cursor-pointer truncate">
+            <span>🖼️</span> <span class="truncate">Logos</span>
           </button>
         </div>
 
@@ -1264,22 +1264,22 @@
       <div id="ajustes-preview-side" class="hidden lg:flex flex-1 bg-slate-950 flex-col overflow-hidden relative">
         
         <!-- Mini barra de estado y zoom del slip individual -->
-        <div class="bg-slate-900/95 px-3 sm:px-4 py-2 flex items-center justify-between border-b border-slate-800 text-xs text-slate-300 flex-shrink-0 gap-2">
-          <div class="flex items-center gap-2 min-w-0">
-            <span class="font-bold text-white flex items-center gap-1.5 truncate">
-              <span>📄</span> <span class="hidden sm:inline">Recibo Individual </span><span>(10.6 × 10.2 cm)</span>
+        <div class="bg-slate-900/95 px-2.5 sm:px-4 py-2 flex items-center justify-between border-b border-slate-800 text-xs text-slate-300 flex-shrink-0 gap-1.5">
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="font-bold text-white text-xs truncate">
+              📄 Recibo 10.6cm
             </span>
-            <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 bg-emerald-950/50 border border-emerald-800/60 px-2 py-0.5 rounded-full flex-shrink-0">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> <span>En Vivo</span>
+            <span class="text-[9.5px] text-emerald-400 font-bold bg-emerald-950/50 border border-emerald-800/60 px-1.5 py-0.5 rounded-full flex-shrink-0 hidden xs:inline sm:inline">
+              Vivo
             </span>
           </div>
           
-          <div class="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
+          <div class="flex items-center gap-1 flex-shrink-0">
             <button type="button" onclick="setZoomSlipAjustes(-0.15)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold text-xs cursor-pointer transition" title="Alejar">➖</button>
-            <span id="ajustes-zoom-val" class="font-receipt font-bold text-[11px] sm:text-xs text-amber-300 w-12 sm:w-14 text-center bg-slate-950 px-1 py-1 rounded-lg border border-slate-800">165%</span>
+            <span id="ajustes-zoom-val" class="font-receipt font-bold text-[11px] text-amber-300 w-11 text-center bg-slate-950 px-0.5 py-1 rounded-lg border border-slate-800">165%</span>
             <button type="button" onclick="setZoomSlipAjustes(0.15)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold text-xs cursor-pointer transition" title="Acercar">➕</button>
-            <button type="button" onclick="autoAjustarZoomSlip()" class="px-2 sm:px-2.5 py-1 bg-sky-700 hover:bg-sky-600 text-white text-[11px] sm:text-xs font-bold rounded-lg cursor-pointer transition flex items-center gap-1" title="Ajustar automáticamente al tamaño de la pantalla">📐 Auto</button>
-            <button type="button" onclick="setZoomSlipAjustes(0)" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] sm:text-xs rounded-lg cursor-pointer transition" title="Restablecer zoom a 100%">1:1</button>
+            <button type="button" onclick="autoAjustarZoomSlip()" class="px-2 py-1 bg-sky-700 hover:bg-sky-600 text-white text-[11px] font-bold rounded-lg cursor-pointer transition" title="Ajustar automáticamente al tamaño de la pantalla">📐 Auto</button>
+            <button type="button" onclick="setZoomSlipAjustes(0)" class="px-1.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] rounded-lg cursor-pointer transition" title="Restablecer zoom a 100%">1:1</button>
           </div>
         </div>
 
@@ -1296,26 +1296,23 @@
 
     </div>
 
-    <!-- Footer Modal -->
-    <div class="bg-slate-100 px-3 sm:px-6 py-2 sm:py-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 flex-shrink-0">
-      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-        <button type="button" onclick="fijarComoPredeterminado()" class="px-2.5 sm:px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-xl shadow-xs transition cursor-pointer text-xs flex items-center gap-1" title="Guardar esta configuración para que sea la predeterminada al restablecer">
-          <span>⭐</span> <span class="hidden sm:inline">Guardar </span><span>Predeterminado</span>
+    <!-- Footer Modal Responsivo (2x2 en móviles, 1 línea en escritorio) -->
+    <div class="bg-slate-100 px-2.5 sm:px-6 py-2 sm:py-2.5 border-t border-slate-200 flex-shrink-0">
+      <div class="grid grid-cols-2 sm:flex sm:items-center sm:justify-between gap-1.5 sm:gap-2">
+        <button type="button" onclick="fijarComoPredeterminado()" class="px-2 sm:px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-xl shadow-xs transition cursor-pointer text-xs flex items-center justify-center gap-1" title="Guardar esta configuración para que sea la predeterminada al restablecer">
+          <span>⭐</span> <span>Predeterminado</span>
         </button>
-        <button type="button" onclick="restablecerAjustesPredeterminados()" class="px-2.5 sm:px-3 py-1.5 bg-white hover:bg-slate-200 text-slate-800 font-bold rounded-xl border border-slate-300 transition cursor-pointer text-xs flex items-center gap-1" title="Restablecer a tu configuración predeterminada guardada">
+        <button type="button" onclick="restablecerAjustesPredeterminados()" class="px-2 sm:px-3 py-2 bg-white hover:bg-slate-200 text-slate-800 font-bold rounded-xl border border-slate-300 transition cursor-pointer text-xs flex items-center justify-center gap-1" title="Restablecer a tu configuración predeterminada guardada">
           <span>↺</span> <span>Restablecer</span>
         </button>
-        <button type="button" onclick="restablecerAjustesFabrica()" class="px-2 sm:px-2.5 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-600 font-semibold rounded-xl transition cursor-pointer text-xs flex items-center gap-1" title="Restablecer a los valores originales de fábrica">
-          <span>🏭</span> <span class="hidden xs:inline sm:inline">Fábrica</span>
+        <button type="button" onclick="restablecerAjustesFabrica()" class="px-2 sm:px-2.5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-600 font-semibold rounded-xl transition cursor-pointer text-xs flex items-center justify-center gap-1" title="Restablecer a los valores originales de fábrica">
+          <span>🏭</span> <span>Fábrica</span>
+        </button>
+        <button type="button" onclick="cerrarModalAjustes()" class="px-3 sm:px-5 py-2 bg-sky-600 hover:bg-sky-500 text-white font-black rounded-xl shadow transition cursor-pointer text-xs flex items-center justify-center gap-1">
+          <span>Listo / Aplicar</span>
         </button>
       </div>
-
-      <div class="flex items-center gap-2 sm:gap-3">
-        <span id="notif-ajustes-feedback" class="hidden text-[11px] sm:text-xs font-bold text-emerald-700 bg-emerald-100 border border-emerald-300 px-2 py-0.5 sm:py-1 rounded-lg"></span>
-        <button type="button" onclick="cerrarModalAjustes()" class="px-4 sm:px-5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white font-black rounded-xl shadow transition cursor-pointer text-xs">
-          Listo / Aplicar
-        </button>
-      </div>
+      <div id="notif-ajustes-feedback" class="hidden mt-1.5 text-center text-[11px] font-bold text-emerald-700 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-lg"></div>
     </div>
 
   </div>
@@ -3228,7 +3225,11 @@
     vp.classList.add('flex');
     const btnNav = document.getElementById('btn-header-preview');
     if (btnNav) btnNav.classList.add('hidden');
-    applyZoom();
+    if (isAutoZoom) {
+      autoAjustarZoom();
+    } else {
+      applyZoom();
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
@@ -3251,7 +3252,7 @@
     const viewPreview = document.getElementById('view-preview');
     if (!container || !viewPreview) return;
 
-    const availableWidth = Math.max(50, viewPreview.clientWidth - 20);
+    const availableWidth = Math.max(50, viewPreview.clientWidth - 16);
     const tirasPorPag = getTirasPorPagina();
     const dims = getPageDimensions(Math.min(getTotalRecibos(), tirasPorPag));
     const pageWidthPx = dims.widthMm * 96 / 25.4;
@@ -3259,7 +3260,7 @@
     if (availableWidth > 50 && pageWidthPx > 50) {
       let z = (availableWidth / pageWidthPx) * 0.985;
       z = Math.floor(z * 100) / 100;
-      z = Math.max(0.40, Math.min(1.5, z));
+      z = Math.max(0.25, Math.min(1.5, z));
       currentZoom = z;
       applyZoom();
       updateZoomButtons('auto');
@@ -3320,6 +3321,10 @@
     }
     if (isAutoZoom && (layoutMode === 'paralelo' || currentScreen === 'preview')) {
       autoAjustarZoom();
+    }
+    const modalAjustes = document.getElementById('modal-ajustes');
+    if (modalAjustes && !modalAjustes.classList.contains('hidden')) {
+      autoAjustarZoomSlip();
     }
   });
 
