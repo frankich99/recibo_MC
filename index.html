@@ -919,7 +919,7 @@
                 <span class="font-black text-emerald-900 text-[11px]">Distancia Etiqueta a Cajetín (Seguridad Anti-Solape):</span>
                 <span id="val-gapLabelBox" class="font-receipt font-black bg-emerald-200 px-2 py-0.5 rounded text-[10px] text-emerald-950">1.5 mm (0.15 cm)</span>
               </div>
-              <input type="range" id="ajuste-gapLabelBox" min="0.0" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapLabelBox', this.value)" class="w-full">
+              <input type="range" id="ajuste-gapLabelBox" min="-1.5" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapLabelBox', this.value)" class="w-full">
               <span class="text-[9.5px] text-emerald-800 mt-0.5 block">Separación vertical entre la etiqueta de texto y la línea superior del cajetín</span>
             </div>
 
@@ -928,7 +928,7 @@
                 <span class="font-bold text-slate-800 text-[11px]">Separación entre Bloques de Campos:</span>
                 <span id="val-gapCampos" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">2.2 mm (0.22 cm)</span>
               </div>
-              <input type="range" id="ajuste-gapCampos" min="1.0" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapCampos', this.value)" class="w-full">
+              <input type="range" id="ajuste-gapCampos" min="-2.0" max="5.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapCampos', this.value)" class="w-full">
             </div>
 
             <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
@@ -960,7 +960,7 @@
                 <span class="font-bold text-slate-800 text-[11px]">Alto Cuerpo de Tabla (Conceptos/Partidas):</span>
                 <span id="val-hTablaBody" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">18.0 mm (1.80 cm)</span>
               </div>
-              <input type="range" id="ajuste-hTablaBody" min="14" max="30" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('hTablaBody', this.value)" class="w-full">
+              <input type="range" id="ajuste-hTablaBody" min="10" max="48" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('hTablaBody', this.value)" class="w-full">
             </div>
 
             <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
@@ -1302,10 +1302,10 @@
         parsed.boldG44_TablaDatos = parsed.boldTablaDesc !== undefined ? parsed.boldTablaDesc : false;
         parsed.ffG44_TablaDatos = parsed.ffTablaNums || "'Courier Prime', Courier, monospace";
       }
-      if (parsed.gapLabelBox === undefined || parsed.gapLabelBox < 0.0) {
+      if (parsed.gapLabelBox === undefined) {
         parsed.gapLabelBox = 1.5;
       }
-      if (parsed.gapCampos === undefined || parsed.gapCampos < 1.8) {
+      if (parsed.gapCampos === undefined) {
         parsed.gapCampos = 2.2;
       }
       ajustes = { ...AJUSTES_DEFAULT, ...parsed };
@@ -2265,9 +2265,9 @@
     const escudoY = a.escudoOffsetY || 0.0;
     const escudoOp = a.escudoOpacity !== undefined ? a.escudoOpacity : 0.12;
 
-    // Espaciados calibrados para NUNCA colisionar ni solaparse en PDF
-    const gapLbl = (a.gapLabelBox !== undefined && Number(a.gapLabelBox) >= 0.0) ? Number(a.gapLabelBox) : 1.5; // Espacio limpio entre etiqueta y borde superior
-    const gapCmp = (a.gapCampos !== undefined && a.gapCampos >= 1.2) ? a.gapCampos : 2.2;     // Espacio entre campos
+    // Espaciados calibrados para ajuste milimétrico continuo (admite valores reducidos y negativos)
+    const gapLbl = a.gapLabelBox !== undefined ? Number(a.gapLabelBox) : 1.5; // Separación etiqueta a borde superior
+    const gapCmp = a.gapCampos !== undefined ? Number(a.gapCampos) : 2.2;     // Separación entre bloques de campos
 
     // Ajuste responsive preventivo contra desbordes en textos de contribuyente
     let fitFontNombre = fontG43;
