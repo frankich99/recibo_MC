@@ -3431,11 +3431,11 @@
           if (img.complete) return Promise.resolve();
           return new Promise(res => { img.onload = res; img.onerror = res; });
         }));
-        await new Promise(r => setTimeout(r, 120));
+        await new Promise(r => setTimeout(r, 25));
 
         const target = document.getElementById('sb-page');
         const h2cOpts = {
-          scale: 2.2,
+          scale: 3,
           useCORS: true,
           logging: false,
           backgroundColor: '#ffffff',
@@ -3445,8 +3445,8 @@
           y: 0,
           width: target.offsetWidth,
           height: target.offsetHeight,
-          windowWidth: Math.max(1600, target.offsetWidth * 2),
-          windowHeight: Math.max(1600, target.offsetHeight * 2),
+          windowWidth: target.offsetWidth,
+          windowHeight: target.offsetHeight,
           onclone: (doc) => {
             const el = doc.getElementById('pdf-sandbox');
             if (el) el.style.opacity = '1';
@@ -3474,14 +3474,14 @@
           CanvasRenderingContext2D.prototype.fillText = origFillText;
         }
 
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const imgData = canvas.toDataURL('image/png');
 
         if (p === 0) {
           pdfDoc = new jsPDF({ unit: 'mm', format: [dims.widthMm, dims.heightMm], orientation: 'portrait' });
         } else {
           pdfDoc.addPage([dims.widthMm, dims.heightMm], 'portrait');
         }
-        pdfDoc.addImage(imgData, 'JPEG', 0, 0, dims.widthMm, dims.heightMm, undefined, 'FAST');
+        pdfDoc.addImage(imgData, 'PNG', 0, 0, dims.widthMm, dims.heightMm, undefined, 'FAST');
       }
 
       if (pdfDoc) {
