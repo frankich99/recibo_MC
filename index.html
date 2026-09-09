@@ -9,9 +9,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+  /* Resaltado interactivo verde suave para ajuste en paralelo */
+  .highlight-part-active {
+    outline: 2.5px solid #10b981 !important;
+    outline-offset: 1px !important;
+    background-color: rgba(16, 185, 129, 0.22) !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35) !important;
+    transition: all 0.15s ease-in-out !important;
+    border-radius: 3px !important;
+  }
+
   :root {
     --strip-width: 212mm;
     --slip-width: 106mm;
@@ -242,18 +252,18 @@
           <div class="text-[10px] text-slate-500 mt-0.5">Plantilla vacía para llenar a mano.</div>
         </button>
 
-        <!-- Modo 2: Solo Correlativo (Default) -->
-        <button type="button" id="btn-modo-2" onclick="setModo(2)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-red-500 bg-red-50 ring-2 ring-red-400/30 cursor-pointer">
+        <!-- Modo 2: Solo Correlativo -->
+        <button type="button" id="btn-modo-2" onclick="setModo(2)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-slate-200 bg-slate-50 cursor-pointer">
           <div class="text-lg mb-0.5">🔴</div>
-          <div class="text-xs font-black text-red-900 uppercase">2. Solo Correlativo</div>
-          <div class="text-[10px] text-red-700 mt-0.5">Numeración roja correlativa Desde/Hasta.</div>
+          <div class="text-xs font-black text-slate-900 uppercase">2. Solo Correlativo</div>
+          <div class="text-[10px] text-slate-500 mt-0.5">Solo números (cajas de texto vacías).</div>
         </button>
 
-        <!-- Modo 3: Con Datos -->
-        <button type="button" id="btn-modo-3" onclick="setModo(3)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-slate-200 bg-slate-50 cursor-pointer">
+        <!-- Modo 3: Con Datos (Default) -->
+        <button type="button" id="btn-modo-3" onclick="setModo(3)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-emerald-500 bg-emerald-50 ring-2 ring-emerald-400/30 cursor-pointer">
           <div class="text-lg mb-0.5">📝</div>
-          <div class="text-xs font-black text-slate-900 uppercase">3. Con Datos</div>
-          <div class="text-[10px] text-slate-500 mt-0.5">Contribuyente, conceptos y montos en soles.</div>
+          <div class="text-xs font-black text-emerald-950 uppercase">3. Con Datos Completos</div>
+          <div class="text-[10px] text-emerald-800 mt-0.5">Contribuyente, conceptos, importes y totales.</div>
         </button>
       </div>
     </section>
@@ -408,7 +418,7 @@
           </div>
           <div>
             <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Domicilio Fiscal (Opcional):</label>
-            <input id="f-domicilio" type="text" oninput="onDatoChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none font-normal" placeholder="Ej: Plaza de Armas Canas">
+            <input id="f-domicilio" type="text" oninput="onDatoChange()" class="w-full px-3 py-2 border border-slate-300 rounded-lg font-receipt text-slate-900 text-xs uppercase focus:ring-2 focus:ring-sky-500 outline-none font-normal" value="JR. SAN MARTÍN S/N - YANAOCA" placeholder="Ej: Plaza de Armas Canas">
           </div>
           <div>
             <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Observaciones:</label>
@@ -433,9 +443,9 @@
                 <td class="p-1"><input id="f-i1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs" value="10.00" placeholder="0.00"></td>
               </tr>
               <tr>
-                <td class="p-1"><input id="f-p2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs"></td>
-                <td class="p-1"><input id="f-d2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 uppercase font-receipt text-slate-900 text-xs"></td>
-                <td class="p-1"><input id="f-i2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs" placeholder="0.00"></td>
+                <td class="p-1"><input id="f-p2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs" value="01.02.04"></td>
+                <td class="p-1"><input id="f-d2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 uppercase font-receipt text-slate-900 text-xs" value="EXPEDICIÓN DE CONSTANCIA Y CERTIFICADO"></td>
+                <td class="p-1"><input id="f-i2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs" value="15.00" placeholder="0.00"></td>
               </tr>
               <tr>
                 <td class="p-1"><input id="f-p3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs"></td>
@@ -450,11 +460,11 @@
         <div class="bg-sky-50 rounded-xl p-3 border border-sky-200 flex items-center justify-between">
           <div class="flex-1 min-w-0 pr-3">
             <span class="text-[10px] font-bold text-sky-900 uppercase block">Son:</span>
-            <div id="f-txt-son" class="font-receipt font-bold text-xs text-sky-950 uppercase truncate">DIEZ CON 00/100 SOLES</div>
+            <div id="f-txt-son" class="font-receipt font-bold text-xs text-sky-950 uppercase truncate">VEINTICINCO CON 00/100 SOLES</div>
           </div>
           <div class="text-right flex-shrink-0">
             <span class="text-[10px] font-bold text-sky-900 uppercase block">Total</span>
-            <div class="text-lg font-black font-receipt text-sky-950">S/ <span id="f-txt-total">10.00</span></div>
+            <div class="text-lg font-black font-receipt text-sky-950">S/ <span id="f-txt-total">25.00</span></div>
           </div>
         </div>
       </section>
@@ -680,17 +690,20 @@
   </div>
 </div>
 
-<!-- ======================== MODAL DE AJUSTES Y CALIBRACIÓN ======================== -->
-<div id="modal-ajustes" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[999999] items-center justify-center p-3 sm:p-4 select-none">
-  <div class="bg-white text-slate-900 border border-slate-200 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-150 flex flex-col max-h-[90vh]">
+<!-- ======================== MODAL DE AJUSTES Y CALIBRACIÓN EN PARALELO ======================== -->
+<div id="modal-ajustes" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[999999] items-center justify-center p-2 sm:p-3 select-none">
+  <div class="bg-white text-slate-900 border border-slate-700 w-full max-w-[1580px] h-[95vh] max-h-[95vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-150">
     
-    <!-- Header -->
-    <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between flex-shrink-0">
-      <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+    <!-- Top Header -->
+    <div class="bg-slate-900 text-white px-4 sm:px-6 py-3 flex items-center justify-between flex-shrink-0 border-b border-slate-800">
+      <div class="flex items-center gap-3">
+        <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
         <div>
-          <h3 class="text-sm font-black uppercase tracking-wide">Ajustes y Calibrador Visual</h3>
-          <p class="text-[10px] text-slate-400">Edita tamaños de letra y dimensiones exactas en cm / mm / px</p>
+          <h3 class="text-sm font-black uppercase tracking-wide flex items-center gap-2">
+            <span>Ajustes y Calibrador Visual</span>
+            <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded-full font-bold">Vista Paralela en Vivo 1:1</span>
+          </h3>
+          <p class="text-[10px] text-slate-400">Edita tamaños, negritas, tipografía y dimensiones con previsualización simultánea y resaltado verde interactivo</p>
         </div>
       </div>
       <div class="flex items-center gap-2">
@@ -702,178 +715,421 @@
       </div>
     </div>
 
-    <!-- Contenido scrolleable -->
-    <div class="p-5 space-y-5 overflow-y-auto text-xs flex-1" id="ajustes-inputs-container">
+    <!-- Body: 2 Columns Side-by-Side (Desktop / Tablet) -->
+    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden min-h-0">
       
-      <!-- SECCIÓN 1: TAMAÑOS DE LETRA -->
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-          <h4 class="font-black text-slate-900 uppercase text-xs flex items-center gap-1.5">
-            <span>🔤</span> Tamaños de Letra (Tipografía en Píxeles)
-          </h4>
-          <span class="text-[10px] font-bold text-slate-500">Afecta vista previa y PDF</span>
+      <!-- Columna Izquierda: Panel de Controles Compacto -->
+      <div class="w-full lg:w-[520px] xl:w-[560px] flex-shrink-0 flex flex-col bg-slate-50 border-r border-slate-200 overflow-hidden" id="ajustes-inputs-container">
+        
+        <!-- Pestañas Superiores (3 Pestañas Claras) -->
+        <div class="flex items-center border-b border-slate-200 bg-white px-2 pt-2 gap-1 flex-shrink-0 overflow-x-auto">
+          <button type="button" id="tab-btn-tipografia" onclick="setAjustesTab('tipografia')" class="ajustes-tab-btn px-3 py-1.5 font-black text-xs rounded-t-lg border-b-2 border-sky-600 text-sky-600 flex items-center gap-1.5 transition cursor-pointer bg-sky-50/50 whitespace-nowrap">
+            <span>🎨</span> Tipografía & Tamaños
+          </button>
+          <button type="button" id="tab-btn-medidas" onclick="setAjustesTab('medidas')" class="ajustes-tab-btn px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition cursor-pointer whitespace-nowrap">
+            <span>📏</span> Medidas & Espacios
+          </button>
+          <button type="button" id="tab-btn-logos" onclick="setAjustesTab('logos')" class="ajustes-tab-btn px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition cursor-pointer whitespace-nowrap">
+            <span>🖼️</span> Logo & Filigrana
+          </button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Nº DE RECIBO y FECHA (Etiquetas):</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontNumFecha" min="6" max="14" step="0.5" oninput="onAjusteInput('fontNumFecha', this.value)" class="flex-1">
-              <span id="val-fontNumFecha" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">9.5 px</span>
+        <!-- Contenido de las pestañas scrolleable -->
+        <div class="flex-1 overflow-y-auto p-3.5 space-y-3 text-xs">
+          
+          <!-- TAB 1: Tipografía & Tamaños (7 Grupos Unificados con Reset y Negrita) -->
+          <div id="tab-content-tipografia" class="space-y-3">
+            <div class="text-[11px] text-slate-600 bg-slate-100/90 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between">
+              <span>7 grupos funcionales unificados. Pasa el cursor para ver el resaltado verde en el recibo.</span>
+              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">En Vivo</span>
             </div>
+
+            <!-- GRUPO 1: Etiquetas Contribuyente -->
+            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-1')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="font-black text-slate-900 text-xs">1. Etiquetas Contribuyente</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="val-fontG1_LabelsContrib" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">8.0 px</span>
+                  <button type="button" onclick="restablecerGrupo('g1')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-500 mb-2">Nombre o Razón Social:, Domicilio Fiscal:, Observaciones:</div>
+              <div class="space-y-2">
+                <select id="ajuste-ffG1_LabelsContrib" onchange="onAjusteFontFamily('ffG1_LabelsContrib', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
+                  <input type="range" id="ajuste-fontG1_LabelsContrib" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('fontG1_LabelsContrib', this.value)" class="flex-1">
+                  <button type="button" id="btn-bold-boldG1_LabelsContrib" onclick="toggleAjusteBold('boldG1_LabelsContrib')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRUPO 2: Cabecera Tabla & Totales -->
+            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-2')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="font-black text-slate-900 text-xs">2. Cabecera Tabla & Totales</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="val-fontG2_TablaLabels" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">8.0 px</span>
+                  <button type="button" onclick="restablecerGrupo('g2')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-500 mb-2">PARTIDA, DESCRIPCIÓN, IMPORTE, Son:, TOTAL</div>
+              <div class="space-y-2">
+                <select id="ajuste-ffG2_TablaLabels" onchange="onAjusteFontFamily('ffG2_TablaLabels', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
+                  <input type="range" id="ajuste-fontG2_TablaLabels" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-2'); onAjusteInput('fontG2_TablaLabels', this.value)" class="flex-1">
+                  <button type="button" id="btn-bold-boldG2_TablaLabels" onclick="toggleAjusteBold('boldG2_TablaLabels')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRUPO 3: Encabezado & Títulos -->
+            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-3')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="font-black text-slate-900 text-xs">3. Encabezado & Títulos</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="val-fontG3_HeaderTitulos" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">9.5 px</span>
+                  <button type="button" onclick="restablecerGrupo('g3')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-500 mb-2">RECIBO DE CAJA, Nº RECIBO (etiqueta), FECHA (etiqueta)</div>
+              <div class="space-y-2">
+                <select id="ajuste-ffG3_HeaderTitulos" onchange="onAjusteFontFamily('ffG3_HeaderTitulos', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
+                  <input type="range" id="ajuste-fontG3_HeaderTitulos" min="7" max="16" step="0.5" oninput="highlightPreviewPart('grupo-3'); onAjusteInput('fontG3_HeaderTitulos', this.value)" class="flex-1">
+                  <button type="button" id="btn-bold-boldG3_HeaderTitulos" onclick="toggleAjusteBold('boldG3_HeaderTitulos')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRUPO 4.1: Datos Cajetín -->
+            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-41')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="font-black text-slate-900 text-xs">4.1. Datos Cajetín (Valores)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="val-fontG41_CajetinVal" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">9.0 px</span>
+                  <button type="button" onclick="restablecerGrupo('g41')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-500 mb-2">Número correlativo (00000098466) y Fecha (01/09/2026)</div>
+              <div class="space-y-2">
+                <select id="ajuste-ffG41_CajetinVal" onchange="onAjusteFontFamily('ffG41_CajetinVal', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
+                  <input type="range" id="ajuste-fontG41_CajetinVal" min="6" max="14" step="0.5" oninput="highlightPreviewPart('grupo-41'); onAjusteInput('fontG41_CajetinVal', this.value)" class="flex-1">
+                  <button type="button" id="btn-bold-boldG41_CajetinVal" onclick="toggleAjusteBold('boldG41_CajetinVal')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRUPO 4.2: Serie Roja Correlativa -->
+            <div class="p-3 bg-white rounded-xl border border-red-200 hover:border-red-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-42')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-600"></span>
+                  <span class="font-black text-red-700 text-xs">4.2. Serie Roja Correlativa</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="val-fontG42_SerieRoja" class="font-receipt font-bold bg-red-50 text-red-700 px-2 py-0.5 rounded text-[11px]">16.5 px</span>
+                  <button type="button" onclick="restablecerGrupo('g42')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
+                </div>
+              </div>
+              <div class="text-[10px] text-red-600 mb-2 font-medium">Nº 098466 (Rojo muy rojo de fábrica #dc2626)</div>
+              <div class="space-y-2">
+                <select id="ajuste-ffG42_SerieRoja" onchange="onAjusteFontFamily('ffG42_SerieRoja', this.value)" class="w-full bg-red-50/50 border border-red-200 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-red-500"></select>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
+                  <input type="range" id="ajuste-fontG42_SerieRoja" min="10" max="24" step="0.5" oninput="highlightPreviewPart('grupo-42'); onAjusteInput('fontG42_SerieRoja', this.value)" class="flex-1">
+                  <button type="button" id="btn-bold-boldG42_SerieRoja" onclick="toggleAjusteBold('boldG42_SerieRoja')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRUPO 4.3: Datos Contribuyente -->
+            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="font-black text-slate-900 text-xs">4.3. Datos Contribuyente (Inputs)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="val-fontG43_DatosContrib" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">8.5 px</span>
+                  <button type="button" onclick="restablecerGrupo('g43')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-500 mb-2">Valores escritos de Nombre, Domicilio y Obs (SIEMPRE EN MAYÚSCULAS)</div>
+              <div class="space-y-2">
+                <select id="ajuste-ffG43_DatosContrib" onchange="onAjusteFontFamily('ffG43_DatosContrib', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
+                  <input type="range" id="ajuste-fontG43_DatosContrib" min="6" max="14" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('fontG43_DatosContrib', this.value)" class="flex-1">
+                  <button type="button" id="btn-bold-boldG43_DatosContrib" onclick="toggleAjusteBold('boldG43_DatosContrib')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- GRUPO 4.4: Datos Tabla, Son & Total -->
+            <div class="p-3 bg-white rounded-xl border border-slate-200 hover:border-emerald-500 shadow-sm transition" onmouseenter="highlightPreviewPart('grupo-44')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="font-black text-slate-900 text-xs">4.4. Datos Tabla, Son & Total</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="val-fontG44_TablaDatos" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[11px] text-slate-800">7.5 px</span>
+                  <button type="button" onclick="restablecerGrupo('g44')" class="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺ Reset</button>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-500 mb-2">Partidas, descripciones, importes S/, texto Son y total numérico</div>
+              <div class="space-y-2">
+                <select id="ajuste-ffG44_TablaDatos" onchange="onAjusteFontFamily('ffG44_TablaDatos', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-500 font-semibold w-12">Tamaño:</span>
+                  <input type="range" id="ajuste-fontG44_TablaDatos" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('fontG44_TablaDatos', this.value)" class="flex-1">
+                  <button type="button" id="btn-bold-boldG44_TablaDatos" onclick="toggleAjusteBold('boldG44_TablaDatos')" class="w-8 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition" title="Alternar Negrita">B</button>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Nº Recibo y Fecha (Datos correlativos):</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontNumFechaVal" min="6" max="14" step="0.5" oninput="onAjusteInput('fontNumFechaVal', this.value)" class="flex-1">
-              <span id="val-fontNumFechaVal" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">9.0 px</span>
+          <!-- TAB 2: Medidas & Espacios -->
+          <div id="tab-content-medidas" class="hidden space-y-2.5">
+            <div class="text-[11px] text-slate-600 bg-slate-100/90 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between">
+              <span>Calibra las dimensiones milimétricas para evitar solapamientos.</span>
+              <button type="button" onclick="restablecerGrupo('medidas')" class="text-[11px] px-2 py-0.5 rounded bg-white hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer medidas de fábrica">↺ Reset Medidas</button>
             </div>
+            
+            <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-300 hover:border-emerald-500 transition" onmouseenter="highlightPreviewPart('grupo-1')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-black text-emerald-900 text-[11px]">Distancia Etiqueta a Cajetín (Seguridad Anti-Solape):</span>
+                <span id="val-gapLabelBox" class="font-receipt font-black bg-emerald-200 px-2 py-0.5 rounded text-[10px] text-emerald-950">1.5 mm (0.15 cm)</span>
+              </div>
+              <input type="range" id="ajuste-gapLabelBox" min="0.0" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapLabelBox', this.value)" class="w-full">
+              <span class="text-[9.5px] text-emerald-800 mt-0.5 block">Separación vertical entre la etiqueta de texto y la línea superior del cajetín</span>
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-1')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-800 text-[11px]">Separación entre Bloques de Campos:</span>
+                <span id="val-gapCampos" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">2.2 mm (0.22 cm)</span>
+              </div>
+              <input type="range" id="ajuste-gapCampos" min="1.0" max="4.0" step="0.1" oninput="highlightPreviewPart('grupo-1'); onAjusteInput('gapCampos', this.value)" class="w-full">
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-800 text-[11px]">Espesor Cajetín Nombre o Razón Social:</span>
+                <span id="val-hNombre" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">5.5 mm (0.55 cm)</span>
+              </div>
+              <input type="range" id="ajuste-hNombre" min="4" max="10" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('hNombre', this.value)" class="w-full">
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-800 text-[11px]">Espesor Cajetín Domicilio Fiscal:</span>
+                <span id="val-hDomicilio" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">5.5 mm (0.55 cm)</span>
+              </div>
+              <input type="range" id="ajuste-hDomicilio" min="4" max="10" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('hDomicilio', this.value)" class="w-full">
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-43')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-800 text-[11px]">Espesor Cajetín Observaciones:</span>
+                <span id="val-hObs" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">8.5 mm (0.85 cm)</span>
+              </div>
+              <input type="range" id="ajuste-hObs" min="5" max="14" step="0.5" oninput="highlightPreviewPart('grupo-43'); onAjusteInput('hObs', this.value)" class="w-full">
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('grupo-44')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-800 text-[11px]">Alto Cuerpo de Tabla (Conceptos/Partidas):</span>
+                <span id="val-hTablaBody" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">18.0 mm (1.80 cm)</span>
+              </div>
+              <input type="range" id="ajuste-hTablaBody" min="14" max="30" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('hTablaBody', this.value)" class="w-full">
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-800 text-[11px]">Ancho Cajetín Nº / Fecha / Serie:</span>
+                <span id="val-wBoxNumFecha" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">41.0 mm (4.10 cm)</span>
+              </div>
+              <input type="range" id="ajuste-wBoxNumFecha" min="35" max="48" step="0.5" oninput="highlightPreviewPart('hdr-cajetin'); onAjusteInput('wBoxNumFecha', this.value)" class="w-full">
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('hdr-general')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-800 text-[11px]">Alto Encabezado Oficial:</span>
+                <span id="val-hHeader" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">16.0 mm (1.60 cm)</span>
+              </div>
+              <input type="range" id="ajuste-hHeader" min="14" max="22" step="0.5" oninput="highlightPreviewPart('hdr-general'); onAjusteInput('hHeader', this.value)" class="w-full">
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('hdr-cajetin')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-800 text-[11px]">Grosor de Líneas y Bordes de Cajetines:</span>
+                <span id="val-borderWidth" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">1.0 px</span>
+              </div>
+              <input type="range" id="ajuste-borderWidth" min="0.6" max="2.2" step="0.1" oninput="highlightPreviewPart('hdr-cajetin'); onAjusteInput('borderWidth', this.value)" class="w-full">
+            </div>
+
           </div>
 
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Título "RECIBO DE CAJA":</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontReciboCaja" min="8" max="18" step="0.5" oninput="onAjusteInput('fontReciboCaja', this.value)" class="flex-1">
-              <span id="val-fontReciboCaja" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">11.5 px</span>
+          <!-- TAB 3: Logo Municipal & Escudo Gris -->
+          <div id="tab-content-logos" class="hidden space-y-2.5">
+            <div class="text-[11px] text-slate-600 bg-slate-100/90 p-2.5 rounded-xl border border-slate-200 flex items-center justify-between">
+              <span>Posición, tamaño y visibilidad de símbolos oficiales.</span>
+              <button type="button" onclick="restablecerGrupo('logos')" class="text-[11px] px-2 py-0.5 rounded bg-white hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer logos de fábrica">↺ Reset Logos</button>
             </div>
+            
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('hdr-logo')" onmouseleave="unhighlightPreviewPart()">
+              <div class="font-bold text-slate-900 text-xs mb-1 flex items-center gap-1.5">
+                <span>🛡️</span> Logo Oficial Canas (`logo/mc.png`):
+              </div>
+              <div class="space-y-2 mt-2">
+                <div>
+                  <div class="flex items-center justify-between mb-0.5">
+                    <span class="text-[11px] font-semibold text-slate-700">Tamaño del Logo:</span>
+                    <span id="val-logoSize" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">15.0 mm (1.50 cm)</span>
+                  </div>
+                  <input type="range" id="ajuste-logoSize" min="10" max="26" step="0.5" oninput="highlightPreviewPart('hdr-logo'); onAjusteInput('logoSize', this.value)" class="w-full">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <div class="flex items-center justify-between mb-0.5">
+                      <span class="text-[10px] font-semibold text-slate-700">Mover X (Horiz):</span>
+                      <span id="val-logoOffsetX" class="font-receipt font-bold bg-slate-100 px-1 py-0.5 rounded text-[9.5px] text-slate-700">0.0 mm</span>
+                    </div>
+                    <input type="range" id="ajuste-logoOffsetX" min="-8" max="8" step="0.5" oninput="highlightPreviewPart('hdr-logo'); onAjusteInput('logoOffsetX', this.value)" class="w-full">
+                  </div>
+                  <div>
+                    <div class="flex items-center justify-between mb-0.5">
+                      <span class="text-[10px] font-semibold text-slate-700">Mover Y (Vert):</span>
+                      <span id="val-logoOffsetY" class="font-receipt font-bold bg-slate-100 px-1 py-0.5 rounded text-[9.5px] text-slate-700">0.0 mm</span>
+                    </div>
+                    <input type="range" id="ajuste-logoOffsetY" min="-8" max="8" step="0.5" oninput="highlightPreviewPart('hdr-logo'); onAjusteInput('logoOffsetY', this.value)" class="w-full">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('filigrana')" onmouseleave="unhighlightPreviewPart()">
+              <div class="font-bold text-slate-900 text-xs mb-1 flex items-center gap-1.5">
+                <span>⚔️</span> Escudo Gris Central (`datos/escudo_gris.png`):
+              </div>
+              <div class="space-y-2 mt-2">
+                <div>
+                  <div class="flex items-center justify-between mb-0.5">
+                    <span class="text-[11px] font-semibold text-slate-700">Tamaño del Escudo:</span>
+                    <span id="val-escudoSize" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">22.0 mm (2.20 cm)</span>
+                  </div>
+                  <input type="range" id="ajuste-escudoSize" min="14" max="45" step="1.0" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoSize', this.value)" class="w-full">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <div class="flex items-center justify-between mb-0.5">
+                      <span class="text-[10px] font-semibold text-slate-700">Mover X (Horiz):</span>
+                      <span id="val-escudoOffsetX" class="font-receipt font-bold bg-slate-100 px-1 py-0.5 rounded text-[9.5px] text-slate-700">0.0 mm</span>
+                    </div>
+                    <input type="range" id="ajuste-escudoOffsetX" min="-15" max="15" step="0.5" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOffsetX', this.value)" class="w-full">
+                  </div>
+                  <div>
+                    <div class="flex items-center justify-between mb-0.5">
+                      <span class="text-[10px] font-semibold text-slate-700">Mover Y (Vert):</span>
+                      <span id="val-escudoOffsetY" class="font-receipt font-bold bg-slate-100 px-1 py-0.5 rounded text-[9.5px] text-slate-700">0.0 mm</span>
+                    </div>
+                    <input type="range" id="ajuste-escudoOffsetY" min="-15" max="15" step="0.5" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOffsetY', this.value)" class="w-full">
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between mb-0.5">
+                    <span class="text-[11px] font-semibold text-slate-700">Opacidad del Escudo Gris:</span>
+                    <span id="val-escudoOpacity" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">12%</span>
+                  </div>
+                  <input type="range" id="ajuste-escudoOpacity" min="0.02" max="0.50" step="0.01" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOpacity', this.value)" class="w-full">
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition" onmouseenter="highlightPreviewPart('watermark-pattern')" onmouseleave="unhighlightPreviewPart()">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-800 text-[11px]">Opacidad Filigrana Azul de Seguridad:</span>
+                <span id="val-filigranaOpacity" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">26%</span>
+              </div>
+              <input type="range" id="ajuste-filigranaOpacity" min="0.05" max="0.50" step="0.01" oninput="highlightPreviewPart('watermark-pattern'); onAjusteInput('filigranaOpacity', this.value)" class="w-full">
+              <span class="text-[9.5px] text-slate-500 mt-1 block">Ajusta el tono de las líneas con el texto azul "MUNICIPALIDAD PROVINCIAL DE CANAS"</span>
+            </div>
+
           </div>
 
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Nº Correlativo Rojo (Serie):</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontSerie" min="10" max="22" step="0.5" oninput="onAjusteInput('fontSerie', this.value)" class="flex-1">
-              <span id="val-fontSerie" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs text-red-600">16.0 px</span>
-            </div>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Etiquetas (Nombre, Domicilio, Obs):</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontLabels" min="6" max="12" step="0.5" oninput="onAjusteInput('fontLabels', this.value)" class="flex-1">
-              <span id="val-fontLabels" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">8.0 px</span>
-            </div>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Datos Contribuyente (Nombre/Domicilio):</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontDatos" min="6" max="14" step="0.5" oninput="onAjusteInput('fontDatos', this.value)" class="flex-1">
-              <span id="val-fontDatos" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">8.5 px</span>
-            </div>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Datos Observaciones:</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontObs" min="6" max="12" step="0.5" oninput="onAjusteInput('fontObs', this.value)" class="flex-1">
-              <span id="val-fontObs" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">7.5 px</span>
-            </div>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Tabla Cabecera (PARTIDA, etc.):</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontTablaHdr" min="6" max="12" step="0.5" oninput="onAjusteInput('fontTablaHdr', this.value)" class="flex-1">
-              <span id="val-fontTablaHdr" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">8.0 px</span>
-            </div>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Tabla Contenido (Conceptos y Montos):</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontTablaBody" min="6" max="12" step="0.5" oninput="onAjusteInput('fontTablaBody', this.value)" class="flex-1">
-              <span id="val-fontTablaBody" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">7.5 px</span>
-            </div>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Pie de Tabla (Son y TOTAL):</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-fontSonTotal" min="6" max="12" step="0.5" oninput="onAjusteInput('fontSonTotal', this.value)" class="flex-1">
-              <span id="val-fontSonTotal" class="w-14 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">8.0 px</span>
-            </div>
-          </div>
         </div>
+
       </div>
 
-      <!-- SECCIÓN 2: DIMENSIONES Y ESPESORES EN CM / MM -->
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-          <h4 class="font-black text-slate-900 uppercase text-xs flex items-center gap-1.5">
-            <span>📏</span> Dimensiones y Espesores (en Milímetros y Centímetros)
-          </h4>
-          <span class="text-[10px] font-bold text-slate-500">10 mm = 1.0 cm</span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Espesor Cajetín Nombre o Razón Social:</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-hNombre" min="4" max="12" step="0.5" oninput="onAjusteInput('hNombre', this.value)" class="flex-1">
-              <span id="val-hNombre" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">6.0 mm</span>
-            </div>
-            <span class="text-[9.5px] text-slate-500">0.6 cm (calibrado)</span>
+      <!-- Columna Derecha: Vista Previa Paralela de 1 Solo Recibo en Grande -->
+      <div class="flex-1 bg-slate-950 flex flex-col overflow-hidden relative">
+        
+        <!-- Mini barra de estado y zoom del slip individual -->
+        <div class="bg-slate-900/95 px-4 py-2 flex items-center justify-between border-b border-slate-800 text-xs text-slate-300 flex-shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-white flex items-center gap-1.5">
+              <span>📄</span> Recibo Individual (10.6 × 10.2 cm)
+            </span>
+            <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded border border-slate-700 hidden sm:inline">Caja útil 9.0 × 9.2 cm</span>
+            <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 bg-emerald-950/50 border border-emerald-800/60 px-2 py-0.5 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> En Tiempo Real
+            </span>
           </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Espesor Cajetín Domicilio Fiscal:</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-hDomicilio" min="4" max="12" step="0.5" oninput="onAjusteInput('hDomicilio', this.value)" class="flex-1">
-              <span id="val-hDomicilio" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">6.0 mm</span>
-            </div>
-            <span class="text-[9.5px] text-slate-500">0.6 cm</span>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Espesor Cajetín Observaciones:</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-hObs" min="5" max="15" step="0.5" oninput="onAjusteInput('hObs', this.value)" class="flex-1">
-              <span id="val-hObs" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">9.0 mm</span>
-            </div>
-            <span class="text-[9.5px] text-slate-500">0.9 cm</span>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Alto Cuerpo de Tabla (Conceptos):</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-hTablaBody" min="25" max="45" step="0.5" oninput="onAjusteInput('hTablaBody', this.value)" class="flex-1">
-              <span id="val-hTablaBody" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">34.0 mm</span>
-            </div>
-            <span class="text-[9.5px] text-slate-500">3.4 cm (altura útil partidas)</span>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Ancho Cajetín Nº/Fecha/Serie:</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-wBoxNumFecha" min="35" max="48" step="0.5" oninput="onAjusteInput('wBoxNumFecha', this.value)" class="flex-1">
-              <span id="val-wBoxNumFecha" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">41.0 mm</span>
-            </div>
-            <span class="text-[9.5px] text-slate-500">4.1 cm</span>
-          </div>
-
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Alto Encabezado Oficial:</label>
-            <div class="flex items-center gap-2">
-              <input type="range" id="ajuste-hHeader" min="14" max="22" step="0.5" oninput="onAjusteInput('hHeader', this.value)" class="flex-1">
-              <span id="val-hHeader" class="w-16 text-center font-receipt font-bold bg-white px-2 py-1 rounded border text-xs">17.0 mm</span>
-            </div>
-            <span class="text-[9.5px] text-slate-500">1.7 cm (espacio para escudo y texto)</span>
+          
+          <div class="flex items-center gap-1.5">
+            <span class="text-[10px] font-bold text-slate-400 uppercase hidden sm:inline">Zoom:</span>
+            <button type="button" onclick="setZoomSlipAjustes(-0.15)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold text-xs cursor-pointer transition" title="Alejar">➖</button>
+            <span id="ajustes-zoom-val" class="font-receipt font-bold text-xs text-amber-300 w-14 text-center bg-slate-950 px-1 py-1 rounded-lg border border-slate-800">165%</span>
+            <button type="button" onclick="setZoomSlipAjustes(0.15)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold text-xs cursor-pointer transition" title="Acercar">➕</button>
+            <button type="button" onclick="autoAjustarZoomSlip()" class="px-2.5 py-1 bg-sky-700 hover:bg-sky-600 text-white text-xs font-bold rounded-lg cursor-pointer transition flex items-center gap-1" title="Ajustar automáticamente al tamaño de la pantalla">📐 Auto-Ajustar</button>
+            <button type="button" onclick="setZoomSlipAjustes(0)" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded-lg cursor-pointer transition" title="Restablecer zoom a 100%">Reset</button>
           </div>
         </div>
+
+        <!-- Canvas de previsualización centrado -->
+        <div id="ajustes-live-slip-wrapper" class="flex-1 overflow-auto flex items-center justify-center p-6 sm:p-10 select-none bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]">
+          <div id="ajustes-single-slip-wrapper" style="transform: scale(1.65); transform-origin: center center; transition: transform 0.15s ease; flex-shrink: 0;">
+            <div id="ajustes-live-slip-container">
+              <!-- Renderizado dinámico de 1 slip grande -->
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
 
     <!-- Footer Modal -->
-    <div class="bg-slate-100 px-5 py-3.5 flex items-center justify-between border-t border-slate-200 flex-shrink-0">
+    <div class="bg-slate-100 px-5 py-2.5 flex items-center justify-between border-t border-slate-200 flex-shrink-0">
       <button type="button" onclick="restablecerAjustesFabrica()" class="px-3.5 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl transition cursor-pointer text-xs flex items-center gap-1">
         <span>🔄</span> Restablecer Fábrica
       </button>
 
-      <div class="flex items-center gap-2">
-        <button type="button" onclick="cerrarModalAjustes()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-white font-black rounded-xl shadow transition cursor-pointer text-xs">
-          Guardar y Listo
+      <div class="flex items-center gap-3">
+        <span class="text-[11px] text-slate-500 hidden sm:inline flex items-center gap-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Resaltado verde al pasar el cursor o editar
+        </span>
+        <button type="button" onclick="cerrarModalAjustes()" class="px-5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white font-black rounded-xl shadow transition cursor-pointer text-xs">
+          Listo / Aplicar
         </button>
       </div>
     </div>
@@ -896,7 +1152,7 @@
 (function() {
 
   // ======================== ESTADO ========================
-  let modo = 2;            // 1=blanco, 2=solo correlativo, 3=con datos
+  let modo = 3;            // 1=blanco, 2=solo correlativo, 3=con datos
   let tipoHoja = "ajustado"; // "ajustado" (212x306mm), "a4" (210x297mm), "tira" (212x102mm)
   let serieDesde = 98466;
   let serieHasta = 98468;
@@ -915,35 +1171,93 @@
   let recibosData = {
     98466: {
       nombre: "SABINA USCAMAYTA TACO - 24583755",
-      domicilio: "",
+      domicilio: "JR. SAN MARTÍN S/N - YANAOCA",
       obs: "CREACION Y/O APERTURA DE CARPETA PREDIAL",
       p1: "1", d1: "OTROS DERECHOS ADMINISTRATIVOS GENERALES", i1: "10.00",
-      p2: "", d2: "", i2: "",
+      p2: "01.02.04", d2: "EXPEDICIÓN DE CONSTANCIA Y CERTIFICADO", i2: "15.00",
+      p3: "", d3: "", i3: ""
+    },
+    98467: {
+      nombre: "SABINA USCAMAYTA TACO - 24583755",
+      domicilio: "JR. SAN MARTÍN S/N - YANAOCA",
+      obs: "CREACION Y/O APERTURA DE CARPETA PREDIAL",
+      p1: "1", d1: "OTROS DERECHOS ADMINISTRATIVOS GENERALES", i1: "10.00",
+      p2: "01.02.04", d2: "EXPEDICIÓN DE CONSTANCIA Y CERTIFICADO", i2: "15.00",
+      p3: "", d3: "", i3: ""
+    },
+    98468: {
+      nombre: "SABINA USCAMAYTA TACO - 24583755",
+      domicilio: "JR. SAN MARTÍN S/N - YANAOCA",
+      obs: "CREACION Y/O APERTURA DE CARPETA PREDIAL",
+      p1: "1", d1: "OTROS DERECHOS ADMINISTRATIVOS GENERALES", i1: "10.00",
+      p2: "01.02.04", d2: "EXPEDICIÓN DE CONSTANCIA Y CERTIFICADO", i2: "15.00",
       p3: "", d3: "", i3: ""
     }
   };
   let reciboEditandoIdx = 0;
 
   // ======================== CONFIGURACIÓN Y CALIBRADOR VISUAL ========================
+  // ======================== CONFIGURACIÓN Y CALIBRADOR VISUAL ========================
   const AJUSTES_DEFAULT = {
-    // Fuentes (px)
-    fontNumFecha: 9.5,
-    fontNumFechaVal: 9.0,
-    fontReciboCaja: 11.5,
-    fontSerie: 16.0,
-    fontLabels: 8.0,
-    fontDatos: 8.5,
-    fontObs: 7.5,
-    fontTablaHdr: 8.0,
-    fontTablaBody: 7.5,
-    fontSonTotal: 8.0,
-    // Dimensiones (mm)
-    hNombre: 6.0,       // 0.6 cm
-    hDomicilio: 6.0,    // 0.6 cm
-    hObs: 9.0,          // 0.9 cm
-    hTablaBody: 34.0,   // 3.4 cm
-    wBoxNumFecha: 41.0, // 4.1 cm
-    hHeader: 17.0       // 1.7 cm
+    // 1. Etiquetas Contribuyente (Nombre o Razón Social:, Domicilio Fiscal:, Observaciones:)
+    fontG1_LabelsContrib: 8.0,
+    boldG1_LabelsContrib: true,
+    ffG1_LabelsContrib: 'Inter, sans-serif',
+
+    // 2. Cabecera de Tabla & Totales (PARTIDA, DESCRIPCIÓN, IMPORTE, Son:, TOTAL)
+    fontG2_TablaLabels: 8.0,
+    boldG2_TablaLabels: true,
+    ffG2_TablaLabels: 'Inter, sans-serif',
+
+    // 3. Encabezado & Títulos (RECIBO DE CAJA, Nº RECIBO etiqueta, FECHA etiqueta)
+    fontG3_HeaderTitulos: 9.5,
+    boldG3_HeaderTitulos: true,
+    ffG3_HeaderTitulos: 'Inter, sans-serif',
+
+    // 4.1. Información Cajetín (Nº Recibo y Fecha datos)
+    fontG41_CajetinVal: 9.0,
+    boldG41_CajetinVal: true,
+    ffG41_CajetinVal: 'Inter, sans-serif',
+
+    // 4.2. Serie Roja Correlativa (Nº 098466 - Rojo intenso de fábrica)
+    fontG42_SerieRoja: 16.5,
+    boldG42_SerieRoja: true,
+    ffG42_SerieRoja: "'Times New Roman', Times, serif",
+
+    // 4.3. Información Contribuyente (Inputs - Siempre en Mayúsculas)
+    fontG43_DatosContrib: 8.5,
+    boldG43_DatosContrib: true,
+    ffG43_DatosContrib: 'Inter, sans-serif',
+
+    // 4.4. Información Cuadro / Tabla (Items, Son texto y Monto Total)
+    fontG44_TablaDatos: 7.5,
+    boldG44_TablaDatos: false,
+    ffG44_TablaDatos: "'Courier Prime', Courier, monospace",
+
+    // Dimensiones y espaciados (mm) - Calibrados para NUNCA colisionar ni solaparse
+    gapLabelBox: 1.5,     // 1.5 mm espacio limpio entre etiqueta y borde superior de caja
+    gapCampos: 2.2,       // 2.2 mm separación entre bloques de campos
+    hNombre: 5.5,         // 5.5 mm alto caja Nombre
+    hDomicilio: 5.5,      // 5.5 mm alto caja Domicilio
+    hObs: 8.5,            // 8.5 mm alto caja Observaciones
+    hTablaBody: 18.0,     // 18.0 mm alto cuerpo tabla
+    wBoxNumFecha: 41.0,   // 41.0 mm ancho cajetín
+    hHeader: 16.0,        // 16.0 mm alto encabezado
+    borderWidth: 1.0,     // px espesor bordes
+
+    // Controles de Logo MC (logo/mc.png)
+    logoSize: 15.0,       // mm
+    logoOffsetX: 0.0,     // mm
+    logoOffsetY: 0.0,     // mm
+
+    // Controles de Escudo Gris (datos/escudo_gris.png)
+    escudoSize: 22.0,     // mm
+    escudoOffsetX: 0.0,   // mm
+    escudoOffsetY: 0.0,   // mm
+    escudoOpacity: 0.12,  // 0.02 - 0.50
+
+    // Filigrana Azul de Fondo
+    filigranaOpacity: 0.26 // 0.05 - 0.50
   };
 
   let ajustesLocked = localStorage.getItem('recibo_mc_ajustes_locked') === 'true';
@@ -951,10 +1265,182 @@
   try {
     const savedAjustes = localStorage.getItem('recibo_mc_ajustes');
     if (savedAjustes) {
-      ajustes = { ...AJUSTES_DEFAULT, ...JSON.parse(savedAjustes) };
+      const parsed = JSON.parse(savedAjustes);
+      // Migración automática de claves legacy
+      if (parsed.fontLabels && !parsed.fontG1_LabelsContrib) {
+        parsed.fontG1_LabelsContrib = parsed.fontLabels;
+        parsed.boldG1_LabelsContrib = parsed.boldLabels !== undefined ? parsed.boldLabels : true;
+        parsed.ffG1_LabelsContrib = parsed.ffLabels || 'Inter, sans-serif';
+      }
+      if (parsed.fontTablaHdr && !parsed.fontG2_TablaLabels) {
+        parsed.fontG2_TablaLabels = parsed.fontTablaHdr;
+        parsed.boldG2_TablaLabels = parsed.boldTablaHdr !== undefined ? parsed.boldTablaHdr : true;
+        parsed.ffG2_TablaLabels = parsed.ffTablaHdr || 'Inter, sans-serif';
+      }
+      if (parsed.fontReciboCaja && !parsed.fontG3_HeaderTitulos) {
+        parsed.fontG3_HeaderTitulos = parsed.fontNumFecha || 9.5;
+        parsed.boldG3_HeaderTitulos = parsed.boldReciboCaja !== undefined ? parsed.boldReciboCaja : true;
+        parsed.ffG3_HeaderTitulos = parsed.ffReciboCaja || 'Inter, sans-serif';
+      }
+      if (parsed.fontNumFechaVal && !parsed.fontG41_CajetinVal) {
+        parsed.fontG41_CajetinVal = parsed.fontNumFechaVal;
+        parsed.boldG41_CajetinVal = parsed.boldNumFechaVal !== undefined ? parsed.boldNumFechaVal : true;
+        parsed.ffG41_CajetinVal = parsed.ffNumFechaVal || 'Inter, sans-serif';
+      }
+      if (parsed.fontSerie && !parsed.fontG42_SerieRoja) {
+        parsed.fontG42_SerieRoja = parsed.fontSerie;
+        parsed.boldG42_SerieRoja = parsed.boldSerie !== undefined ? parsed.boldSerie : true;
+        parsed.ffG42_SerieRoja = parsed.ffSerie || "'Times New Roman', Times, serif";
+      }
+      if (parsed.fontDatos && !parsed.fontG43_DatosContrib) {
+        parsed.fontG43_DatosContrib = parsed.fontDatos;
+        parsed.boldG43_DatosContrib = parsed.boldDatos !== undefined ? parsed.boldDatos : true;
+        parsed.ffG43_DatosContrib = parsed.ffDatos || 'Inter, sans-serif';
+      }
+      if (parsed.fontTablaDesc && !parsed.fontG44_TablaDatos) {
+        parsed.fontG44_TablaDatos = parsed.fontTablaDesc;
+        parsed.boldG44_TablaDatos = parsed.boldTablaDesc !== undefined ? parsed.boldTablaDesc : false;
+        parsed.ffG44_TablaDatos = parsed.ffTablaNums || "'Courier Prime', Courier, monospace";
+      }
+      if (parsed.gapLabelBox === undefined || parsed.gapLabelBox < 0.0) {
+        parsed.gapLabelBox = 1.5;
+      }
+      if (parsed.gapCampos === undefined || parsed.gapCampos < 1.8) {
+        parsed.gapCampos = 2.2;
+      }
+      ajustes = { ...AJUSTES_DEFAULT, ...parsed };
     }
   } catch(e) {
     console.warn("Error cargando ajustes:", e);
+  }
+
+  // --- Zoom y Resaltado Verde Suave de la Vista Previa Paralela ---
+  let zoomSlipAjustes = 1.65;
+  let currentHighlightPart = null;
+
+  const LISTA_FUENTES = [
+    { val: "Inter, sans-serif", name: "Inter (Moderna Limpia)" },
+    { val: "Arial, Helvetica, sans-serif", name: "Arial (Estándar)" },
+    { val: "Carlito, Calibri, sans-serif", name: "Calibri / Carlito" },
+    { val: "'Times New Roman', Times, serif", name: "Times New Roman (Clásica Formal)" },
+    { val: "'Courier Prime', Courier, monospace", name: "Courier Prime (Máquina)" },
+    { val: "'Roboto Mono', monospace", name: "Roboto Mono (Monoespaciada)" },
+    { val: "Georgia, serif", name: "Georgia (Elegante)" },
+    { val: "'Trebuchet MS', sans-serif", name: "Trebuchet MS" },
+    { val: "Tahoma, sans-serif", name: "Tahoma" },
+    { val: "Verdana, sans-serif", name: "Verdana" }
+  ];
+
+  function getFontOptionsHTML(selectedFont) {
+    return LISTA_FUENTES.map(f => {
+      const isSel = (f.val === selectedFont || f.val.replace(/['"]/g, '') === (selectedFont || '').replace(/['"]/g, ''));
+      return `<option value="${f.val}" ${isSel ? 'selected' : ''}>${f.name}</option>`;
+    }).join('');
+  }
+
+  function poblarSelectsTipografia() {
+    const grupos = [
+      'ffG1_LabelsContrib',
+      'ffG2_TablaLabels',
+      'ffG3_HeaderTitulos',
+      'ffG41_CajetinVal',
+      'ffG42_SerieRoja',
+      'ffG43_DatosContrib',
+      'ffG44_TablaDatos'
+    ];
+    grupos.forEach(grp => {
+      const el = document.getElementById('ajuste-' + grp);
+      if (el) {
+        const cur = ajustes[grp] || AJUSTES_DEFAULT[grp];
+        el.innerHTML = getFontOptionsHTML(cur);
+      }
+    });
+  }
+
+  function highlightPreviewPart(partName) {
+    currentHighlightPart = partName;
+    applyPartHighlight(partName);
+  }
+
+  function unhighlightPreviewPart() {
+    currentHighlightPart = null;
+    applyPartHighlight(null);
+  }
+
+  function applyPartHighlight(partName) {
+    const container = document.getElementById('ajustes-live-slip-container');
+    if (!container) return;
+    const prev = container.querySelectorAll('.highlight-part-active');
+    prev.forEach(el => el.classList.remove('highlight-part-active'));
+    if (!partName) return;
+
+    let selector = `[data-part="${partName}"]`;
+    if (partName === 'campo-nombre' || partName === 'campo-domicilio' || partName === 'campo-obs') {
+      selector = `[data-part="grupo-1"], [data-part="grupo-43"]`;
+    } else if (partName === 'tabla-hdr') {
+      selector = `[data-part="grupo-2"]`;
+    } else if (partName === 'tabla-body' || partName === 'tabla-pie') {
+      selector = `[data-part="grupo-44"], [data-part="grupo-2"]`;
+    } else if (partName === 'hdr-recibo-caja' || partName === 'hdr-num-fecha-lbl') {
+      selector = `[data-part="grupo-3"]`;
+    } else if (partName === 'hdr-num-fecha-val') {
+      selector = `[data-part="grupo-41"]`;
+    } else if (partName === 'hdr-serie') {
+      selector = `[data-part="grupo-42"]`;
+    }
+
+    const targets = container.querySelectorAll(selector);
+    targets.forEach(el => el.classList.add('highlight-part-active'));
+  }
+
+  function setZoomSlipAjustes(delta) {
+    if (delta === 0) {
+      zoomSlipAjustes = 1.0;
+    } else {
+      zoomSlipAjustes = Math.max(0.8, Math.min(2.8, parseFloat((zoomSlipAjustes + delta).toFixed(2))));
+    }
+    applyZoomSlipUI();
+  }
+
+  function autoAjustarZoomSlip() {
+    const wrapper = document.getElementById('ajustes-live-slip-wrapper');
+    if (!wrapper) return;
+    const w = wrapper.clientWidth - 40;
+    const h = wrapper.clientHeight - 40;
+    const baseW = 106 * (96 / 25.4);
+    const baseH = 102 * (96 / 25.4);
+    if (w > 100 && h > 100) {
+      let ideal = Math.min(w / baseW, h / baseH) * 0.96;
+      ideal = Math.max(0.9, Math.min(2.6, Math.floor(ideal * 20) / 20));
+      zoomSlipAjustes = ideal;
+      applyZoomSlipUI();
+    }
+  }
+
+  function applyZoomSlipUI() {
+    const wrapper = document.getElementById('ajustes-single-slip-wrapper');
+    const lbl = document.getElementById('ajustes-zoom-val');
+    if (wrapper) wrapper.style.transform = `scale(${zoomSlipAjustes})`;
+    if (lbl) lbl.textContent = `${Math.round(zoomSlipAjustes * 100)}%`;
+  }
+
+  function setAjustesTab(tabId) {
+    const tabs = ['tipografia', 'medidas', 'logos'];
+    tabs.forEach(t => {
+      const btn = document.getElementById('tab-btn-' + t);
+      const content = document.getElementById('tab-content-' + t);
+      if (t === tabId) {
+        if (btn) {
+          btn.className = "ajustes-tab-btn px-3 py-1.5 font-black text-xs rounded-t-lg border-b-2 border-sky-600 text-sky-600 flex items-center gap-1.5 transition cursor-pointer bg-sky-50/50 whitespace-nowrap";
+        }
+        if (content) content.classList.remove('hidden');
+      } else {
+        if (btn) {
+          btn.className = "ajustes-tab-btn px-3 py-1.5 font-bold text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition cursor-pointer whitespace-nowrap";
+        }
+        if (content) content.classList.add('hidden');
+      }
+    });
   }
 
   function onAjusteInput(key, val) {
@@ -968,8 +1454,50 @@
 
     const lbl = document.getElementById('val-' + key);
     if (lbl) {
-      lbl.textContent = (key.startsWith('h') || key.startsWith('w')) ? `${num.toFixed(1)} mm` : `${num.toFixed(1)} px`;
+      if (key === 'filigranaOpacity' || key === 'escudoOpacity') {
+        lbl.textContent = `${Math.round(num * 100)}%`;
+      } else if (key === 'borderWidth') {
+        lbl.textContent = `${num.toFixed(1)} px`;
+      } else if (key.startsWith('h') || key.startsWith('w') || key.startsWith('logo') || key.startsWith('escudo') || key.startsWith('gap')) {
+        const cm = (num / 10).toFixed(2);
+        lbl.textContent = `${num.toFixed(1)} mm (${cm} cm)`;
+      } else {
+        lbl.textContent = `${num.toFixed(1)} px`;
+      }
     }
+    renderAjustesLiveSlip();
+    triggerLivePreview();
+  }
+
+  function toggleAjusteBold(key) {
+    if (ajustesLocked) return;
+    ajustes[key] = !ajustes[key];
+    try {
+      localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
+    } catch(e) {}
+    actualizarBotonBoldUI(key);
+    renderAjustesLiveSlip();
+    triggerLivePreview();
+  }
+
+  function actualizarBotonBoldUI(key) {
+    const btn = document.getElementById('btn-bold-' + key);
+    if (!btn) return;
+    const isBold = !!ajustes[key];
+    if (isBold) {
+      btn.className = "w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition bg-emerald-600 text-white border-emerald-500 shadow-sm";
+    } else {
+      btn.className = "w-7 h-6 rounded text-xs font-normal cursor-pointer border flex items-center justify-center transition bg-slate-200 text-slate-500 border-slate-300 hover:bg-slate-300";
+    }
+  }
+
+  function onAjusteFontFamily(key, val) {
+    if (ajustesLocked) return;
+    ajustes[key] = val;
+    try {
+      localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
+    } catch(e) {}
+    renderAjustesLiveSlip();
     triggerLivePreview();
   }
 
@@ -989,17 +1517,17 @@
 
     if (btn && icon && text) {
       if (ajustesLocked) {
-        btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-amber-500/20 border-amber-500 text-amber-300 hover:bg-amber-500/30";
+        btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold border flex items-center gap-1.5 cursor-pointer transition bg-amber-500/20 border-amber-500 text-amber-300 hover:bg-amber-500/30";
         icon.textContent = "🔒";
         text.textContent = "Bloqueado";
       } else {
-        btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold border flex items-center gap-1 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white";
+        btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold border flex items-center gap-1.5 cursor-pointer transition bg-slate-800 border-slate-700 text-slate-300 hover:text-white";
         icon.textContent = "🔓";
         text.textContent = "Desbloqueado";
       }
     }
     if (container) {
-      const inputs = container.querySelectorAll('input');
+      const inputs = container.querySelectorAll('input, select, button[id^="btn-bold-"], button[onclick^="restablecerGrupo"]');
       inputs.forEach(inp => {
         inp.disabled = ajustesLocked;
         if (ajustesLocked) {
@@ -1009,6 +1537,68 @@
         }
       });
     }
+  }
+
+  function restablecerGrupo(grupo) {
+    if (ajustesLocked) {
+      alert("Los ajustes están bloqueados. Desbloquéalos primero.");
+      return;
+    }
+    const def = AJUSTES_DEFAULT;
+    if (grupo === 'g1') {
+      ajustes.fontG1_LabelsContrib = def.fontG1_LabelsContrib;
+      ajustes.boldG1_LabelsContrib = def.boldG1_LabelsContrib;
+      ajustes.ffG1_LabelsContrib = def.ffG1_LabelsContrib;
+    } else if (grupo === 'g2') {
+      ajustes.fontG2_TablaLabels = def.fontG2_TablaLabels;
+      ajustes.boldG2_TablaLabels = def.boldG2_TablaLabels;
+      ajustes.ffG2_TablaLabels = def.ffG2_TablaLabels;
+    } else if (grupo === 'g3') {
+      ajustes.fontG3_HeaderTitulos = def.fontG3_HeaderTitulos;
+      ajustes.boldG3_HeaderTitulos = def.boldG3_HeaderTitulos;
+      ajustes.ffG3_HeaderTitulos = def.ffG3_HeaderTitulos;
+    } else if (grupo === 'g41') {
+      ajustes.fontG41_CajetinVal = def.fontG41_CajetinVal;
+      ajustes.boldG41_CajetinVal = def.boldG41_CajetinVal;
+      ajustes.ffG41_CajetinVal = def.ffG41_CajetinVal;
+    } else if (grupo === 'g42') {
+      ajustes.fontG42_SerieRoja = def.fontG42_SerieRoja;
+      ajustes.boldG42_SerieRoja = def.boldG42_SerieRoja;
+      ajustes.ffG42_SerieRoja = def.ffG42_SerieRoja;
+    } else if (grupo === 'g43') {
+      ajustes.fontG43_DatosContrib = def.fontG43_DatosContrib;
+      ajustes.boldG43_DatosContrib = def.boldG43_DatosContrib;
+      ajustes.ffG43_DatosContrib = def.ffG43_DatosContrib;
+    } else if (grupo === 'g44') {
+      ajustes.fontG44_TablaDatos = def.fontG44_TablaDatos;
+      ajustes.boldG44_TablaDatos = def.boldG44_TablaDatos;
+      ajustes.ffG44_TablaDatos = def.ffG44_TablaDatos;
+    } else if (grupo === 'medidas') {
+      ajustes.gapLabelBox = def.gapLabelBox;
+      ajustes.gapCampos = def.gapCampos;
+      ajustes.hNombre = def.hNombre;
+      ajustes.hDomicilio = def.hDomicilio;
+      ajustes.hObs = def.hObs;
+      ajustes.hTablaBody = def.hTablaBody;
+      ajustes.wBoxNumFecha = def.wBoxNumFecha;
+      ajustes.hHeader = def.hHeader;
+      ajustes.borderWidth = def.borderWidth;
+    } else if (grupo === 'logos') {
+      ajustes.logoSize = def.logoSize;
+      ajustes.logoOffsetX = def.logoOffsetX;
+      ajustes.logoOffsetY = def.logoOffsetY;
+      ajustes.escudoSize = def.escudoSize;
+      ajustes.escudoOffsetX = def.escudoOffsetX;
+      ajustes.escudoOffsetY = def.escudoOffsetY;
+      ajustes.escudoOpacity = def.escudoOpacity;
+      ajustes.filigranaOpacity = def.filigranaOpacity;
+    }
+    try {
+      localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
+    } catch(e) {}
+    sincronizarValoresAjustesUI();
+    renderAjustesLiveSlip();
+    triggerLivePreview();
   }
 
   function restablecerAjustesFabrica() {
@@ -1021,17 +1611,23 @@
       localStorage.removeItem('recibo_mc_ajustes');
     } catch(e) {}
     sincronizarValoresAjustesUI();
+    renderAjustesLiveSlip();
     triggerLivePreview();
   }
 
   function abrirModalAjustes() {
+    poblarSelectsTipografia();
     sincronizarValoresAjustesUI();
+    renderAjustesLiveSlip();
     actualizarEstadoLockUI();
     const modal = document.getElementById('modal-ajustes');
     if (modal) {
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     }
+    setTimeout(() => {
+      autoAjustarZoomSlip();
+    }, 60);
   }
 
   function cerrarModalAjustes() {
@@ -1043,12 +1639,28 @@
   }
 
   function sincronizarValoresAjustesUI() {
+    poblarSelectsTipografia();
     for (const [key, val] of Object.entries(ajustes)) {
       const input = document.getElementById('ajuste-' + key);
       const lbl = document.getElementById('val-' + key);
       if (input) input.value = val;
       if (lbl) {
-        lbl.textContent = (key.startsWith('h') || key.startsWith('w')) ? `${Number(val).toFixed(1)} mm` : `${Number(val).toFixed(1)} px`;
+        if (key === 'filigranaOpacity' || key === 'escudoOpacity') {
+          lbl.textContent = `${Math.round(val * 100)}%`;
+        } else if (key === 'borderWidth') {
+          lbl.textContent = `${Number(val).toFixed(1)} px`;
+        } else if (key.startsWith('h') || key.startsWith('w') || key.startsWith('logo') || key.startsWith('escudo') || key.startsWith('gap')) {
+          const cm = (val / 10).toFixed(2);
+          lbl.textContent = `${Number(val).toFixed(1)} mm (${cm} cm)`;
+        } else if (key.startsWith('font')) {
+          lbl.textContent = `${Number(val).toFixed(1)} px`;
+        }
+      }
+      if (key.startsWith('bold')) {
+        actualizarBotonBoldUI(key);
+      }
+      if (key.startsWith('ff')) {
+        if (input) input.value = val;
       }
     }
   }
@@ -1166,11 +1778,21 @@
 
   function getReciboData(serieNum) {
     if (!recibosData[serieNum]) {
-      recibosData[serieNum] = {
-        nombre: "", domicilio: "", obs: "",
-        p1: "", d1: "", i1: "",
-        p2: "", d2: "", i2: "",
+      const base = recibosData[serieDesde] || {
+        nombre: "SABINA USCAMAYTA TACO - 24583755",
+        domicilio: "JR. SAN MARTÍN S/N - YANAOCA",
+        obs: "CREACION Y/O APERTURA DE CARPETA PREDIAL",
+        p1: "1", d1: "OTROS DERECHOS ADMINISTRATIVOS GENERALES", i1: "10.00",
+        p2: "01.02.04", d2: "EXPEDICIÓN DE CONSTANCIA Y CERTIFICADO", i2: "15.00",
         p3: "", d3: "", i3: ""
+      };
+      recibosData[serieNum] = {
+        nombre: base.nombre || "",
+        domicilio: base.domicilio || "",
+        obs: base.obs || "",
+        p1: base.p1 || "", d1: base.d1 || "", i1: base.i1 || "",
+        p2: base.p2 || "", d2: base.d2 || "", i2: base.i2 || "",
+        p3: base.p3 || "", d3: base.d3 || "", i3: base.i3 || ""
       };
     }
     return recibosData[serieNum];
@@ -1575,6 +2197,360 @@
     }, 450);
   }
 
+  // ======================== GENERADOR SLIP BOX INDIVIDUAL (FUENTE ÚNICA DE VERDAD) ========================
+  function renderSlipContent(params = {}) {
+    const a = ajustes;
+    const boxWidth = params.boxWidth || '90mm';
+    const boxHeight = params.boxHeight || '92mm';
+    const currentNum = params.currentNum !== undefined ? params.currentNum : '';
+    const currentFecha = params.currentFecha !== undefined ? params.currentFecha : '';
+    const currentSerie = params.currentSerie !== undefined ? params.currentSerie : '';
+    const valNombre = params.valNombre || '';
+    const valDomicilio = params.valDomicilio || '';
+    const valObs = params.valObs || '';
+    const valP1 = params.valP1 || '', valD1 = params.valD1 || '', fmtI1 = params.fmtI1 || '';
+    const valP2 = params.valP2 || '', valD2 = params.valD2 || '', fmtI2 = params.fmtI2 || '';
+    const valP3 = params.valP3 || '', valD3 = params.valD3 || '', fmtI3 = params.fmtI3 || '';
+    const sonStr = params.sonStr || '';
+    const totalStr = params.totalStr || '';
+    const showEscudoFlag = params.showEscudo !== undefined ? params.showEscudo : showEscudo;
+    const bw = (a.borderWidth || 1.0) + 'px';
+
+    // 1. Etiquetas Contribuyente (Nombre o Razón Social:, Domicilio Fiscal:, Observaciones:)
+    const fontG1 = a.fontG1_LabelsContrib || 8.0;
+    const fwG1   = a.boldG1_LabelsContrib ? '800' : '500';
+    const ffG1   = a.ffG1_LabelsContrib || 'Inter, sans-serif';
+
+    // 2. Cabecera Tabla & Totales (PARTIDA, DESCRIPCIÓN, IMPORTE, Son:, TOTAL)
+    const fontG2 = a.fontG2_TablaLabels || 8.0;
+    const fwG2   = a.boldG2_TablaLabels ? '900' : '600';
+    const ffG2   = a.ffG2_TablaLabels || 'Inter, sans-serif';
+
+    // 3. Encabezado & Títulos (RECIBO DE CAJA, Nº RECIBO etiqueta, FECHA etiqueta)
+    const fontG3 = a.fontG3_HeaderTitulos || 9.5;
+    const fwG3   = a.boldG3_HeaderTitulos ? '900' : '600';
+    const ffG3   = a.ffG3_HeaderTitulos || 'Inter, sans-serif';
+
+    // 4.1. Información Cajetín (Nº Recibo y Fecha datos)
+    const fontG41 = a.fontG41_CajetinVal || 9.0;
+    const fwG41   = a.boldG41_CajetinVal ? '700' : '500';
+    const ffG41   = a.ffG41_CajetinVal || 'Inter, sans-serif';
+
+    // 4.2. Serie Roja Correlativa (Nº 098466 - Rojo muy rojo de fábrica)
+    const fontG42 = a.fontG42_SerieRoja || 16.5;
+    const fwG42   = a.boldG42_SerieRoja ? '900' : '500';
+    const ffG42   = a.ffG42_SerieRoja || "'Times New Roman', Times, serif";
+
+    // 4.3. Datos Contribuyente (Inputs - Siempre en Mayúsculas)
+    const fontG43 = a.fontG43_DatosContrib || 8.5;
+    const fwG43   = a.boldG43_DatosContrib ? '700' : '500';
+    const ffG43   = a.ffG43_DatosContrib || 'Inter, sans-serif';
+
+    // 4.4. Datos Tabla, Son & Total (ítems, descripciones, montos S/, texto Son y total numérico)
+    const fontG44 = a.fontG44_TablaDatos || 7.5;
+    const fwG44   = a.boldG44_TablaDatos ? '700' : '500';
+    const ffG44   = a.ffG44_TablaDatos || "'Courier Prime', Courier, monospace";
+
+    const hTablaTotal = (4 + Number(a.hTablaBody || 18.0) + 6).toFixed(1);
+    const hHeaderVal = Number(a.hHeader || 16.0);
+    const hFilaNum = (hHeaderVal * 0.31).toFixed(1);
+    const hFilaFecha = (hHeaderVal * 0.31).toFixed(1);
+
+    const logoSize = a.logoSize || 15.0;
+    const logoX = a.logoOffsetX || 0.0;
+    const logoY = a.logoOffsetY || 0.0;
+
+    const escudoSize = a.escudoSize || 22.0;
+    const escudoX = a.escudoOffsetX || 0.0;
+    const escudoY = a.escudoOffsetY || 0.0;
+    const escudoOp = a.escudoOpacity !== undefined ? a.escudoOpacity : 0.12;
+
+    // Espaciados calibrados para NUNCA colisionar ni solaparse en PDF
+    const gapLbl = (a.gapLabelBox !== undefined && Number(a.gapLabelBox) >= 0.0) ? Number(a.gapLabelBox) : 1.5; // Espacio limpio entre etiqueta y borde superior
+    const gapCmp = (a.gapCampos !== undefined && a.gapCampos >= 1.2) ? a.gapCampos : 2.2;     // Espacio entre campos
+
+    // Ajuste responsive preventivo contra desbordes en textos de contribuyente
+    let fitFontNombre = fontG43;
+    if (valNombre && valNombre.length > 36) {
+      fitFontNombre = Math.max(5.5, +(fontG43 * Math.max(0.68, 36 / valNombre.length)).toFixed(1));
+    }
+
+    let fitFontDomicilio = fontG43;
+    if (valDomicilio && valDomicilio.length > 36) {
+      fitFontDomicilio = Math.max(5.5, +(fontG43 * Math.max(0.68, 36 / valDomicilio.length)).toFixed(1));
+    }
+
+    let fitFontObs = fontG43;
+    if (valObs && valObs.length > 55) {
+      fitFontObs = Math.max(5.5, +(fontG43 * Math.max(0.70, 55 / valObs.length)).toFixed(1));
+    }
+
+    let fitFontSon = fontG44;
+    if (sonStr && sonStr.length > 42) {
+      fitFontSon = Math.max(5.5, +(fontG44 * Math.max(0.72, 42 / sonStr.length)).toFixed(1));
+    }
+
+    let fontTotalMonto = fontG44;
+    if (totalStr && totalStr.length >= 10) {
+      fontTotalMonto = Math.max(5.5, +(fontG44 * 0.85).toFixed(1));
+    }
+
+    // Renderizado seguro y sincronizado de filas de la tabla anti-desborde
+    const rowP = [valP1, valP2, valP3];
+    const rowD = [valD1, valD2, valD3];
+    const rowI = [fmtI1, fmtI2, fmtI3];
+
+    let maxFilas = 0;
+    for (let i = 0; i < 3; i++) {
+      if (rowP[i] || rowD[i] || rowI[i]) maxFilas = i + 1;
+    }
+
+    let colPartidaHTML = '';
+    let colDescHTML = '';
+    let colImporteHTML = '';
+
+    for (let i = 0; i < maxFilas; i++) {
+      const p = rowP[i] ? rowP[i].trim() : '&nbsp;';
+      const d = rowD[i] ? rowD[i].trim() : '&nbsp;';
+      const rawI = rowI[i] ? rowI[i].trim() : '';
+
+      colPartidaHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em;">${p}</div>`;
+      colDescHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em;">${d}</div>`;
+
+      if (rawI) {
+        // Asegurar que S/ y el monto NUNCA se separen en 2 líneas
+        const safeI = rawI.replace(/S\/\s*/g, 'S/&nbsp;');
+        let fSizeI = fontG44;
+        if (rawI.length >= 13) {
+          fSizeI = Math.max(5.2, +(fontG44 * 0.78).toFixed(1));
+        } else if (rawI.length >= 10) {
+          fSizeI = Math.max(5.8, +(fontG44 * 0.88).toFixed(1));
+        }
+        colImporteHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em; font-size: ${fSizeI}px; text-align: right;">${safeI}</div>`;
+      } else {
+        colImporteHTML += `<div style="line-height: 1.25; height: 1.25em;">&nbsp;</div>`;
+      }
+    }
+
+    const escudoHTML = showEscudoFlag ? `
+      <div data-part="filigrana" class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 transition-all overflow-hidden">
+        <img src="datos/escudo_gris.png" alt="" class="object-contain select-none transition-all" style="width: ${escudoSize}mm; height: ${escudoSize}mm; opacity: ${escudoOp}; transform: translate(${escudoX}mm, ${escudoY}mm);">
+      </div>
+    ` : '';
+
+    return `
+      <div class="inner-box-9cm" style="width: ${boxWidth}; min-width: ${boxWidth}; max-width: ${boxWidth}; height: ${boxHeight}; min-height: ${boxHeight}; max-height: ${boxHeight}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; position: relative; z-index: 10; background: transparent; overflow: hidden;">
+        
+        <!-- ENCABEZADO OFICIAL (${hHeaderVal}mm de alto exacto) -->
+        <div data-part="hdr-general" class="transition-all" style="height: ${hHeaderVal}mm; min-height: ${hHeaderVal}mm; max-height: ${hHeaderVal}mm; width: 100%; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; box-sizing: border-box;">
+          <!-- Escudo oficial (con tamaño y posición calibrables) -->
+          <div data-part="hdr-logo" class="transition-all" style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; overflow: visible;">
+            <img src="logo/mc.png" alt="Escudo" style="width: ${logoSize}mm; height: ${logoSize}mm; max-height: 100%; object-fit: contain; transform: translate(${logoX}mm, ${logoY}mm); transition: transform 0.1s ease;">
+          </div>
+
+          <!-- Identidad Municipal Centrada -->
+          <div style="flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 1mm; line-height: 1.1; box-sizing: border-box; overflow: hidden; font-family: ${ffG3};">
+            <div style="font-size: 7.5px; font-weight: 900; text-transform: uppercase; color: #020617; line-height: 1.1; letter-spacing: 0.1px; white-space: nowrap !important;">
+              MUNICIPALIDAD PROVINCIAL<br>DE CANAS - YANAOCA
+            </div>
+            <div style="font-size: 5.8px; font-weight: 700; color: #1e293b; line-height: 1.1; margin-top: 0.3mm; white-space: nowrap !important;">
+              <div>Plaza de Armas · Canas - Yanaoca - Cusco</div>
+              <div>R.U.C. 20170325185</div>
+            </div>
+            <div data-part="grupo-3" class="rounded px-1 transition-all" style="font-family: ${ffG3}; font-size: ${fontG3}px; font-weight: ${fwG3}; text-transform: uppercase; color: #020617; line-height: 1; margin-top: 0.5mm; letter-spacing: 0.8px; white-space: nowrap !important;">
+              RECIBO DE CAJA
+            </div>
+          </div>
+
+          <!-- Cajetín Nº Recibo / Fecha / Serie (${a.wBoxNumFecha}mm de ancho, ${hHeaderVal}mm de alto) -->
+          <div data-part="hdr-cajetin" class="box-num-fecha transition-all" style="width: ${a.wBoxNumFecha}mm; min-width: ${a.wBoxNumFecha}mm; max-width: ${a.wBoxNumFecha}mm; height: ${hHeaderVal}mm; min-height: ${hHeaderVal}mm; max-height: ${hHeaderVal}mm; border: ${bw} solid #0f172a; border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; box-sizing: border-box; background: transparent;">
+            <!-- Fila 1: Nº Recibo -->
+            <div style="height: ${hFilaNum}mm; min-height: ${hFilaNum}mm; max-height: ${hFilaNum}mm; display: flex; align-items: center; border-bottom: ${bw} solid #0f172a; box-sizing: border-box;">
+              <span data-part="grupo-3" class="lbl-col transition-all" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3}; font-size: ${fontG3}px; font-weight: ${fwG3}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">Nº RECIBO</span>
+              <span data-part="grupo-41" class="transition-all" style="flex: 1; min-width: 0; height: 100%; font-family: ${ffG41}; font-size: ${fontG41}px; font-weight: ${fwG41}; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentNum}</span>
+            </div>
+            <!-- Fila 2: Fecha -->
+            <div style="height: ${hFilaFecha}mm; min-height: ${hFilaFecha}mm; max-height: ${hFilaFecha}mm; display: flex; align-items: center; border-bottom: ${bw} solid #0f172a; box-sizing: border-box;">
+              <span data-part="grupo-3" class="lbl-col transition-all" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3}; font-size: ${fontG3}px; font-weight: ${fwG3}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">FECHA</span>
+              <span data-part="grupo-41" class="transition-all" style="flex: 1; min-width: 0; height: 100%; font-family: ${ffG41}; font-size: ${fontG41}px; font-weight: ${fwG41}; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentFecha}</span>
+            </div>
+            <!-- Fila 3: Nº Serie Rojo (#dc2626) -->
+            <div data-part="grupo-42" class="transition-all" style="flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; font-family: ${ffG42}; font-size: ${fontG42}px; font-weight: ${fwG42}; color: #dc2626; line-height: 1; box-sizing: border-box; white-space: nowrap;">
+              ${currentSerie ? `<span>Nº ${currentSerie}</span>` : ''}
+            </div>
+          </div>
+        </div>
+
+        <!-- CAMPOS DE DATOS DEL CONTRIBUYENTE (Separación calibrable anti-colisión) -->
+        <div style="width: 100%; flex-shrink: 0; display: flex; flex-direction: column; box-sizing: border-box;">
+          <!-- 1. Nombre o Razón Social -->
+          <span data-part="grupo-1" class="transition-all" style="font-family: ${ffG1}; font-size: ${fontG1}px; font-weight: ${fwG1}; color: #0f172a; line-height: 1.25; margin-bottom: ${gapLbl}mm; padding-left: 1px; display: block; box-sizing: border-box;">Nombre o Razón Social:</span>
+          <div data-part="grupo-43" class="transition-all" style="height: ${a.hNombre}mm; min-height: ${a.hNombre}mm; max-height: ${a.hNombre}mm; border: ${bw} solid #0f172a; border-radius: 4px; padding: 0 4px; display: flex; align-items: center; font-family: ${ffG43}; font-size: ${fitFontNombre}px; font-weight: ${fwG43}; color: #020617; text-transform: uppercase; overflow: hidden; white-space: nowrap !important; text-overflow: ellipsis; box-sizing: border-box; background: transparent; margin-bottom: ${gapCmp}mm;">
+            ${valNombre}
+          </div>
+
+          <!-- 2. Domicilio Fiscal -->
+          <span data-part="grupo-1" class="transition-all" style="font-family: ${ffG1}; font-size: ${fontG1}px; font-weight: ${fwG1}; color: #0f172a; line-height: 1.25; margin-bottom: ${gapLbl}mm; padding-left: 1px; display: block; box-sizing: border-box;">Domicilio Fiscal:</span>
+          <div data-part="grupo-43" class="transition-all" style="height: ${a.hDomicilio}mm; min-height: ${a.hDomicilio}mm; max-height: ${a.hDomicilio}mm; border: ${bw} solid #0f172a; border-radius: 4px; padding: 0 4px; display: flex; align-items: center; font-family: ${ffG43}; font-size: ${fitFontDomicilio}px; font-weight: ${fwG43}; color: #020617; text-transform: uppercase; overflow: hidden; white-space: nowrap !important; text-overflow: ellipsis; box-sizing: border-box; background: transparent; margin-bottom: ${gapCmp}mm;">
+            ${valDomicilio}
+          </div>
+
+          <!-- 3. Observaciones -->
+          <span data-part="grupo-1" class="transition-all" style="font-family: ${ffG1}; font-size: ${fontG1}px; font-weight: ${fwG1}; color: #0f172a; line-height: 1.25; margin-bottom: ${gapLbl}mm; padding-left: 1px; display: block; box-sizing: border-box;">Observaciones:</span>
+          <div data-part="grupo-43" class="transition-all" style="height: ${a.hObs}mm; min-height: ${a.hObs}mm; max-height: ${a.hObs}mm; border: ${bw} solid #0f172a; border-radius: 4px; padding: 1.5px 4px; display: flex; align-items: flex-start; font-family: ${ffG43}; font-size: ${fitFontObs}px; font-weight: ${fwG43}; color: #020617; text-transform: uppercase; overflow: hidden; word-break: break-word; line-height: 1.25; box-sizing: border-box; background: transparent;">
+            ${valObs}
+          </div>
+        </div>
+
+        <!-- Separación exacta de 1mm hacia la tabla -->
+        <div style="height: 1mm; min-height: 1mm; max-height: 1mm; flex-shrink: 0;"></div>
+
+        <!-- TABLA OFICIAL (${hTablaTotal}mm de alto: Cabecera 4mm + Cuerpo ${a.hTablaBody}mm + Total 6mm) -->
+        <div data-part="tabla-box" class="transition-all" style="width: 100%; height: ${hTablaTotal}mm; min-height: ${hTablaTotal}mm; max-height: ${hTablaTotal}mm; border: ${bw} solid #0f172a; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; box-sizing: border-box; background: transparent; position: relative;">
+          
+          <!-- Cabecera de Tabla (4mm de alto: Partida 13mm, Descripción 59mm, Importe 18mm) -->
+          <div data-part="grupo-2" class="transition-all relative z-[2]" style="height: 4mm; min-height: 4mm; max-height: 4mm; display: flex; border-bottom: ${bw} solid #0f172a; align-items: center; background: transparent; box-sizing: border-box; font-family: ${ffG2};">
+            <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG2}px; font-weight: ${fwG2}; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">PARTIDA</div>
+            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG2}px; font-weight: ${fwG2}; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">DESCRIPCIÓN</div>
+            <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: center; font-size: ${fontG2}px; font-weight: ${fwG2}; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">IMPORTE</div>
+          </div>
+
+          <!-- Cuerpo de Tabla (${a.hTablaBody}mm de alto) con Escudo Gris de fondo -->
+          <div data-part="grupo-44" class="transition-all" style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; position: relative; box-sizing: border-box; overflow: hidden; font-family: ${ffG44};">
+            ${escudoHTML}
+            <!-- Columna Partida (13mm) -->
+            <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 1mm 0.5mm; text-align: center; line-height: 1.25; color: #000; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44}; overflow: hidden;">
+              ${colPartidaHTML}
+            </div>
+            <!-- Columna Descripción (59mm) -->
+            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 1mm 1.5mm; text-align: left; line-height: 1.25; color: #000; text-transform: uppercase; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44}; overflow: hidden;">
+              ${colDescHTML}
+            </div>
+            <!-- Columna Importe (18mm) - Anti-quiebre y anti-desborde -->
+            <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; padding: 1mm 1.2mm; text-align: right; line-height: 1.25; color: #000; position: relative; z-index: 1; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44}; overflow: hidden;">
+              ${colImporteHTML}
+            </div>
+          </div>
+
+          <!-- Pie de Tabla: Son / TOTAL / Monto (6mm de alto: Son 59mm, TOTAL 13mm, Monto 18mm) -->
+          <div class="transition-all text-black relative z-[2]" style="height: 6mm; min-height: 6mm; max-height: 6mm; display: flex; border-top: ${bw} solid #0f172a; align-items: center; background: transparent; box-sizing: border-box;">
+            <!-- Son (59mm) -->
+            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 0 1.5mm; display: flex; align-items: center; gap: 1mm; overflow: hidden; box-sizing: border-box; line-height: 1;">
+              <span data-part="grupo-2" style="font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; flex-shrink: 0; line-height: 1; white-space: nowrap;">Son:</span>
+              <span data-part="grupo-44" style="font-family: ${ffG44}; text-transform: uppercase; font-size: ${fitFontSon}px; font-weight: ${fwG44}; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1;">${sonStr}</span>
+            </div>
+            <!-- TOTAL (13mm) -->
+            <div data-part="grupo-2" style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap;">
+              TOTAL
+            </div>
+            <!-- Monto (18mm) -->
+            <div data-part="grupo-44" style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-family: ${ffG44}; font-weight: ${fwG44}; font-size: ${fontTotalMonto}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis;">
+              ${totalStr}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    `;
+  }
+
+  // ======================== RENDERIZADOR EN TIEMPO REAL VISTA PREVIA MODAL AJUSTES ========================
+  function renderAjustesLiveSlip() {
+    const container = document.getElementById('ajustes-live-slip-container');
+    if (!container) return;
+
+    let currentNum = "00000098466";
+    let currentFecha = document.getElementById('f-fecha-global')?.value || fechaGlobal || "01/09/2026";
+    let currentSerie = "098466";
+    let valNombre = "SABINA USCAMAYTA TACO - 24583755";
+    let valDomicilio = "JR. SAN MARTÍN S/N - YANAOCA";
+    let valObs = "CREACION Y/O APERTURA DE CARPETA PREDIAL";
+    let valP1 = "1", valD1 = "OTROS DERECHOS ADMINISTRATIVOS GENERALES", fmtI1 = "S/ 10.00";
+    let valP2 = "01.02.04", valD2 = "EXPEDICIÓN DE CONSTANCIA Y CERTIFICADO", fmtI2 = "S/ 15.00";
+    let valP3 = "", valD3 = "", fmtI3 = "";
+    let sonStr = "VEINTICINCO CON 00/100 SOLES";
+    let totalStr = "25.00";
+
+    const serieActual = serieDesde + reciboEditandoIdx;
+    if (hasReciboData(serieActual)) {
+      const rd = getReciboData(serieActual);
+      if (rd.nombre) valNombre = rd.nombre;
+      if (rd.domicilio) valDomicilio = rd.domicilio;
+      if (rd.obs) valObs = rd.obs;
+      if (rd.p1 || rd.d1 || rd.i1) {
+        valP1 = rd.p1 || "";
+        valD1 = rd.d1 || "";
+        fmtI1 = rd.i1 ? `S/ ${parseFloat(rd.i1).toFixed(2)}` : "";
+      }
+      if (rd.p2 || rd.d2 || rd.i2) {
+        valP2 = rd.p2 || "";
+        valD2 = rd.d2 || "";
+        fmtI2 = rd.i2 ? `S/ ${parseFloat(rd.i2).toFixed(2)}` : "";
+      }
+      if (rd.p3 || rd.d3 || rd.i3) {
+        valP3 = rd.p3 || "";
+        valD3 = rd.d3 || "";
+        fmtI3 = rd.i3 ? `S/ ${parseFloat(rd.i3).toFixed(2)}` : "";
+      }
+      let tot = parseVal(rd.i1) + parseVal(rd.i2) + parseVal(rd.i3);
+      if (tot > 0) {
+        totalStr = tot.toFixed(2);
+        let ent = Math.floor(tot);
+        let cen = Math.round((tot - ent) * 100);
+        sonStr = `${numeroALetras(ent)} CON ${String(cen).padStart(2, '0')}/100 SOLES`;
+      }
+    }
+
+    if (serieActual) {
+      currentSerie = String(serieActual).padStart(6, '0');
+      currentNum = String(serieActual).padStart(10, '0');
+    }
+
+    const slipInner = renderSlipContent({
+      boxWidth: '90mm',
+      boxHeight: '92mm',
+      currentNum,
+      currentFecha,
+      currentSerie,
+      valNombre,
+      valDomicilio,
+      valObs,
+      valP1, valD1, fmtI1,
+      valP2, valD2, fmtI2,
+      valP3, valD3, fmtI3,
+      sonStr,
+      totalStr,
+      showEscudo: true
+    });
+
+    const watermarkSlipHTML = showFiligrana ? `
+      <div data-part="watermark-pattern" class="watermark-horizontal-lines" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0;">
+        <svg style="width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="wm-slip-live" width="141" height="9.6" patternUnits="userSpaceOnUse">
+              <text x="0" y="7.5" textLength="141" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="6.8px" font-weight="700" fill="#0284c7" opacity="${ajustes.filigranaOpacity !== undefined ? ajustes.filigranaOpacity : 0.26}">MUNICIPALIDAD PROVINCIAL DE CANAS </text>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#wm-slip-live)" />
+        </svg>
+      </div>
+    ` : '';
+
+    container.innerHTML = `
+      <div class="receipt-pane shadow-2xl rounded-sm receipt-watermark-bg" style="width: 106mm; min-width: 106mm; max-width: 106mm; height: 102mm; min-height: 102mm; max-height: 102mm; padding: 5mm 8mm 5mm 8mm; box-sizing: border-box; position: relative; background: #ffffff; border: 1px solid #cbd5e1; overflow: hidden;">
+        ${watermarkSlipHTML}
+        <div style="position: relative; z-index: 10; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+          ${slipInner}
+        </div>
+      </div>
+    `;
+
+    if (currentHighlightPart) {
+      applyPartHighlight(currentHighlightPart);
+    }
+  }
+
   // ======================== GENERADOR HTML TIRA ========================
   function buildStripHTML(serieNum, forceBlank, stripWidth = '212mm', slipWidth = '106mm', boxWidth = '90mm', boxHeight = '92mm', stripHeight = '102mm') {
     const serieStr = String(serieNum).padStart(6, '0');
@@ -1626,134 +2602,22 @@
       }
     }
 
-    const escudoHTML = showEscudo ? `
-      <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-        <img src="datos/escudo_gris.png" alt="" class="w-[22mm] h-[22mm] object-contain opacity-[0.12] select-none">
-      </div>
-    ` : '';
-
-    function slipBox() {
-      const a = ajustes;
-      const hTablaTotal = (4 + Number(a.hTablaBody) + 6).toFixed(1);
-      const hFilaNum = (a.hHeader * 0.31).toFixed(1);
-      const hFilaFecha = (a.hHeader * 0.31).toFixed(1);
-
-      return `
-        <div class="inner-box-9cm" style="width: ${boxWidth}; min-width: ${boxWidth}; max-width: ${boxWidth}; height: ${boxHeight}; min-height: ${boxHeight}; max-height: ${boxHeight}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; position: relative; z-index: 10; background: transparent; overflow: hidden;">
-          
-          <!-- ENCABEZADO OFICIAL (${a.hHeader}mm de alto exacto) -->
-          <div style="height: ${a.hHeader}mm; min-height: ${a.hHeader}mm; max-height: ${a.hHeader}mm; width: 100%; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; box-sizing: border-box;">
-            <!-- Escudo oficial (15x15mm) -->
-            <div style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-              <img src="logo/mc.png" alt="Escudo" style="width: 15mm; height: 100%; max-height: 16.5mm; object-fit: contain;">
-            </div>
-
-            <!-- Identidad Municipal Centrada (white-space: nowrap para evitar colisión de líneas) -->
-            <div style="flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 1mm; line-height: 1.1; box-sizing: border-box; overflow: hidden;">
-              <div style="font-size: 7.5px; font-weight: 900; text-transform: uppercase; color: #020617; line-height: 1.1; letter-spacing: 0.1px; font-family: Inter, sans-serif; white-space: nowrap !important;">
-                MUNICIPALIDAD PROVINCIAL<br>DE CANAS - YANAOCA
-              </div>
-              <div style="font-size: 5.8px; font-weight: 700; color: #1e293b; line-height: 1.1; margin-top: 0.3mm; font-family: Inter, sans-serif; white-space: nowrap !important;">
-                <div>Plaza de Armas · Canas - Yanaoca - Cusco</div>
-                <div>R.U.C. 20170325185</div>
-              </div>
-              <div style="font-size: ${a.fontReciboCaja}px; font-weight: 900; text-transform: uppercase; color: #020617; line-height: 1; margin-top: 0.5mm; letter-spacing: 0.8px; font-family: Inter, sans-serif; white-space: nowrap !important;">
-                RECIBO DE CAJA
-              </div>
-            </div>
-
-            <!-- Cajetín Nº Recibo / Fecha / Serie (${a.wBoxNumFecha}mm de ancho, ${a.hHeader}mm de alto) -->
-            <div class="box-num-fecha" style="width: ${a.wBoxNumFecha}mm; min-width: ${a.wBoxNumFecha}mm; max-width: ${a.wBoxNumFecha}mm; height: ${a.hHeader}mm; min-height: ${a.hHeader}mm; max-height: ${a.hHeader}mm; border: 1px solid #0f172a; border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; box-sizing: border-box; background: transparent;">
-              <!-- Fila 1: Nº Recibo -->
-              <div style="height: ${hFilaNum}mm; min-height: ${hFilaNum}mm; max-height: ${hFilaNum}mm; display: flex; align-items: center; border-bottom: 1px solid #0f172a; box-sizing: border-box;">
-                <span class="lbl-col" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: 1px solid #0f172a; font-family: Inter, sans-serif; font-size: ${a.fontNumFecha}px; font-weight: 900; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">Nº RECIBO</span>
-                <span style="flex: 1; min-width: 0; height: 100%; font-family: Inter, sans-serif; font-size: ${a.fontNumFechaVal}px; font-weight: 700; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentNum}</span>
-              </div>
-              <!-- Fila 2: Fecha -->
-              <div style="height: ${hFilaFecha}mm; min-height: ${hFilaFecha}mm; max-height: ${hFilaFecha}mm; display: flex; align-items: center; border-bottom: 1px solid #0f172a; box-sizing: border-box;">
-                <span class="lbl-col" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: 1px solid #0f172a; font-family: Inter, sans-serif; font-size: ${a.fontNumFecha}px; font-weight: 900; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">FECHA</span>
-                <span style="flex: 1; min-width: 0; height: 100%; font-family: Inter, sans-serif; font-size: ${a.fontNumFechaVal}px; font-weight: 700; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentFecha}</span>
-              </div>
-              <!-- Fila 3: Nº Serie Rojo -->
-              <div style="flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; font-family: 'Times New Roman', Times, Georgia, serif; font-size: ${a.fontSerie}px; font-weight: 900; color: #dc2626; line-height: 1; box-sizing: border-box; white-space: nowrap;">
-                ${currentSerie ? `<span>Nº ${currentSerie}</span>` : ''}
-              </div>
-            </div>
-          </div>
-
-          <!-- CAMPOS DE DATOS DEL CONTRIBUYENTE -->
-          <div style="width: 100%; flex-shrink: 0; display: flex; flex-direction: column; box-sizing: border-box;">
-            <!-- 1. Nombre o Razón Social (Etiqueta 3mm, Cajetín ${a.hNombre}mm) -->
-            <div style="height: 3mm; min-height: 3mm; max-height: 3mm; font-family: Inter, sans-serif; font-size: ${a.fontLabels}px; font-weight: 800; color: #0f172a; display: flex; align-items: flex-end; padding-bottom: 0.3mm; box-sizing: border-box;">Nombre o Razón Social:</div>
-            <div style="height: ${a.hNombre}mm; min-height: ${a.hNombre}mm; max-height: ${a.hNombre}mm; border: 1px solid #0f172a; border-radius: 4px; padding: 0 4px; display: flex; align-items: center; font-family: Inter, sans-serif; font-size: ${a.fontDatos}px; font-weight: 600; color: #020617; text-transform: uppercase; overflow: hidden; white-space: nowrap; box-sizing: border-box; background: transparent;">
-              ${valNombre}
-            </div>
-
-            <!-- 2. Domicilio Fiscal (Etiqueta 3mm, Cajetín ${a.hDomicilio}mm) -->
-            <div style="height: 3mm; min-height: 3mm; max-height: 3mm; font-family: Inter, sans-serif; font-size: ${a.fontLabels}px; font-weight: 800; color: #0f172a; display: flex; align-items: flex-end; padding-bottom: 0.3mm; box-sizing: border-box;">Domicilio Fiscal:</div>
-            <div style="height: ${a.hDomicilio}mm; min-height: ${a.hDomicilio}mm; max-height: ${a.hDomicilio}mm; border: 1px solid #0f172a; border-radius: 4px; padding: 0 4px; display: flex; align-items: center; font-family: Inter, sans-serif; font-size: ${a.fontDatos}px; font-weight: 600; color: #020617; text-transform: uppercase; overflow: hidden; white-space: nowrap; box-sizing: border-box; background: transparent;">
-              ${valDomicilio}
-            </div>
-
-            <!-- 3. Observaciones (Etiqueta 3mm, Cajetín ${a.hObs}mm) -->
-            <div style="height: 3mm; min-height: 3mm; max-height: 3mm; font-family: Inter, sans-serif; font-size: ${a.fontLabels}px; font-weight: 800; color: #0f172a; display: flex; align-items: flex-end; padding-bottom: 0.3mm; box-sizing: border-box;">Observaciones:</div>
-            <div style="height: ${a.hObs}mm; min-height: ${a.hObs}mm; max-height: ${a.hObs}mm; border: 1px solid #0f172a; border-radius: 4px; padding: 1.5px 4px; display: flex; align-items: flex-start; font-family: Inter, sans-serif; font-size: ${a.fontObs}px; font-weight: 500; color: #020617; text-transform: uppercase; overflow: hidden; word-break: break-word; line-height: 1.2; box-sizing: border-box; background: transparent;">
-              ${valObs}
-            </div>
-          </div>
-
-          <!-- Separación exacta de 1mm hacia la tabla -->
-          <div style="height: 1mm; min-height: 1mm; max-height: 1mm; flex-shrink: 0;"></div>
-
-          <!-- TABLA OFICIAL (${hTablaTotal}mm de alto: Cabecera 4mm + Cuerpo ${a.hTablaBody}mm + Total 6mm) -->
-          <div style="width: 100%; height: ${hTablaTotal}mm; min-height: ${hTablaTotal}mm; max-height: ${hTablaTotal}mm; border: 1px solid #0f172a; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; box-sizing: border-box; background: transparent; position: relative;">
-            
-            <!-- Cabecera de Tabla (4mm de alto) -->
-            <div style="height: 4mm; min-height: 4mm; max-height: 4mm; display: flex; border-bottom: 1px solid #0f172a; align-items: center; background: transparent; box-sizing: border-box;" class="relative z-[2]">
-              <div style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; border-right: 1px solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-size: ${a.fontTablaHdr}px; font-weight: 900; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">PARTIDA</div>
-              <div style="width: 62mm; min-width: 62mm; max-width: 62mm; height: 100%; border-right: 1px solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-size: ${a.fontTablaHdr}px; font-weight: 900; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">DESCRIPCIÓN</div>
-              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-size: ${a.fontTablaHdr}px; font-weight: 900; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">IMPORTE</div>
-            </div>
-
-            <!-- Cuerpo de Tabla (${a.hTablaBody}mm de alto) con Escudo Gris de fondo -->
-            <div style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; font-size: ${a.fontTablaBody}px; font-family: Inter, sans-serif; position: relative; box-sizing: border-box; overflow: hidden;">
-              ${escudoHTML}
-              <!-- Columna Partida (15mm) -->
-              <div style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; border-right: 1px solid #0f172a; padding: 1mm 0.5mm; text-align: center; line-height: 1.25; color: #000; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-family: 'Courier Prime', Courier, monospace; font-weight: 700;">
-                ${valP1 ? valP1 + '<br>' : ''}${valP2 ? valP2 + '<br>' : ''}${valP3 || ''}
-              </div>
-              <!-- Columna Descripción (62mm) -->
-              <div style="width: 62mm; min-width: 62mm; max-width: 62mm; height: 100%; border-right: 1px solid #0f172a; padding: 1mm 1.5mm; text-align: left; line-height: 1.25; color: #000; text-transform: uppercase; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-weight: 500;">
-                ${valD1 ? valD1 + '<br>' : ''}${valD2 ? valD2 + '<br>' : ''}${valD3 || ''}
-              </div>
-              <!-- Columna Importe (13mm) -->
-              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; padding: 1mm 1.2mm; text-align: right; line-height: 1.25; color: #000; font-weight: 700; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-family: 'Courier Prime', Courier, monospace;">
-                ${fmtI1 ? fmtI1 + '<br>' : ''}${fmtI2 ? fmtI2 + '<br>' : ''}${fmtI3 || ''}
-              </div>
-            </div>
-
-            <!-- Pie de Tabla: Son / TOTAL / Monto (6mm de alto, line-height: 1 sin recortes) -->
-            <div style="height: 6mm; min-height: 6mm; max-height: 6mm; display: flex; border-top: 1px solid #0f172a; align-items: center; background: transparent; box-sizing: border-box;" class="text-black relative z-[2]">
-              <!-- Son (64mm) -->
-              <div style="width: 64mm; min-width: 64mm; max-width: 64mm; height: 100%; border-right: 1px solid #0f172a; padding: 0 1.5mm; display: flex; align-items: center; gap: 1mm; overflow: hidden; box-sizing: border-box; line-height: 1;">
-                <span style="font-family: Inter, sans-serif; font-weight: 900; font-size: ${a.fontSonTotal}px; color: #000; flex-shrink: 0; line-height: 1;">Son:</span>
-                <span style="font-family: Inter, sans-serif; text-transform: uppercase; font-size: ${Math.max(6, a.fontSonTotal - 0.5)}px; font-weight: 600; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1;">${sonStr}</span>
-              </div>
-              <!-- TOTAL (13mm) -->
-              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: 1px solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-weight: 900; font-size: ${a.fontSonTotal}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap;">
-                TOTAL
-              </div>
-              <!-- Monto (13mm) -->
-              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-family: 'Courier Prime', Courier, monospace; font-weight: 900; font-size: ${a.fontSonTotal}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap;">
-                ${totalStr}
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      `;
-    }
+    const slipHTML = renderSlipContent({
+      boxWidth,
+      boxHeight,
+      currentNum,
+      currentFecha,
+      currentSerie,
+      valNombre,
+      valDomicilio,
+      valObs,
+      valP1, valD1, fmtI1,
+      valP2, valD2, fmtI2,
+      valP3, valD3, fmtI3,
+      sonStr,
+      totalStr,
+      showEscudo
+    });
 
     const isA4 = (stripWidth === '210mm');
     const pLeft = isA4 ? 'padding: 5mm 8mm 5mm 7mm;' : 'padding: 5mm 9mm 5mm 7mm;';
@@ -1762,10 +2626,10 @@
     return `
       <section class="receipt-strip bg-transparent" style="width: ${stripWidth}; min-width: ${stripWidth}; max-width: ${stripWidth}; height: ${stripHeight}; min-height: ${stripHeight}; max-height: ${stripHeight}; display: flex; flex-direction: row; flex-wrap: nowrap !important; box-sizing: border-box; position: relative;">
         <div class="receipt-pane pane-left" style="width: ${slipWidth}; min-width: ${slipWidth}; max-width: ${slipWidth}; flex: 0 0 ${slipWidth} !important; ${pLeft} box-sizing: border-box; position: relative;">
-          ${slipBox()}
+          ${slipHTML}
         </div>
         <div class="receipt-pane pane-right" style="width: ${slipWidth}; min-width: ${slipWidth}; max-width: ${slipWidth}; flex: 0 0 ${slipWidth} !important; ${pRight} box-sizing: border-box; position: relative;">
-          ${slipBox()}
+          ${slipHTML}
         </div>
       </section>
     `;
@@ -1796,7 +2660,7 @@
             <svg style="width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <pattern id="wm-p-${pag}" width="141" height="9.6" patternUnits="userSpaceOnUse">
-                  <text x="0" y="7.5" textLength="141" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="6.8px" font-weight="700" fill="#0284c7" opacity="0.26">MUNICIPALIDAD PROVINCIAL DE CANAS </text>
+                  <text x="0" y="7.5" textLength="141" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="6.8px" font-weight="700" fill="#0284c7" opacity="${ajustes.filigranaOpacity !== undefined ? ajustes.filigranaOpacity : 0.26}">MUNICIPALIDAD PROVINCIAL DE CANAS </text>
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#wm-p-${pag})" />
@@ -1910,7 +2774,7 @@
 
       if (mainContainer) mainContainer.className = "w-full max-w-[1920px] mx-auto p-3 sm:p-4 flex flex-col lg:flex-row gap-5 items-start";
       if (viewForm) {
-        viewForm.className = "w-full lg:w-[465px] xl:w-[500px] flex-shrink-0 flex flex-col gap-4 max-h-[calc(100vh-80px)] overflow-y-auto pr-1 pb-10 sticky top-16";
+        viewForm.className = "w-full lg:w-[560px] xl:w-[610px] 2xl:w-[650px] flex-shrink-0 flex flex-col gap-4 max-h-[calc(100vh-80px)] overflow-y-auto pr-1 pb-10 sticky top-16";
         viewForm.classList.remove('hidden');
       }
       if (formCols) formCols.className = "flex flex-col gap-4";
@@ -2135,7 +2999,7 @@
               <svg style="width: 100%; height: 100%;" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <pattern id="wm-sb-${p}" width="141" height="9.6" patternUnits="userSpaceOnUse">
-                    <text x="0" y="7.5" textLength="141" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="6.8px" font-weight="700" fill="#0284c7" opacity="0.25">MUNICIPALIDAD PROVINCIAL DE CANAS </text>
+                    <text x="0" y="7.5" textLength="141" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="6.8px" font-weight="700" fill="#0284c7" opacity="${ajustes.filigranaOpacity !== undefined ? ajustes.filigranaOpacity : 0.26}">MUNICIPALIDAD PROVINCIAL DE CANAS </text>
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#wm-sb-${p})" />
@@ -2261,9 +3125,17 @@
   window.onAjusteInput = onAjusteInput;
   window.toggleLockAjustes = toggleLockAjustes;
   window.restablecerAjustesFabrica = restablecerAjustesFabrica;
+  window.setAjustesTab = setAjustesTab;
+  window.toggleAjusteBold = toggleAjusteBold;
+  window.onAjusteFontFamily = onAjusteFontFamily;
+  window.setZoomSlipAjustes = setZoomSlipAjustes;
+  window.autoAjustarZoomSlip = autoAjustarZoomSlip;
+  window.restablecerGrupo = restablecerGrupo;
+  window.highlightPreviewPart = highlightPreviewPart;
+  window.unhighlightPreviewPart = unhighlightPreviewPart;
 
   // ======================== INIT ========================
-  setModo(2);
+  setModo(3);
   setTipoHoja("ajustado");
   onRangoChange();
   setLayoutMode(layoutMode);
