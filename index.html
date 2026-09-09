@@ -2713,7 +2713,35 @@
     const rowI = [fmtI1, fmtI2, fmtI3];
 
     const hBodyVal = Number(a.hTablaBody || 18.0);
-    const rowHeightMm = Number(a.hFilaTabla || 4.2).toFixed(2);
+
+    // Calcular líneas necesarias por fila para que el texto fluya hacia abajo sin recortarse ni achicar fuente
+    const linesNeeded = [1, 1, 1];
+    for (let i = 0; i < 3; i++) {
+      const textLen = (rowD[i] ? String(rowD[i]).trim().length : 0);
+      if (textLen > 65) {
+        linesNeeded[i] = 3;
+      } else if (textLen > 30) {
+        linesNeeded[i] = 2;
+      } else {
+        linesNeeded[i] = 1;
+      }
+    }
+
+    // Distribuir la altura total hBodyVal (18.0mm) exactamente entre las 3 filas (sin agrandar el cuadrado)
+    const totalUnits = linesNeeded[0] + linesNeeded[1] + linesNeeded[2];
+    const rowHeights = linesNeeded.map(n => {
+      let h = (hBodyVal / totalUnits) * n;
+      return +(Math.max(3.2, h)).toFixed(2);
+    });
+
+    // Ajuste para que la suma total sea exactamente igual a hBodyVal (sin alterar el cuadrado exterior)
+    let sumH = rowHeights[0] + rowHeights[1] + rowHeights[2];
+    if (Math.abs(sumH - hBodyVal) > 0.05) {
+      const factor = hBodyVal / sumH;
+      rowHeights[0] = +(rowHeights[0] * factor).toFixed(2);
+      rowHeights[1] = +(rowHeights[1] * factor).toFixed(2);
+      rowHeights[2] = +(hBodyVal - rowHeights[0] - rowHeights[1]).toFixed(2);
+    }
 
     let rowsHTML = '';
     for (let i = 0; i < 3; i++) {
@@ -2721,21 +2749,17 @@
       const d = rowD[i] ? String(rowD[i]).trim() : '';
       const rawI = rowI[i] ? String(rowI[i]).trim() : '';
       const safeI = rawI ? rawI.replace(/S\/\s*/g, 'S/&nbsp;') : '';
-
-      let fitFontD = fontG44;
-      if (d && d.length > 34) {
-        fitFontD = Math.max(4.8, +(fontG44 * Math.max(0.65, 34 / d.length)).toFixed(1));
-      }
+      const rh = rowHeights[i];
 
       rowsHTML += `
-        <div style="width: 100%; height: ${rowHeightMm}mm; min-height: ${rowHeightMm}mm; max-height: ${rowHeightMm}mm; display: flex; flex-direction: row; align-items: center; box-sizing: border-box; position: relative; z-index: 1; color: #000; font-family: ${ffG44};">
-          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0 0.5mm;">
+        <div style="width: 100%; height: ${rh}mm; min-height: ${rh}mm; max-height: ${rh}mm; display: flex; flex-direction: row; align-items: flex-start; box-sizing: border-box; position: relative; z-index: 1; color: #000; font-family: ${ffG44}; overflow: hidden;">
+          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: flex-start; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0.6mm 0.5mm 0 0.5mm; line-height: 1.15;">
             ${p || '&nbsp;'}
           </div>
-          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: flex-start; padding: 0 1.5mm; font-size: ${fitFontD}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; line-height: 1.1;">
+          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: flex-start; justify-content: flex-start; padding: 0.6mm 1.5mm 0.4mm 1.5mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; overflow: hidden; white-space: normal; word-break: break-word; line-height: 1.15; box-sizing: border-box;">
             ${d || '&nbsp;'}
           </div>
-          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box;">
+          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: flex-start; justify-content: flex-end; padding: 0.6mm 1.2mm 0 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box; line-height: 1.15;">
             ${safeI || '&nbsp;'}
           </div>
         </div>
