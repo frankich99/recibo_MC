@@ -914,14 +914,15 @@
                 </div>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
-                <div class="sm:col-span-6">
+                <div class="sm:col-span-5">
                   <select id="ajuste-ffG44_TablaDatos" onchange="onAjusteFontFamily('ffG44_TablaDatos', this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800 text-xs focus:ring-1 focus:ring-sky-500"></select>
                 </div>
-                <div class="sm:col-span-6 flex items-center gap-1.5">
+                <div class="sm:col-span-7 flex items-center gap-1">
                   <button type="button" onclick="stepAjuste('fontG44_TablaDatos', -0.5); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
-                  <input type="range" id="ajuste-fontG44_TablaDatos" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('fontG44_TablaDatos', this.value)" class="flex-1 cursor-pointer">
+                  <input type="range" id="ajuste-fontG44_TablaDatos" min="6" max="13" step="0.5" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('fontG44_TablaDatos', this.value)" class="flex-1 cursor-pointer min-w-[50px]">
                   <button type="button" onclick="stepAjuste('fontG44_TablaDatos', 0.5); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
-                  <button type="button" id="btn-bold-boldG44_TablaDatos" onclick="toggleAjusteBold('boldG44_TablaDatos')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
+                  <button type="button" id="btn-bold-boldG44_TablaDatos" data-w="px-1.5" onclick="toggleAjusteBold('boldG44_TablaDatos')" class="px-1.5 h-6 rounded text-[10px] font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Negrita General: Partidas, Descripciones y Son">B Gen</button>
+                  <button type="button" id="btn-bold-boldG44_Valores" data-w="px-1.5" onclick="toggleAjusteBold('boldG44_Valores')" class="px-1.5 h-6 rounded text-[10px] font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Negrita Solo Valores: Importes S/ y Total numérico">B Datos</button>
                 </div>
               </div>
             </div>
@@ -1329,7 +1330,8 @@
 
     // 4.4. Información Cuadro / Tabla (Items, Son texto y Monto Total)
     fontG44_TablaDatos: 7.5,
-    boldG44_TablaDatos: false,
+    boldG44_TablaDatos: false, // Negrita General (partidas, descripciones, texto Son)
+    boldG44_Valores: true,     // Negrita Solo Datos / Valores (importes numéricos y total)
     ffG44_TablaDatos: "'Courier Prime', Courier, monospace",
 
     // Dimensiones y espaciados (mm) - Calibrados para NUNCA colisionar ni solaparse
@@ -1399,6 +1401,9 @@
         parsed.fontG44_TablaDatos = parsed.fontTablaDesc;
         parsed.boldG44_TablaDatos = parsed.boldTablaDesc !== undefined ? parsed.boldTablaDesc : false;
         parsed.ffG44_TablaDatos = parsed.ffTablaNums || "'Courier Prime', Courier, monospace";
+      }
+      if (parsed.boldG44_Valores === undefined) {
+        parsed.boldG44_Valores = true;
       }
       if (parsed.gapLabelBox === undefined) {
         parsed.gapLabelBox = 1.5;
@@ -1600,10 +1605,11 @@
     const btn = document.getElementById('btn-bold-' + key);
     if (!btn) return;
     const isBold = !!ajustes[key];
+    const wClass = btn.dataset.w || 'w-7';
     if (isBold) {
-      btn.className = "w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition bg-emerald-600 text-white border-emerald-500 shadow-sm";
+      btn.className = `${wClass} h-6 rounded text-[10px] font-black cursor-pointer border flex items-center justify-center transition bg-emerald-600 text-white border-emerald-500 shadow-sm flex-shrink-0`;
     } else {
-      btn.className = "w-7 h-6 rounded text-xs font-normal cursor-pointer border flex items-center justify-center transition bg-slate-200 text-slate-500 border-slate-300 hover:bg-slate-300";
+      btn.className = `${wClass} h-6 rounded text-[10px] font-normal cursor-pointer border flex items-center justify-center transition bg-slate-200 text-slate-500 border-slate-300 hover:bg-slate-300 flex-shrink-0`;
     }
   }
 
@@ -1688,6 +1694,7 @@
     } else if (grupo === 'g44') {
       ajustes.fontG44_TablaDatos = def.fontG44_TablaDatos;
       ajustes.boldG44_TablaDatos = def.boldG44_TablaDatos;
+      ajustes.boldG44_Valores = def.boldG44_Valores;
       ajustes.ffG44_TablaDatos = def.ffG44_TablaDatos;
     } else if (grupo === 'medidas') {
       ajustes.gapLabelBox = def.gapLabelBox;
@@ -2364,7 +2371,8 @@
 
     // 4.4. Datos Tabla, Son & Total (ítems, descripciones, montos S/, texto Son y total numérico)
     const fontG44 = a.fontG44_TablaDatos || 7.5;
-    const fwG44   = a.boldG44_TablaDatos ? '700' : '500';
+    const fwG44Gen   = a.boldG44_TablaDatos ? '700' : '500';
+    const fwG44Val   = (a.boldG44_Valores !== undefined ? a.boldG44_Valores : true) ? '700' : '500';
     const ffG44   = a.ffG44_TablaDatos || "'Courier Prime', Courier, monospace";
 
     const hTablaTotal = (4 + Number(a.hTablaBody || 18.0) + 6).toFixed(1);
@@ -2449,7 +2457,7 @@
       if (rawI) {
         // Asegurar que S/ y el monto NUNCA se separen en 2 líneas con el tamaño completo unificado
         const safeI = rawI.replace(/S\/\s*/g, 'S/&nbsp;');
-        colImporteHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em; font-size: ${fSizeImporte}px; text-align: right;">${safeI}</div>`;
+        colImporteHTML += `<div style="white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; height: 1.25em; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; text-align: right;">${safeI}</div>`;
       } else {
         colImporteHTML += `<div style="line-height: 1.25; height: 1.25em;">&nbsp;</div>`;
       }
@@ -2465,22 +2473,24 @@
       <div class="inner-box-9cm" style="width: ${boxWidth}; min-width: ${boxWidth}; max-width: ${boxWidth}; height: ${boxHeight}; min-height: ${boxHeight}; max-height: ${boxHeight}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; position: relative; z-index: 10; background: transparent; overflow: hidden;">
         
         <!-- ENCABEZADO OFICIAL (${hHeaderVal}mm de alto exacto) -->
-        <div data-part="hdr-general" class="transition-all" style="height: ${hHeaderVal}mm; min-height: ${hHeaderVal}mm; max-height: ${hHeaderVal}mm; width: 100%; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; box-sizing: border-box;">
-          <!-- Escudo oficial (con tamaño y posición calibrables) -->
-          <div data-part="hdr-logo" class="transition-all" style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; overflow: visible;">
+        <div data-part="hdr-general" class="transition-all" style="height: ${hHeaderVal}mm; min-height: ${hHeaderVal}mm; max-height: ${hHeaderVal}mm; width: 100%; display: flex; align-items: flex-start; justify-content: space-between; flex-shrink: 0; box-sizing: border-box;">
+          <!-- Escudo oficial (con tamaño y posición calibrables, alineado arriba) -->
+          <div data-part="hdr-logo" class="transition-all" style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; flex-shrink: 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 0.2mm; position: relative; overflow: visible;">
             <img src="logo/mc.png" alt="Escudo" style="width: ${logoSize}mm; height: ${logoSize}mm; max-height: 100%; object-fit: contain; transform: translate(${logoX}mm, ${logoY}mm); transition: transform 0.1s ease;">
           </div>
 
-          <!-- Identidad Municipal Centrada -->
-          <div style="flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 1mm; line-height: 1.1; box-sizing: border-box; overflow: hidden; font-family: ${ffG3};">
-            <div style="font-size: 7.5px; font-weight: 900; text-transform: uppercase; color: #020617; line-height: 1.1; letter-spacing: 0.1px; white-space: nowrap !important;">
-              MUNICIPALIDAD PROVINCIAL<br>DE CANAS - YANAOCA
+          <!-- Identidad Municipal Centrada (Alineada arriba como Imagen 2 física, con amplio respiro abajo) -->
+          <div style="flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center; padding: 0.2mm 1mm 0 1mm; line-height: 1.15; box-sizing: border-box; overflow: hidden; font-family: ${ffG3};">
+            <div style="font-size: 6.8px; font-weight: 700; text-transform: uppercase; color: #020617; line-height: 1.15; letter-spacing: 0.15px; white-space: nowrap !important;">
+              <div>MUNICIPALIDAD PROVINCIAL</div>
+              <div>DE CANAS - YANAOCA</div>
             </div>
-            <div style="font-size: 5.8px; font-weight: 700; color: #1e293b; line-height: 1.1; margin-top: 0.3mm; white-space: nowrap !important;">
-              <div>Plaza de Armas · Canas - Yanaoca - Cusco</div>
-              <div>R.U.C. 20170325185</div>
+            <div style="font-size: 5.2px; font-weight: 400; color: #1e293b; line-height: 1.15; margin-top: 0.3mm; white-space: nowrap !important;">
+              <div>Plaza de Armas</div>
+              <div>Canas - Yanaoca - Cusco</div>
+              <div style="font-weight: 600; margin-top: 0.15mm; color: #0f172a;">R.U.C. 20170325185</div>
             </div>
-            <div data-part="grupo-3" class="rounded px-1 transition-all" style="font-family: ${ffG3}; font-size: ${fontG3}px; font-weight: ${fwG3}; text-transform: uppercase; color: #020617; line-height: 1; margin-top: 0.5mm; letter-spacing: 0.8px; white-space: nowrap !important;">
+            <div data-part="grupo-3" class="rounded px-1 transition-all" style="font-family: ${ffG3}; font-size: ${fontG3}px; font-weight: ${fwG3}; text-transform: uppercase; color: #020617; line-height: 1.1; margin-top: 0.9mm; letter-spacing: 0.8px; white-space: nowrap !important;">
               RECIBO DE CAJA
             </div>
           </div>
@@ -2542,15 +2552,15 @@
           <div data-part="grupo-44" class="transition-all" style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; position: relative; box-sizing: border-box; overflow: hidden; font-family: ${ffG44};">
             ${escudoHTML}
             <!-- Columna Partida (13mm) -->
-            <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 1mm 0.5mm; text-align: center; line-height: 1.25; color: #000; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44}; overflow: hidden;">
+            <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 1mm 0.5mm; text-align: center; line-height: 1.25; color: #000; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; overflow: hidden;">
               ${colPartidaHTML}
             </div>
             <!-- Columna Descripción (59mm) -->
-            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 1mm 1.5mm; text-align: left; line-height: 1.25; color: #000; text-transform: uppercase; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44}; overflow: hidden;">
+            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 1mm 1.5mm; text-align: left; line-height: 1.25; color: #000; text-transform: uppercase; position: relative; z-index: 1; word-break: break-word; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; overflow: hidden;">
               ${colDescHTML}
             </div>
             <!-- Columna Importe (18mm) - Anti-quiebre y anti-desborde -->
-            <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; padding: 1mm 1.2mm; text-align: right; line-height: 1.25; color: #000; position: relative; z-index: 1; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44}; overflow: hidden;">
+            <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; padding: 1mm 1.2mm; text-align: right; line-height: 1.25; color: #000; position: relative; z-index: 1; box-sizing: border-box; font-size: ${fontG44}px; font-weight: ${fwG44Val}; overflow: hidden;">
               ${colImporteHTML}
             </div>
           </div>
@@ -2560,14 +2570,14 @@
             <!-- Son (59mm) -->
             <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 0 1.5mm; display: flex; align-items: center; gap: 1mm; overflow: hidden; box-sizing: border-box; line-height: 1;">
               <span data-part="grupo-2" style="font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; flex-shrink: 0; line-height: 1; white-space: nowrap;">Son:</span>
-              <span data-part="grupo-44" style="font-family: ${ffG44}; text-transform: uppercase; font-size: ${fitFontSon}px; font-weight: ${fwG44}; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1;">${sonStr}</span>
+              <span data-part="grupo-44" style="font-family: ${ffG44}; text-transform: uppercase; font-size: ${fitFontSon}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1;">${sonStr}</span>
             </div>
             <!-- TOTAL (13mm) -->
             <div data-part="grupo-2" style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap;">
               TOTAL
             </div>
             <!-- Monto (18mm) -->
-            <div data-part="grupo-44" style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-family: ${ffG44}; font-weight: ${fwG44}; font-size: ${fontTotalMonto}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis;">
+            <div data-part="grupo-44" style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.2mm; font-family: ${ffG44}; font-weight: ${fwG44Val}; font-size: ${fontTotalMonto}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis;">
               ${totalStr}
             </div>
           </div>
