@@ -3429,9 +3429,8 @@
         await new Promise(r => setTimeout(r, 120));
 
         const target = document.getElementById('sb-page');
-        const targetRect = target.getBoundingClientRect();
         const h2cOpts = {
-          scale: 3,
+          scale: 2.2,
           useCORS: true,
           logging: false,
           backgroundColor: '#ffffff',
@@ -3446,10 +3445,6 @@
           onclone: (doc) => {
             const el = doc.getElementById('pdf-sandbox');
             if (el) el.style.opacity = '1';
-            const link = doc.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = 'https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap';
-            doc.head.appendChild(link);
             const style = doc.createElement('style');
             style.textContent = `
               * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; }
@@ -3459,15 +3454,29 @@
           }
         };
 
-        const canvas = await html2canvas(target, h2cOpts);
-        const imgData = canvas.toDataURL('image/png');
+        // Hook temporal: compensa sobrecálculo de baseline en html2canvas (evita caída de texto hacia abajo)
+        const origFillText = CanvasRenderingContext2D.prototype.fillText;
+        CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+          const m = this.font ? this.font.match(/(\d+(\.\d+)?)px/) : null;
+          const fs = m ? parseFloat(m[1]) : 0;
+          return origFillText.call(this, text, x, y - fs * 0.52, maxWidth);
+        };
+
+        let canvas;
+        try {
+          canvas = await html2canvas(target, h2cOpts);
+        } finally {
+          CanvasRenderingContext2D.prototype.fillText = origFillText;
+        }
+
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
 
         if (p === 0) {
           pdfDoc = new jsPDF({ unit: 'mm', format: [dims.widthMm, dims.heightMm], orientation: 'portrait' });
         } else {
           pdfDoc.addPage([dims.widthMm, dims.heightMm], 'portrait');
         }
-        pdfDoc.addImage(imgData, 'PNG', 0, 0, dims.widthMm, dims.heightMm, undefined, 'FAST');
+        pdfDoc.addImage(imgData, 'JPEG', 0, 0, dims.widthMm, dims.heightMm, undefined, 'FAST');
       }
 
       if (pdfDoc) {
