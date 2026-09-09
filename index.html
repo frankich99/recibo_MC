@@ -1195,9 +1195,16 @@
                     <span id="val-escudoOpacity" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">12%</span>
                   </div>
                   <div class="flex items-center gap-1.5">
-                    <button type="button" onclick="stepAjuste('escudoOpacity', -0.02); highlightPreviewPart('filigrana');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
-                    <input type="range" id="ajuste-escudoOpacity" min="0.02" max="0.50" step="0.01" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOpacity', this.value)" class="flex-1 cursor-pointer">
-                    <button type="button" onclick="stepAjuste('escudoOpacity', 0.02); highlightPreviewPart('filigrana');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                    <button type="button" onclick="stepAjuste('escudoOpacity', -0.05); highlightPreviewPart('filigrana');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−5%)">−</button>
+                    <input type="range" id="ajuste-escudoOpacity" min="0.02" max="1.00" step="0.01" oninput="highlightPreviewPart('filigrana'); onAjusteInput('escudoOpacity', this.value)" class="flex-1 cursor-pointer">
+                    <button type="button" onclick="stepAjuste('escudoOpacity', 0.05); highlightPreviewPart('filigrana');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+5%)">+</button>
+                  </div>
+                  <div class="flex items-center justify-end text-[9.5px] text-slate-500 mt-1 gap-1">
+                    <button type="button" onclick="setAjusteDirecto('escudoOpacity', 0.15); highlightPreviewPart('filigrana');" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-200 cursor-pointer">15%</button>
+                    <button type="button" onclick="setAjusteDirecto('escudoOpacity', 0.30); highlightPreviewPart('filigrana');" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-200 cursor-pointer">30%</button>
+                    <button type="button" onclick="setAjusteDirecto('escudoOpacity', 0.50); highlightPreviewPart('filigrana');" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-200 cursor-pointer">50%</button>
+                    <button type="button" onclick="setAjusteDirecto('escudoOpacity', 0.80); highlightPreviewPart('filigrana');" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-200 cursor-pointer">80%</button>
+                    <button type="button" onclick="setAjusteDirecto('escudoOpacity', 1.00); highlightPreviewPart('filigrana');" class="px-1.5 py-0.5 rounded bg-slate-700 hover:bg-slate-600 text-white font-bold border border-slate-700 cursor-pointer">100%</button>
                   </div>
                 </div>
               </div>
@@ -1205,15 +1212,30 @@
 
             <div class="p-2.5 bg-white rounded-xl border border-slate-200 hover:border-emerald-400 transition shadow-2xs" onmouseenter="highlightPreviewPart('watermark-pattern')" onmouseleave="unhighlightPreviewPart()">
               <div class="flex items-center justify-between mb-1">
-                <span class="font-bold text-slate-800 text-[11px]">Opacidad Filigrana Azul de Seguridad:</span>
-                <span id="val-filigranaOpacity" class="font-receipt font-bold bg-slate-100 px-2 py-0.5 rounded text-[10px] text-slate-700">26%</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                  <span class="font-bold text-slate-800 text-[11px]">Opacidad Filigrana Azul de Seguridad:</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span id="val-filigranaOpacity" class="font-receipt font-black bg-sky-100 text-sky-950 px-2 py-0.5 rounded text-[11px] border border-sky-300">26%</span>
+                  <button type="button" onclick="restablecerGrupo('logos')" class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-300 transition cursor-pointer" title="Restablecer este grupo">↺</button>
+                </div>
               </div>
               <div class="flex items-center gap-1.5">
-                <button type="button" onclick="stepAjuste('filigranaOpacity', -0.02); highlightPreviewPart('watermark-pattern');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
-                <input type="range" id="ajuste-filigranaOpacity" min="0.05" max="0.50" step="0.01" oninput="highlightPreviewPart('watermark-pattern'); onAjusteInput('filigranaOpacity', this.value)" class="flex-1 cursor-pointer">
-                <button type="button" onclick="stepAjuste('filigranaOpacity', 0.02); highlightPreviewPart('watermark-pattern');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                <button type="button" onclick="stepAjuste('filigranaOpacity', -0.05); highlightPreviewPart('watermark-pattern');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Disminuir (−5%)">−</button>
+                <input type="range" id="ajuste-filigranaOpacity" min="0.02" max="1.00" step="0.01" oninput="highlightPreviewPart('watermark-pattern'); onAjusteInput('filigranaOpacity', this.value)" class="flex-1 cursor-pointer">
+                <button type="button" onclick="stepAjuste('filigranaOpacity', 0.05); highlightPreviewPart('watermark-pattern');" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-slate-300 select-none flex-shrink-0" title="Aumentar (+5%)">+</button>
               </div>
-              <span class="text-[9.5px] text-slate-500 mt-1 block">Ajusta el tono de las líneas con el texto azul "MUNICIPALIDAD PROVINCIAL DE CANAS"</span>
+              <div class="flex flex-wrap items-center justify-between text-[9.5px] text-slate-500 mt-1.5 gap-1">
+                <span>Líneas con texto azul (hasta 100% de intensidad):</span>
+                <div class="flex items-center gap-1">
+                  <button type="button" onclick="setAjusteDirecto('filigranaOpacity', 0.20); highlightPreviewPart('watermark-pattern');" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-sky-100 text-slate-700 font-bold border border-slate-200 cursor-pointer">20%</button>
+                  <button type="button" onclick="setAjusteDirecto('filigranaOpacity', 0.40); highlightPreviewPart('watermark-pattern');" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-sky-100 text-slate-700 font-bold border border-slate-200 cursor-pointer">40%</button>
+                  <button type="button" onclick="setAjusteDirecto('filigranaOpacity', 0.60); highlightPreviewPart('watermark-pattern');" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-sky-100 text-slate-700 font-bold border border-slate-200 cursor-pointer">60%</button>
+                  <button type="button" onclick="setAjusteDirecto('filigranaOpacity', 0.80); highlightPreviewPart('watermark-pattern');" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-sky-100 text-slate-700 font-bold border border-slate-200 cursor-pointer">80%</button>
+                  <button type="button" onclick="setAjusteDirecto('filigranaOpacity', 1.00); highlightPreviewPart('watermark-pattern');" class="px-1.5 py-0.5 rounded bg-sky-600 hover:bg-sky-500 text-white font-bold border border-sky-600 cursor-pointer">100%</button>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -1722,6 +1744,15 @@
     next = parseFloat(next.toFixed(Math.max(1, decimals)));
     input.value = next;
     onAjusteInput(key, next);
+  }
+
+  function setAjusteDirecto(key, val) {
+    if (ajustesLocked) return;
+    const input = document.getElementById('ajuste-' + key);
+    const num = parseFloat(val);
+    if (isNaN(num)) return;
+    if (input) input.value = num;
+    onAjusteInput(key, num);
   }
 
   function toggleAjusteBold(key) {
@@ -3412,6 +3443,7 @@
   window.cerrarModalAjustes = cerrarModalAjustes;
   window.onAjusteInput = onAjusteInput;
   window.stepAjuste = stepAjuste;
+  window.setAjusteDirecto = setAjusteDirecto;
   window.toggleLockAjustes = toggleLockAjustes;
   window.restablecerAjustesFabrica = restablecerAjustesFabrica;
   window.setAjustesTab = setAjustesTab;
