@@ -11,24 +11,24 @@ Cualquier modelo de IA o desarrollador que modifique las medidas o el CSS de imp
 ### 1. Dimensiones de Papel
 | Formato | Medidas Físicas | Distribución Vertical | Uso |
 |---|---|---|---|
-| **Oficio (Principal)** | **21.5 cm × 33.0 cm** (215 × 330 mm) | 3 tiras de 10.2 cm (306 mm) + 2.4 cm (24 mm) sobrante inferior | Impresión estándar de 3 recibos por pliego |
-| **Tira Suelta** | **21.5 cm × 10.2 cm** (215 × 102 mm) | 1 tira individual exacta al ras (sin sobrante) | Impresoras continuas / alimentación de tira |
+| **Oficio (Principal)** | **21.6 cm × 33.0 cm** (216 × 330 mm) | 3 tiras de 10.2 cm (306 mm) + 2.4 cm (24 mm) sobrante inferior | Impresión estándar de 3 recibos por pliego |
+| **Tira Suelta** | **21.6 cm × 10.2 cm** (216 × 102 mm) | 1 tira individual exacta al ras (sin sobrante) | Impresoras continuas / alimentación de tira |
 | **A4 Estándar** | **21.0 cm × 29.7 cm** (210 × 297 mm) | 2 tiras de 10.2 cm (204 mm) + 9.3 cm corte sobrante | Pliegos A4 convencionales |
 
 > **PROHIBICIÓN ESTRICTA:**
-> - **NUNCA** usar 21.6 cm, 21.2 cm, 21.05 cm ni 30.3 cm para Oficio. La medida física real es **21.5 cm × 33.0 cm**.
+> - La medida física calibrada de la hoja Oficio es **21.6 cm × 33.0 cm** (216 × 330 mm).
 > - El formato "Ajustado" fue **completamente eliminado**. No reintroducir botones ni referencias a "ajustado".
 
-### 2. Simetría Horizontal Exacta de Cada Tira (21.5 cm / 215 mm)
+### 2. Simetría Horizontal Exacta de Cada Tira (21.6 cm / 216 mm)
 Cada tira horizontal se divide en **2 talones gemelos** (Izquierdo: Cobranza / Talón Oficina; Derecho: Usuario / Cliente).
-- **Ancho por talón (Slip Width):** `107.5 mm` (`10.75 cm`, mitad exacta de 215 mm).
+- **Ancho por talón (Slip Width):** `108.0 mm` (`10.8 cm`, mitad exacta de 216 mm).
 - **Caja de contenido (`.talon-box`):** `90.00 mm` de ancho × `92.00 mm` de alto.
 - **Márgenes simétricos por talón:**
-  - Margen exterior lateral: `8.75 mm`
+  - Margen exterior lateral: `9.00 mm`
   - Caja de recibo: `90.00 mm`
-  - Margen interior hacia línea de corte central: `8.75 mm`
-  - **Suma exacta:** `8.75 mm + 90.00 mm + 8.75 mm = 107.50 mm`.
-  - **Total de la tira (2 talones):** `107.50 mm × 2 = 215.00 mm` (**21.5 cm**).
+  - Margen interior hacia línea de corte central: `9.00 mm`
+  - **Suma exacta:** `9.00 mm + 90.00 mm + 9.00 mm = 108.00 mm`.
+  - **Total de la tira (2 talones):** `108.00 mm × 2 = 216.00 mm` (**21.6 cm**).
 
 ### 3. Distribución Vertical en Hoja Oficio (33.0 cm / 330 mm)
 - Tira 1: `102.00 mm`
@@ -37,6 +37,15 @@ Cada tira horizontal se divide en **2 talones gemelos** (Izquierdo: Cobranza / T
 - **Subtotal recibos:** `306.00 mm` (30.6 cm)
 - **Sobrante inferior con línea punteada de corte:** `24.00 mm` (2.4 cm)
 - **Total:** `330.00 mm` (**33.0 cm**).
+
+---
+
+## 📱 Responsividad Móvil (Modo Celular)
+La interfaz cuenta con optimización responsive integral para dispositivos móviles (desde 320px hasta tablets y desktop):
+- **Header Compacto:** Reducido a ~45px de alto en móviles para no desperdiciar espacio vertical en pantallas pequeñas.
+- **Tabla de Conceptos Fluida:** Ajustada con columnas proporcionales (`PARTIDA: w-12 sm:w-20`, `DESCRIPCIÓN: min-w-0`, `IMPORTE: w-18 sm:w-28`) para eliminar scrollbars horizontales forzados en pantallas de 320px a 480px.
+- **Modal de Ajustes Dual:** Selector móvil entre pestaña "⚙️ Controles" y "👁️ Ver Recibo 1:1" con recálculo automático de escala (`scale()`) para garantizar que el talón entre completo en pantalla sin desbordar.
+- **Vista Previa Dinámica:** `autoAjustarZoom()` escala proporcionalmente la hoja Oficio o la Tira a la pantalla del dispositivo.
 
 ---
 
@@ -58,23 +67,19 @@ recibo_mc/
 1. `getPageDimensions(tirasEnPag)`: Retorna las medidas milimétricas (`widthMm`, `heightMm`, `slipWidthMm`, etc.) según el papel seleccionado (`oficio`, `tira`, `a4`).
 2. `buildStripHTML(serieNum, forceBlank, ...)`: Genera el marcado HTML de cada tira horizontal aplicando los paddings simétricos calculados (`mExt`, `mCut`).
 3. `renderSlipContent(params)`: Fuente única de verdad para el contenido interior del talón de 90 × 92 mm (encabezado, número, fecha, datos del usuario, tabla de conceptos, firmas).
-4. `updateAjustes()` / `cargarAjustes()`: Persistencia en `localStorage` con fallback seguro de valores por defecto:
-   - `margenLateral`: default `8.75` mm.
-   - `margenCorteCentral`: default `8.75` mm.
+4. `updateAjustes()` / `cargarAjustes()`: Persistencia en `localStorage` con fallback seguro y migración automática de valores por defecto:
+   - `margenLateral`: default `9.0` mm.
+   - `margenCorteCentral`: default `9.0` mm.
    - `boxWidthMm`: default `90.0` mm.
    - `borderWidth`, `fontSize`, `hHeader`, etc.
-5. `recalcSheetScale()`: Ajuste dinámico del preview en pantalla mediante transform CSS `scale()` para visualización fiel sin deformar el DOM imprimible.
-6. `@media print`:
-   - `@page { size: 215mm 330mm; margin: 0; }` para Oficio.
-   - `@page { size: 215mm 102mm; margin: 0; }` para Tira.
-   - Remoción de encabezados/pies de página del navegador, colores forzados (`-webkit-print-color-adjust: exact`).
+5. `recalcSheetScale()` / `autoAjustarZoom()`: Ajuste dinámico del preview en pantalla mediante transform CSS `scale()` para visualización fiel sin deformar el DOM imprimible.
 
 ---
 
 ## 🎛️ Panel de Ajustes (Medidas Calibrables en UI)
 En el modal de **Ajustes** -> pestaña **Medidas**:
-- **Margen Exterior (Lateral):** Control numérico + steppers en mm y cm (default: 8.75 mm).
-- **Margen Corte Central:** Control numérico + steppers en mm y cm (default: 8.75 mm).
+- **Margen Exterior (Lateral):** Control numérico + steppers en mm y cm (default: 9.00 mm).
+- **Margen Corte Central:** Control numérico + steppers en mm y cm (default: 9.00 mm).
 - **Ancho Caja Recibo:** Control numérico + steppers en mm y cm (default: 90.00 mm).
 - Modificar estos valores recalcula inmediatamente la tira y el preview manteniendo la simetría.
 
