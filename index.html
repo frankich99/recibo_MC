@@ -449,26 +449,26 @@
           <table class="w-full text-left text-xs">
             <thead class="bg-slate-100 font-bold border-b border-slate-300 text-slate-800 text-[10px]">
               <tr>
-                <th class="p-1 sm:p-2 w-12 sm:w-20 text-center">PARTIDA</th>
+                <th class="p-1 sm:p-2 w-16 sm:w-20 text-center">PARTIDA</th>
                 <th class="p-1 sm:p-2 min-w-0">DESCRIPCIÓN</th>
-                <th class="p-1 sm:p-2 w-18 sm:w-28 text-right">IMPORTE</th>
+                <th class="p-1 sm:p-2 w-20 sm:w-28 text-right">IMPORTE</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 text-xs">
               <tr class="align-top">
-                <td class="p-1 w-12 sm:w-20"><input id="f-p1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="1"></td>
+                <td class="p-1 w-16 sm:w-20"><input id="f-p1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="1"></td>
                 <td class="p-1 min-w-0"><textarea id="f-d1" rows="1" oninput="autoGrowTextarea(this); onDatoChange()" class="w-full border border-slate-300 rounded p-1 sm:p-1.5 uppercase font-receipt text-slate-900 text-xs resize-none overflow-hidden focus:ring-2 focus:ring-sky-500 outline-none leading-snug block min-h-[28px] transition-all" placeholder="DESCRIPCIÓN">OTROS DERECHOS ADMINISTRATIVOS GENERALES</textarea></td>
-                <td class="p-1 w-18 sm:w-28"><input id="f-i1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="10.00" placeholder="0.00"></td>
+                <td class="p-1 w-20 sm:w-28"><input id="f-i1" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="10.00" placeholder="0.00"></td>
               </tr>
               <tr class="align-top">
-                <td class="p-1 w-12 sm:w-20"><input id="f-p2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="01.02.04"></td>
+                <td class="p-1 w-16 sm:w-20"><input id="f-p2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="01.02.04"></td>
                 <td class="p-1 min-w-0"><textarea id="f-d2" rows="1" oninput="autoGrowTextarea(this); onDatoChange()" class="w-full border border-slate-300 rounded p-1 sm:p-1.5 uppercase font-receipt text-slate-900 text-xs resize-none overflow-hidden focus:ring-2 focus:ring-sky-500 outline-none leading-snug block min-h-[28px] transition-all" placeholder="DESCRIPCIÓN">EXPEDICIÓN DE CONSTANCIA Y CERTIFICADO</textarea></td>
-                <td class="p-1 w-18 sm:w-28"><input id="f-i2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="15.00" placeholder="0.00"></td>
+                <td class="p-1 w-20 sm:w-28"><input id="f-i2" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs focus:ring-2 focus:ring-sky-500 outline-none" value="15.00" placeholder="0.00"></td>
               </tr>
               <tr class="align-top">
-                <td class="p-1 w-12 sm:w-20"><input id="f-p3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs focus:ring-2 focus:ring-sky-500 outline-none"></td>
+                <td class="p-1 w-16 sm:w-20"><input id="f-p3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-center font-receipt text-slate-900 text-xs focus:ring-2 focus:ring-sky-500 outline-none"></td>
                 <td class="p-1 min-w-0"><textarea id="f-d3" rows="1" oninput="autoGrowTextarea(this); onDatoChange()" class="w-full border border-slate-300 rounded p-1 sm:p-1.5 uppercase font-receipt text-slate-900 text-xs resize-none overflow-hidden focus:ring-2 focus:ring-sky-500 outline-none leading-snug block min-h-[28px] transition-all" placeholder="DESCRIPCIÓN"></textarea></td>
-                <td class="p-1 w-18 sm:w-28"><input id="f-i3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs focus:ring-2 focus:ring-sky-500 outline-none" placeholder="0.00"></td>
+                <td class="p-1 w-20 sm:w-28"><input id="f-i3" type="text" oninput="onDatoChange()" class="w-full border border-slate-300 rounded p-1 text-right font-receipt font-bold text-slate-950 text-xs focus:ring-2 focus:ring-sky-500 outline-none" placeholder="0.00"></td>
               </tr>
             </tbody>
           </table>
@@ -523,13 +523,17 @@
       </section>
 
       <!-- BOTONES DE ACCIÓN PRINCIPALES (MODO NORMAL) -->
-      <div id="form-action-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-        <button type="button" onclick="irAVistaPrevia()" class="py-3.5 px-5 bg-sky-600 hover:bg-sky-500 text-white font-black text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="2"></path></svg>
-          <span>VER VISTA PREVIA</span>
+      <div id="form-action-buttons" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1">
+        <button type="button" onclick="irAVistaPrevia()" class="py-3 px-3 bg-sky-600 hover:bg-sky-500 text-white font-black text-xs sm:text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="2"></path></svg>
+          <span>VISTA PREVIA</span>
         </button>
-        <button type="button" onclick="descargarPDF()" class="py-3.5 px-5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2 border border-emerald-400 cursor-pointer">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <button type="button" onclick="verPDF()" class="py-3 px-3 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs sm:text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2 border border-indigo-400 cursor-pointer">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          <span>VER PDF</span>
+        </button>
+        <button type="button" onclick="descargarPDF()" class="py-3 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2 border border-emerald-400 cursor-pointer">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           <span>DESCARGAR PDF</span>
         </button>
       </div>
@@ -554,10 +558,10 @@
     <!-- Toolbar de Vista Previa Compacta Responsiva -->
     <div class="w-full bg-slate-800/95 backdrop-blur border border-slate-700 text-white rounded-xl shadow-md p-2 mb-2 flex flex-col gap-2 sticky top-0 z-40">
       
-      <!-- Fila 1: Back, Info, Ajustes y Descarga Directa -->
-      <div class="flex items-center justify-between gap-2 w-full">
+      <!-- Fila 1: Back, Info, Ajustes y Acciones PDF -->
+      <div class="flex items-center justify-between gap-1.5 sm:gap-2 w-full">
         <div class="flex items-center gap-1.5 min-w-0">
-          <button type="button" id="preview-back-btn" onclick="volverAFormulario()" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-bold text-white rounded-lg border border-slate-600 transition flex items-center gap-1 cursor-pointer flex-shrink-0">
+          <button type="button" id="preview-back-btn" onclick="volverAFormulario()" class="px-2 sm:px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-bold text-white rounded-lg border border-slate-600 transition flex items-center gap-1 cursor-pointer flex-shrink-0">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
             <span class="hidden xs:inline sm:inline">Volver</span>
           </button>
@@ -568,14 +572,18 @@
           </div>
         </div>
 
-        <div class="flex items-center gap-1.5 flex-shrink-0">
-          <button type="button" onclick="abrirModalAjustes()" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 font-bold text-xs text-amber-300 hover:text-white rounded-lg border border-slate-600 shadow transition flex items-center gap-1 cursor-pointer" title="Calibrar fuentes y medidas">
+        <div class="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
+          <button type="button" onclick="abrirModalAjustes()" class="px-2 sm:px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 font-bold text-xs text-amber-300 hover:text-white rounded-lg border border-slate-600 shadow transition flex items-center gap-1 cursor-pointer" title="Calibrar fuentes y medidas">
             <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-            <span class="hidden xs:inline sm:inline">Ajustes</span>
+            <span class="hidden md:inline">Ajustes</span>
           </button>
-          <button type="button" onclick="descargarPDF()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 font-black text-xs text-white rounded-lg shadow transition flex items-center gap-1.5 border border-emerald-400 cursor-pointer">
+          <button type="button" onclick="verPDF()" class="px-2 sm:px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 font-black text-xs text-white rounded-lg shadow transition flex items-center gap-1 border border-indigo-400 cursor-pointer" title="Ver documento PDF en visor oficial">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <span>VER PDF</span>
+          </button>
+          <button type="button" onclick="descargarPDF()" class="px-2 sm:px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 font-black text-xs text-white rounded-lg shadow transition flex items-center gap-1 border border-emerald-400 cursor-pointer" title="Descargar archivo PDF oficial">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            <span>PDF</span><span class="hidden sm:inline"> DESCARGAR</span>
+            <span class="hidden xs:inline">DESCARGAR</span><span class="xs:hidden">PDF</span>
           </button>
         </div>
       </div>
@@ -590,12 +598,14 @@
           <button type="button" onclick="setTipoHoja('tira')" id="preview-papel-tira" class="preview-papel-btn flex-1 sm:flex-none px-2 sm:px-2.5 py-1 rounded font-bold text-slate-300 hover:bg-slate-800 text-[11px] sm:text-xs cursor-pointer transition text-center whitespace-nowrap">Tira</button>
         </div>
 
-        <!-- Controles de Zoom Lineales -->
+        <!-- Controles de Zoom Lineales Ampliados para Celular y Escritorio -->
         <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-700 text-xs flex-shrink-0 ml-auto">
           <span class="text-[10px] font-bold text-slate-400 uppercase px-1 hidden sm:inline">Zoom:</span>
-          <button type="button" onclick="setZoom('auto')" class="zoom-btn px-2 py-0.5 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer" id="zoom-auto" title="Ajuste automático a ancho completo">Auto</button>
-          <button type="button" onclick="setZoom(1.0)" class="zoom-btn px-1.5 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer" id="zoom-100">100%</button>
-          <button type="button" onclick="setZoom(0.8)" class="zoom-btn px-1.5 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer" id="zoom-80">80%</button>
+          <button type="button" onclick="stepZoom(-0.1)" class="px-1.5 py-0.5 rounded font-black text-slate-300 hover:bg-slate-800 text-xs cursor-pointer select-none" title="Reducir zoom">-</button>
+          <button type="button" onclick="setZoom('auto')" class="zoom-btn px-2 py-0.5 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer shadow" id="zoom-auto" title="Ajustar hoja completa">Hoja</button>
+          <button type="button" onclick="setZoom('talon')" class="zoom-btn px-2 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer" id="zoom-talon" title="Ajustar a 1 talón individual (lectura cómoda en móvil)">Talón</button>
+          <button type="button" onclick="setZoom(1.0)" class="zoom-btn px-1.5 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer" id="zoom-100" title="Tamaño real 100%">100%</button>
+          <button type="button" onclick="stepZoom(0.1)" class="px-1.5 py-0.5 rounded font-black text-slate-300 hover:bg-slate-800 text-xs cursor-pointer select-none" title="Aumentar zoom">+</button>
         </div>
       </div>
 
@@ -1383,6 +1393,51 @@
     <div class="text-xs text-sky-400 font-semibold mt-1" id="pdf-modal-subtitle">Procesando páginas oficiales...</div>
     <div class="text-[11px] text-slate-400 mt-2">Medidas exactas 1:1 · Líneas de corte · Cero parpadeo</div>
   </div>
+</div>
+
+<!-- ======================== MODAL VISOR DE PDF OFICIAL ======================== -->
+<div id="modal-ver-pdf" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[99999999] flex-col p-2 sm:p-4 select-none">
+  <div class="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl flex flex-col w-full h-full max-w-5xl mx-auto overflow-hidden">
+    <!-- Header Visor -->
+    <div class="bg-slate-900 px-3 sm:px-5 py-2.5 sm:py-3 border-b border-slate-700 flex items-center justify-between gap-2 flex-shrink-0">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 flex-shrink-0"></span>
+        <div class="min-w-0">
+          <h3 class="text-xs sm:text-sm font-black text-white uppercase tracking-wide truncate" id="pdf-viewer-title">Visor de Recibo PDF</h3>
+          <p class="text-[10px] text-slate-400 truncate hidden xs:block">Vista previa oficial con medidas exactas y líneas de corte</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+        <a id="btn-pdf-open-tab" href="#" target="_blank" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-white rounded-lg border border-slate-700 text-xs font-bold transition flex items-center gap-1 cursor-pointer" title="Abrir en pestaña nueva">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          <span class="hidden sm:inline">Pestaña</span>
+        </a>
+        <button type="button" id="btn-pdf-download-again" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-black transition flex items-center gap-1.5 shadow cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span>Descargar</span>
+        </button>
+        <button type="button" onclick="cerrarModalVerPDF()" class="p-1.5 text-slate-400 hover:text-white text-lg font-bold transition cursor-pointer rounded-lg hover:bg-slate-800" title="Cerrar visor">✕</button>
+      </div>
+    </div>
+    <!-- Contenedor del documento PDF -->
+    <div class="flex-1 w-full h-full bg-slate-950 relative overflow-hidden flex flex-col items-center justify-center">
+      <iframe id="pdf-viewer-iframe" class="w-full h-full border-0 bg-white" title="Documento PDF"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== TOAST DE NOTIFICACIÓN DE DESCARGA PDF ======================== -->
+<div id="pdf-toast" class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-2xl border border-emerald-500/50 z-[9999999] items-center gap-3 text-xs max-w-md w-[92vw] sm:w-auto">
+  <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center flex-shrink-0 font-black text-sm">✓</div>
+  <div class="min-w-0 flex-1">
+    <div class="font-bold text-white truncate">PDF descargado exitosamente</div>
+    <div class="text-[10px] text-slate-400 truncate" id="pdf-toast-filename">Recibo_Caja_Canas.pdf</div>
+  </div>
+  <button type="button" onclick="abrirUltimoPDFGenerado()" class="px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-lg transition flex items-center gap-1 cursor-pointer flex-shrink-0">
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+    <span>Ver PDF</span>
+  </button>
+  <button type="button" onclick="cerrarToastPDF()" class="text-slate-400 hover:text-white p-1 text-base font-bold cursor-pointer">✕</button>
 </div>
 
 <!-- ======================== JAVASCRIPT ======================== -->
@@ -2794,8 +2849,8 @@
     }
 
     const escudoHTML = showEscudoFlag ? `
-      <div data-part="filigrana" class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 transition-all overflow-hidden">
-        <img src="datos/escudo_gris.png" alt="" class="object-contain select-none transition-all" style="width: ${escudoSize}mm; height: ${escudoSize}mm; opacity: ${escudoOp}; transform: translate(${escudoX}mm, ${escudoY}mm);">
+      <div data-part="filigrana" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; overflow: hidden;">
+        <img src="datos/escudo_gris.png" alt="" style="width: ${escudoSize}mm; height: ${escudoSize}mm; max-width: 100%; max-height: 100%; object-fit: contain; user-select: none; opacity: ${escudoOp}; transform: translate(${escudoX}mm, ${escudoY}mm);">
       </div>
     ` : '';
 
@@ -2893,9 +2948,9 @@
           <!-- Pie de Tabla: Son / TOTAL / Monto (6mm de alto: Son 59mm, TOTAL 13mm, Monto 18mm) -->
           <div class="transition-all text-black relative z-[2]" style="height: 6mm; min-height: 6mm; max-height: 6mm; display: flex; border-top: ${bw} solid #0f172a; align-items: center; background: transparent; box-sizing: border-box;">
             <!-- Son (59mm) -->
-            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 0 2.2mm; display: flex; align-items: center; gap: 1.2mm; overflow: hidden; box-sizing: border-box; line-height: 1;">
-              <span data-part="grupo-2" style="font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; flex-shrink: 0; line-height: 1; white-space: nowrap;">Son:</span>
-              <span data-part="grupo-44" style="font-family: ${ffG44}; text-transform: uppercase; font-size: ${fitFontSon}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1;">${sonStr}</span>
+            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 0 2.2mm; display: flex; align-items: center; gap: 1.2mm; overflow: hidden; box-sizing: border-box;">
+              <span data-part="grupo-2" style="font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; flex-shrink: 0; line-height: 1.15; white-space: nowrap;">Son:</span>
+              <span data-part="grupo-44" style="font-family: ${ffG44}; text-transform: uppercase; font-size: ${fitFontSon}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.15;">${sonStr}</span>
             </div>
             <!-- TOTAL (13mm) -->
             <div data-part="grupo-2" style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap;">
@@ -3014,6 +3069,16 @@
     if (!el) return;
     el.style.height = 'auto';
     el.style.height = Math.max(28, el.scrollHeight) + 'px';
+  }
+
+  function autoGrowAllTextareas() {
+    requestAnimationFrame(() => {
+      const ids = ['f-nombre', 'f-domicilio', 'f-obs', 'f-d1', 'f-d2', 'f-d3'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.tagName === 'TEXTAREA') autoGrowTextarea(el);
+      });
+    });
   }
 
   // ======================== VISTA PREVIA EN VIVO PASO 5 (DEPRECATED / REMOVED) ========================
@@ -3375,18 +3440,39 @@
       autoAjustarZoom();
       return;
     }
+    if (z === 'talon') {
+      isAutoZoom = false;
+      const viewPreview = document.getElementById('view-preview');
+      const availableWidth = Math.max(50, (viewPreview ? viewPreview.clientWidth : window.innerWidth) - 20);
+      const tirasPorPag = getTirasPorPagina();
+      const dims = getPageDimensions(Math.min(getTotalRecibos(), tirasPorPag));
+      const slipWidthPx = (dims.slipWidthMm || 108) * 96 / 25.4;
+      let calculatedZoom = (availableWidth / slipWidthPx) * 0.98;
+      calculatedZoom = Math.floor(calculatedZoom * 100) / 100;
+      currentZoom = Math.max(0.35, Math.min(2.0, calculatedZoom));
+      applyZoom();
+      updateZoomButtons('talon');
+      return;
+    }
     isAutoZoom = false;
     currentZoom = parseFloat(z) || 1.0;
     applyZoom();
     updateZoomButtons(Math.round(currentZoom * 100));
   }
 
+  function stepZoom(delta) {
+    isAutoZoom = false;
+    currentZoom = Math.max(0.3, Math.min(2.0, Math.round((currentZoom + delta) * 10) / 10));
+    applyZoom();
+    updateZoomButtons(Math.round(currentZoom * 100));
+  }
+
   function updateZoomButtons(activeId) {
     document.querySelectorAll('.zoom-btn').forEach(b => {
-      b.className = "zoom-btn px-2 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer";
+      b.className = "zoom-btn px-1.5 sm:px-2 py-0.5 rounded font-bold text-slate-300 hover:bg-slate-800 text-xs cursor-pointer";
     });
     const btn = document.getElementById('zoom-' + activeId);
-    if (btn) btn.className = "zoom-btn px-2 py-0.5 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer";
+    if (btn) btn.className = "zoom-btn px-1.5 sm:px-2 py-0.5 rounded font-bold bg-sky-600 text-white text-xs cursor-pointer shadow";
   }
 
   function applyZoom() {
@@ -3418,9 +3504,14 @@
     if (window.innerWidth < 1024) {
       if (layoutMode === 'paralelo') {
         setLayoutMode('normal');
-        return;
+      }
+    } else {
+      const saved = localStorage.getItem('recibo_layout_mode') || 'paralelo';
+      if (layoutMode !== saved && currentScreen !== 'preview') {
+        setLayoutMode(saved);
       }
     }
+    autoGrowAllTextareas();
     if (isAutoZoom && (layoutMode === 'paralelo' || currentScreen === 'preview')) {
       autoAjustarZoom();
     }
@@ -3428,19 +3519,13 @@
     if (modalAjustes && !modalAjustes.classList.contains('hidden')) {
       autoAjustarZoomSlip();
     }
-    renderStep5LiveSlip();
   });
 
-  // ======================== DESCARGA PDF DIRECTO ========================
-  async function descargarPDF() {
-    const { totalPags, totalRecibos } = buildAllPagesHTML();
+  // ======================== MOTOR DE GENERACIÓN PDF ========================
+  let ultimoPdfGenerado = null;
 
-    const modal = document.getElementById('pdf-loading-modal');
-    const modalSub = document.getElementById('pdf-modal-subtitle');
-    if (modal) {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
+  async function generarDocumentoPDF(progresoCb) {
+    const { totalPags, totalRecibos } = buildAllPagesHTML();
 
     const prevScrollX = window.scrollX || window.pageXOffset || 0;
     const prevScrollY = window.scrollY || window.pageYOffset || 0;
@@ -3449,11 +3534,10 @@
     if (document.fonts && document.fonts.ready) {
       await document.fonts.ready;
     }
-    await new Promise(r => setTimeout(r, 150));
+    await new Promise(r => setTimeout(r, 120));
 
     const sandbox = document.createElement('div');
     sandbox.id = 'pdf-sandbox';
-    // Colocar en flujo absoluto a top:0, left:0 con opacidad 0 para métricas tipográficas nativas perfectas sin parpadeo
     sandbox.style.cssText = 'position: absolute; left: 0; top: 0; margin: 0; padding: 0; background: #ffffff; z-index: -9999; opacity: 0; pointer-events: none; box-sizing: border-box; overflow: visible; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased;';
     document.body.appendChild(sandbox);
 
@@ -3472,8 +3556,8 @@
 
     try {
       for (let p = 0; p < totalPags; p++) {
-        if (modalSub) {
-          modalSub.textContent = `Procesando página ${p + 1} de ${totalPags}...`;
+        if (progresoCb) {
+          progresoCb(`Procesando página ${p + 1} de ${totalPags}...`);
         }
 
         const tiras = tirasPerPag[p];
@@ -3562,12 +3646,12 @@
           }
         };
 
-        // Hook temporal: compensa sobrecálculo de baseline en html2canvas (evita caída de texto hacia abajo)
+        // Hook calibrado: compensa exactamente 0.18 del tamaño de fuente (centrado geométrico óptimo en cajetines y cajas)
         const origFillText = CanvasRenderingContext2D.prototype.fillText;
         CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
           const m = this.font ? this.font.match(/(\d+(\.\d+)?)px/) : null;
           const fs = m ? parseFloat(m[1]) : 0;
-          return origFillText.call(this, text, x, y - fs * 0.52, maxWidth);
+          return origFillText.call(this, text, x, y - fs * 0.18, maxWidth);
         };
 
         let canvas;
@@ -3587,20 +3671,140 @@
         pdfDoc.addImage(imgData, 'PNG', 0, 0, dims.widthMm, dims.heightMm, undefined, 'FAST');
       }
 
+      return { pdfDoc, filename };
+    } finally {
+      if (sandbox.parentNode) sandbox.parentNode.removeChild(sandbox);
+      window.scrollTo(prevScrollX, prevScrollY);
+    }
+  }
+
+  // ======================== DESCARGA Y VISUALIZACIÓN PDF ========================
+  async function descargarPDF() {
+    const modal = document.getElementById('pdf-loading-modal');
+    const modalSub = document.getElementById('pdf-modal-subtitle');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    try {
+      const { pdfDoc, filename } = await generarDocumentoPDF(txt => {
+        if (modalSub) modalSub.textContent = txt;
+      });
+
       if (pdfDoc) {
         if (modalSub) modalSub.textContent = "Descargando archivo...";
+        const blob = pdfDoc.output('blob');
+        const blobUrl = URL.createObjectURL(blob);
+        ultimoPdfGenerado = { pdfDoc, blob, blobUrl, filename };
+
         pdfDoc.save(filename);
+        mostrarToastPDF(filename);
       }
     } catch(err) {
       console.error("Error PDF:", err);
       alert("Error al generar PDF: " + err.message);
     } finally {
-      if (sandbox.parentNode) sandbox.parentNode.removeChild(sandbox);
-      window.scrollTo(prevScrollX, prevScrollY);
       if (modal) {
         modal.classList.remove('flex');
         modal.classList.add('hidden');
       }
+    }
+  }
+
+  async function verPDF() {
+    const modal = document.getElementById('pdf-loading-modal');
+    const modalSub = document.getElementById('pdf-modal-subtitle');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    try {
+      const { pdfDoc, filename } = await generarDocumentoPDF(txt => {
+        if (modalSub) modalSub.textContent = txt;
+      });
+
+      if (pdfDoc) {
+        const blob = pdfDoc.output('blob');
+        const blobUrl = URL.createObjectURL(blob);
+        ultimoPdfGenerado = { pdfDoc, blob, blobUrl, filename };
+
+        abrirModalVerPDF(blobUrl, filename);
+      }
+    } catch(err) {
+      console.error("Error PDF:", err);
+      alert("Error al generar PDF: " + err.message);
+    } finally {
+      if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
+    }
+  }
+
+  function abrirModalVerPDF(blobUrl, filename) {
+    const modal = document.getElementById('modal-ver-pdf');
+    const iframe = document.getElementById('pdf-viewer-iframe');
+    const title = document.getElementById('pdf-viewer-title');
+    const btnOpenTab = document.getElementById('btn-pdf-open-tab');
+    const btnDl = document.getElementById('btn-pdf-download-again');
+    if (!modal) return;
+
+    if (title && filename) title.textContent = filename;
+    if (btnOpenTab) btnOpenTab.href = blobUrl;
+    if (btnDl) {
+      btnDl.onclick = () => {
+        if (ultimoPdfGenerado && ultimoPdfGenerado.pdfDoc) {
+          ultimoPdfGenerado.pdfDoc.save(ultimoPdfGenerado.filename);
+        }
+      };
+    }
+    if (iframe) iframe.src = blobUrl;
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function cerrarModalVerPDF() {
+    const modal = document.getElementById('modal-ver-pdf');
+    const iframe = document.getElementById('pdf-viewer-iframe');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+    if (iframe) iframe.src = 'about:blank';
+  }
+
+  let toastTimer = null;
+  function mostrarToastPDF(filename) {
+    const toast = document.getElementById('pdf-toast');
+    const lbl = document.getElementById('pdf-toast-filename');
+    if (!toast) return;
+    if (lbl) lbl.textContent = filename;
+    toast.classList.remove('hidden');
+    toast.classList.add('flex');
+
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      cerrarToastPDF();
+    }, 7000);
+  }
+
+  function cerrarToastPDF() {
+    const toast = document.getElementById('pdf-toast');
+    if (toast) {
+      toast.classList.add('hidden');
+      toast.classList.remove('flex');
+    }
+  }
+
+  function abrirUltimoPDFGenerado() {
+    cerrarToastPDF();
+    if (ultimoPdfGenerado && ultimoPdfGenerado.blobUrl) {
+      abrirModalVerPDF(ultimoPdfGenerado.blobUrl, ultimoPdfGenerado.filename);
+    } else {
+      verPDF();
     }
   }
 
@@ -3614,7 +3818,13 @@
   window.irAVistaPrevia = irAVistaPrevia;
   window.volverAFormulario = volverAFormulario;
   window.setZoom = setZoom;
+  window.stepZoom = stepZoom;
   window.descargarPDF = descargarPDF;
+  window.verPDF = verPDF;
+  window.abrirModalVerPDF = abrirModalVerPDF;
+  window.cerrarModalVerPDF = cerrarModalVerPDF;
+  window.abrirUltimoPDFGenerado = abrirUltimoPDFGenerado;
+  window.cerrarToastPDF = cerrarToastPDF;
   window.setLayoutMode = setLayoutMode;
   window.triggerLivePreview = triggerLivePreview;
   window.autoAjustarZoom = autoAjustarZoom;
@@ -3640,16 +3850,18 @@
   window.highlightPreviewPart = highlightPreviewPart;
   window.unhighlightPreviewPart = unhighlightPreviewPart;
   window.autoGrowTextarea = autoGrowTextarea;
+  window.autoGrowAllTextareas = autoGrowAllTextareas;
   window.renderStep5LiveSlip = renderStep5LiveSlip;
 
   // ======================== INIT ========================
   setModo(3);
   setTipoHoja("oficio");
   onRangoChange();
+  cargarReciboEnForm(0);
   setLayoutMode(layoutMode);
   sincronizarValoresAjustesUI();
   actualizarEstadoLockUI();
-  renderStep5LiveSlip();
+  autoGrowAllTextareas();
 
 })();
 </script>

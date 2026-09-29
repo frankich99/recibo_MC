@@ -1,3 +1,6 @@
 .playwright-mcp/
 *.tmp
 *.log
+
+# Screenshots temporales de pruebas
+/*.png
