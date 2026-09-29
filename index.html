@@ -946,6 +946,37 @@
                   <button type="button" id="btn-bold-boldG42_SerieRoja" onclick="toggleAjusteBold('boldG42_SerieRoja')" class="w-7 h-6 rounded text-xs font-black cursor-pointer border flex items-center justify-center transition flex-shrink-0" title="Alternar Negrita">B</button>
                 </div>
               </div>
+              <!-- Posición y alineación del Correlativo Rojo -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 pt-2 border-t border-red-100">
+                <!-- Mover Y (Arriba / Abajo) -->
+                <div>
+                  <div class="flex items-center justify-between mb-0.5">
+                    <span class="text-[10.5px] font-bold text-red-900 flex items-center gap-1">
+                      <span>↕️</span> Mover Vert (Y):
+                    </span>
+                    <span id="val-serieOffsetY" class="font-receipt font-bold bg-red-100/80 text-red-800 px-1.5 py-0.5 rounded text-[10px]">-0.6 mm</span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="stepAjuste('serieOffsetY', -0.2); highlightPreviewPart('grupo-42');" class="w-6 h-6 rounded-md bg-white hover:bg-red-50 active:bg-red-100 text-red-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-red-200 select-none flex-shrink-0" title="Subir / Mover arriba (−)">−</button>
+                    <input type="range" id="ajuste-serieOffsetY" min="-5.0" max="5.0" step="0.2" oninput="highlightPreviewPart('grupo-42'); onAjusteInput('serieOffsetY', this.value)" class="flex-1 cursor-pointer accent-red-600">
+                    <button type="button" onclick="stepAjuste('serieOffsetY', 0.2); highlightPreviewPart('grupo-42');" class="w-6 h-6 rounded-md bg-white hover:bg-red-50 active:bg-red-100 text-red-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-red-200 select-none flex-shrink-0" title="Bajar / Mover abajo (+)">+</button>
+                  </div>
+                </div>
+                <!-- Mover X (Izquierda / Derecha) -->
+                <div>
+                  <div class="flex items-center justify-between mb-0.5">
+                    <span class="text-[10.5px] font-bold text-red-900 flex items-center gap-1">
+                      <span>↔️</span> Mover Horiz (X):
+                    </span>
+                    <span id="val-serieOffsetX" class="font-receipt font-bold bg-red-100/80 text-red-800 px-1.5 py-0.5 rounded text-[10px]">0.0 mm</span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="stepAjuste('serieOffsetX', -0.2); highlightPreviewPart('grupo-42');" class="w-6 h-6 rounded-md bg-white hover:bg-red-50 active:bg-red-100 text-red-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-red-200 select-none flex-shrink-0" title="Mover Izquierda (−)">−</button>
+                    <input type="range" id="ajuste-serieOffsetX" min="-6.0" max="6.0" step="0.2" oninput="highlightPreviewPart('grupo-42'); onAjusteInput('serieOffsetX', this.value)" class="flex-1 cursor-pointer accent-red-600">
+                    <button type="button" onclick="stepAjuste('serieOffsetX', 0.2); highlightPreviewPart('grupo-42');" class="w-6 h-6 rounded-md bg-white hover:bg-red-50 active:bg-red-100 text-red-800 font-black text-sm flex items-center justify-center cursor-pointer transition border border-red-200 select-none flex-shrink-0" title="Mover Derecha (+)">+</button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- GRUPO 4.3: Datos Contribuyente -->
@@ -1099,6 +1130,47 @@
                   <button type="button" onclick="stepAjuste('hFilaTabla', -0.2); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Disminuir (−)">−</button>
                   <input type="range" id="ajuste-hFilaTabla" min="3.0" max="8.0" step="0.2" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('hFilaTabla', this.value)" class="flex-1 cursor-pointer">
                   <button type="button" onclick="stepAjuste('hFilaTabla', 0.2); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-white hover:bg-emerald-100 active:bg-emerald-200 text-emerald-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-emerald-300 select-none flex-shrink-0" title="Aumentar (+)">+</button>
+                </div>
+              </div>
+
+              <!-- 6c. Posición en Conjunto de la Tabla (Partida, Descripción, Importe, Son y Total) -->
+              <div class="sm:col-span-2 p-2.5 sm:p-3 bg-indigo-50/90 rounded-xl border border-indigo-300 hover:border-indigo-500 transition shadow-2xs" onmouseenter="highlightPreviewPart('tabla-box')" onmouseleave="unhighlightPreviewPart()">
+                <div class="flex items-center justify-between mb-1">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm">📐</span>
+                    <span class="font-black text-indigo-950 text-[11px] sm:text-xs">Mover Tabla en Conjunto (Partida, Descripción, Importe, Son y Total)</span>
+                  </div>
+                  <span class="text-[9.5px] text-indigo-600 hidden sm:inline">Desplaza todo el cuadro inferior como una sola unidad</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-1.5">
+                  <!-- Mover Vertical Tabla -->
+                  <div>
+                    <div class="flex items-center justify-between mb-0.5">
+                      <span class="text-[10px] sm:text-[10.5px] font-bold text-indigo-950 flex items-center gap-1">
+                        <span>↕️</span> Mover Vert (Arriba / Abajo):
+                      </span>
+                      <span id="val-tablaOffsetY" class="font-receipt font-black bg-indigo-200/90 px-1.5 py-0.5 rounded text-[10px] text-indigo-950">0.0 mm</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" onclick="stepAjuste('tablaOffsetY', -0.2); highlightPreviewPart('tabla-box');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Subir tabla (−)">−</button>
+                      <input type="range" id="ajuste-tablaOffsetY" min="-8.0" max="8.0" step="0.2" oninput="highlightPreviewPart('tabla-box'); onAjusteInput('tablaOffsetY', this.value)" class="flex-1 cursor-pointer accent-indigo-600">
+                      <button type="button" onclick="stepAjuste('tablaOffsetY', 0.2); highlightPreviewPart('tabla-box');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Bajar tabla (+)">+</button>
+                    </div>
+                  </div>
+                  <!-- Mover Horizontal Tabla -->
+                  <div>
+                    <div class="flex items-center justify-between mb-0.5">
+                      <span class="text-[10px] sm:text-[10.5px] font-bold text-indigo-950 flex items-center gap-1">
+                        <span>↔️</span> Mover Horiz (Izquierda / Derecha):
+                      </span>
+                      <span id="val-tablaOffsetX" class="font-receipt font-black bg-indigo-200/90 px-1.5 py-0.5 rounded text-[10px] text-indigo-950">0.0 mm</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" onclick="stepAjuste('tablaOffsetX', -0.2); highlightPreviewPart('tabla-box');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Mover izquierda tabla (−)">−</button>
+                      <input type="range" id="ajuste-tablaOffsetX" min="-5.0" max="5.0" step="0.2" oninput="highlightPreviewPart('tabla-box'); onAjusteInput('tablaOffsetX', this.value)" class="flex-1 cursor-pointer accent-indigo-600">
+                      <button type="button" onclick="stepAjuste('tablaOffsetX', 0.2); highlightPreviewPart('tabla-box');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Mover derecha tabla (+)">+</button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1520,6 +1592,8 @@
     fontG42_SerieRoja: 16.5,
     boldG42_SerieRoja: true,
     ffG42_SerieRoja: "'Times New Roman', Times, serif",
+    serieOffsetX: 0.0,   // mm (-6.0 a +6.0 mm)
+    serieOffsetY: -0.6,  // mm (-6.0 a +6.0 mm) - Centrado óptimo para evitar que caiga hacia abajo
 
     // 4.3. Información Contribuyente (Inputs - Siempre en Mayúsculas)
     fontG43_DatosContrib: 8.5,
@@ -1546,6 +1620,8 @@
     margenLateral: 9.0,       // mm margen lateral exterior (simetría perfecta: 9 + 90 + 9 = 108 mm)
     margenCorteCentral: 9.0,  // mm margen de corte central entre original y copia
     boxWidthMm: 90.0,         // mm ancho de marco del recibo
+    tablaOffsetX: 0.0,        // mm desplazamiento horizontal en conjunto (Partida, Descripción, Importe, Son, Total)
+    tablaOffsetY: 0.0,        // mm desplazamiento vertical en conjunto
 
     // Controles de Logo MC (logo/mc.png)
     logoSize: 15.0,       // mm
@@ -1696,6 +1772,18 @@
       }
       if (parsed.boxWidthMm === undefined) {
         parsed.boxWidthMm = baseDefaults.boxWidthMm || 90.0;
+      }
+      if (parsed.serieOffsetX === undefined) {
+        parsed.serieOffsetX = baseDefaults.serieOffsetX !== undefined ? baseDefaults.serieOffsetX : 0.0;
+      }
+      if (parsed.serieOffsetY === undefined) {
+        parsed.serieOffsetY = baseDefaults.serieOffsetY !== undefined ? baseDefaults.serieOffsetY : -0.6;
+      }
+      if (parsed.tablaOffsetX === undefined) {
+        parsed.tablaOffsetX = baseDefaults.tablaOffsetX !== undefined ? baseDefaults.tablaOffsetX : 0.0;
+      }
+      if (parsed.tablaOffsetY === undefined) {
+        parsed.tablaOffsetY = baseDefaults.tablaOffsetY !== undefined ? baseDefaults.tablaOffsetY : 0.0;
       }
       ajustes = { ...baseDefaults, ...parsed };
     }
@@ -1887,6 +1975,8 @@
         lbl.textContent = `${Math.round(num * 100)}%`;
       } else if (key === 'borderWidth') {
         lbl.textContent = `${num.toFixed(1)} px`;
+      } else if (key.startsWith('serieOffset') || key.startsWith('tablaOffset')) {
+        lbl.textContent = `${num > 0 ? '+' : ''}${num.toFixed(1)} mm`;
       } else if (key.startsWith('margen') || key.startsWith('boxWidth')) {
         const cm = (num / 10).toFixed(2);
         lbl.textContent = `${num.toFixed(2)} mm (${cm} cm)`;
@@ -2044,6 +2134,8 @@
       ajustes.fontG42_SerieRoja = def.fontG42_SerieRoja;
       ajustes.boldG42_SerieRoja = def.boldG42_SerieRoja;
       ajustes.ffG42_SerieRoja = def.ffG42_SerieRoja;
+      ajustes.serieOffsetX = def.serieOffsetX !== undefined ? def.serieOffsetX : 0.0;
+      ajustes.serieOffsetY = def.serieOffsetY !== undefined ? def.serieOffsetY : -0.6;
     } else if (grupo === 'g43') {
       ajustes.fontG43_DatosContrib = def.fontG43_DatosContrib;
       ajustes.boldG43_DatosContrib = def.boldG43_DatosContrib;
@@ -2067,6 +2159,8 @@
       ajustes.margenLateral = def.margenLateral !== undefined ? def.margenLateral : 9.0;
       ajustes.margenCorteCentral = def.margenCorteCentral !== undefined ? def.margenCorteCentral : 9.0;
       ajustes.boxWidthMm = def.boxWidthMm !== undefined ? def.boxWidthMm : 90.0;
+      ajustes.tablaOffsetX = def.tablaOffsetX !== undefined ? def.tablaOffsetX : 0.0;
+      ajustes.tablaOffsetY = def.tablaOffsetY !== undefined ? def.tablaOffsetY : 0.0;
     } else if (grupo === 'logos') {
       ajustes.logoSize = def.logoSize;
       ajustes.logoOffsetX = def.logoOffsetX;
@@ -2147,6 +2241,8 @@
           lbl.textContent = `${Math.round(val * 100)}%`;
         } else if (key === 'borderWidth') {
           lbl.textContent = `${Number(val).toFixed(1)} px`;
+        } else if (key.startsWith('serieOffset') || key.startsWith('tablaOffset')) {
+          lbl.textContent = `${Number(val) > 0 ? '+' : ''}${Number(val).toFixed(1)} mm`;
         } else if (key.startsWith('margen') || key.startsWith('boxWidth')) {
           const cm = (val / 10).toFixed(2);
           lbl.textContent = `${Number(val).toFixed(2)} mm (${cm} cm)`;
@@ -2779,6 +2875,12 @@
     const escudoY = a.escudoOffsetY || 0.0;
     const escudoOp = a.escudoOpacity !== undefined ? a.escudoOpacity : 0.12;
 
+    const serieX = a.serieOffsetX !== undefined ? Number(a.serieOffsetX) : 0.0;
+    const serieY = a.serieOffsetY !== undefined ? Number(a.serieOffsetY) : -0.6;
+
+    const tablaX = a.tablaOffsetX !== undefined ? Number(a.tablaOffsetX) : 0.0;
+    const tablaY = a.tablaOffsetY !== undefined ? Number(a.tablaOffsetY) : 0.0;
+
     // Espaciados calibrados para ajuste milimétrico continuo (admite valores negativos)
     const gapLbl = a.gapLabelBox !== undefined ? Number(a.gapLabelBox) : 1.8;
     const gapCmp = a.gapCampos !== undefined ? Number(a.gapCampos) : 2.0;
@@ -2893,8 +2995,8 @@
               <span data-part="grupo-41" class="transition-all" style="flex: 1; min-width: 0; height: 100%; font-family: ${ffG41}; font-size: ${fontG41}px; font-weight: ${fwG41}; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentFecha}</span>
             </div>
             <!-- Fila 3: Nº Serie Rojo (#dc2626) -->
-            <div data-part="grupo-42" class="transition-all" style="flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; font-family: ${ffG42}; font-size: ${fontG42}px; font-weight: ${fwG42}; color: #dc2626; line-height: 1; box-sizing: border-box; white-space: nowrap;">
-              ${currentSerie ? `<span>Nº ${currentSerie}</span>` : ''}
+            <div data-part="grupo-42" class="transition-all" style="flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; font-family: ${ffG42}; font-size: ${fontG42}px; font-weight: ${fwG42}; color: #dc2626; line-height: 1; box-sizing: border-box; white-space: nowrap; overflow: visible;">
+              ${currentSerie ? `<span style="display: inline-block; transform: translate(${serieX}mm, ${serieY}mm); transition: transform 0.1s ease;">Nº ${currentSerie}</span>` : ''}
             </div>
           </div>
         </div>
@@ -2924,7 +3026,7 @@
         <div style="height: 1mm; min-height: 1mm; max-height: 1mm; flex-shrink: 0;"></div>
 
         <!-- TABLA OFICIAL (${hTablaTotal}mm de alto: Cabecera 4mm + Cuerpo ${a.hTablaBody}mm + Total 6mm) -->
-        <div data-part="tabla-box" class="transition-all" style="width: 100%; height: ${hTablaTotal}mm; min-height: ${hTablaTotal}mm; max-height: ${hTablaTotal}mm; border: ${bw} solid #0f172a; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; box-sizing: border-box; background: transparent; position: relative;">
+        <div data-part="tabla-box" class="transition-all" style="width: 100%; height: ${hTablaTotal}mm; min-height: ${hTablaTotal}mm; max-height: ${hTablaTotal}mm; border: ${bw} solid #0f172a; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; box-sizing: border-box; background: transparent; position: relative; transform: translate(${tablaX}mm, ${tablaY}mm); transition: transform 0.1s ease;">
           
           <!-- Cabecera de Tabla (4mm de alto: Partida 13mm, Descripción 59mm, Importe 18mm) -->
           <div data-part="grupo-2" class="transition-all relative z-[2]" style="height: 4mm; min-height: 4mm; max-height: 4mm; display: flex; border-bottom: ${bw} solid #0f172a; align-items: center; background: transparent; box-sizing: border-box; font-family: ${ffG2};">
