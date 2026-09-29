@@ -2948,19 +2948,21 @@
       activeRows.push({ p, d, safeI });
     }
 
+    const hFilaVal = a.hFilaTabla !== undefined ? Number(a.hFilaTabla) : 4.2;
+
     let rowsHTML = '';
     for (let i = 0; i < activeRows.length; i++) {
       const { p, d, safeI } = activeRows[i];
 
       rowsHTML += `
-        <div style="width: 100%; display: flex; flex-direction: row; align-items: flex-start; box-sizing: border-box; position: relative; z-index: 1; color: #000; font-family: ${ffG44}; margin: 0; padding: 0;">
-          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; display: flex; align-items: flex-start; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0.6mm 0.8mm 0.4mm 0.8mm; line-height: 1.15;">
+        <div style="width: 100%; min-height: ${hFilaVal}mm; display: flex; flex-direction: row; align-items: flex-start; box-sizing: border-box; position: relative; z-index: 1; color: #000; font-family: ${ffG44}; margin: 0 0 0.6mm 0; padding: 0;">
+          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; display: flex; align-items: flex-start; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0.4mm 0.8mm 0.2mm 0.8mm; line-height: 1.15;">
             ${p || '&nbsp;'}
           </div>
-          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; display: flex; align-items: flex-start; justify-content: flex-start; padding: 0.6mm 1.5mm 0.4mm 2.2mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; white-space: normal; word-break: break-word; line-height: 1.15; box-sizing: border-box;">
+          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; display: flex; align-items: flex-start; justify-content: flex-start; padding: 0.4mm 1.5mm 0.2mm 2.2mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; white-space: normal; word-break: break-word; line-height: 1.15; box-sizing: border-box;">
             ${d || '&nbsp;'}
           </div>
-          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; display: flex; align-items: flex-start; justify-content: flex-end; padding: 0.6mm 2.2mm 0.4mm 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box; line-height: 1.15;">
+          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; display: flex; align-items: flex-start; justify-content: flex-end; padding: 0.4mm 2.2mm 0.2mm 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box; line-height: 1.15;">
             ${safeI || '&nbsp;'}
           </div>
         </div>
@@ -3771,7 +3773,20 @@
           }
         };
 
-        const canvas = await html2canvas(target, h2cOpts);
+        const origFillText = CanvasRenderingContext2D.prototype.fillText;
+        CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+          const m = this.font ? this.font.match(/(\d+(\.\d+)?)px/) : null;
+          const fs = m ? parseFloat(m[1]) : 12;
+          const shift = fs * 0.32;
+          return origFillText.call(this, text, x, y - shift, maxWidth);
+        };
+
+        let canvas;
+        try {
+          canvas = await html2canvas(target, h2cOpts);
+        } finally {
+          CanvasRenderingContext2D.prototype.fillText = origFillText;
+        }
 
         const imgData = canvas.toDataURL('image/png');
 
