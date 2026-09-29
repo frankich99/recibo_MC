@@ -1133,42 +1133,42 @@
                 </div>
               </div>
 
-              <!-- 6c. Posición en Conjunto de la Tabla (Partida, Descripción, Importe, Son y Total) -->
-              <div class="sm:col-span-2 p-2.5 sm:p-3 bg-indigo-50/90 rounded-xl border border-indigo-300 hover:border-indigo-500 transition shadow-2xs" onmouseenter="highlightPreviewPart('tabla-box')" onmouseleave="unhighlightPreviewPart()">
+              <!-- 6c. Posición del Contenido de la Tabla (Partidas, Descripciones e Importes) -->
+              <div class="sm:col-span-2 p-2.5 sm:p-3 bg-indigo-50/90 rounded-xl border border-indigo-300 hover:border-indigo-500 transition shadow-2xs" onmouseenter="highlightPreviewPart('grupo-44')" onmouseleave="unhighlightPreviewPart()">
                 <div class="flex items-center justify-between mb-1">
                   <div class="flex items-center gap-1.5">
-                    <span class="text-sm">📐</span>
-                    <span class="font-black text-indigo-950 text-[11px] sm:text-xs">Mover Tabla en Conjunto (Partida, Descripción, Importe, Son y Total)</span>
+                    <span class="text-sm">📝</span>
+                    <span class="font-black text-indigo-950 text-[11px] sm:text-xs">Posición Contenido de Tabla (Partidas, Descripciones e Importes)</span>
                   </div>
-                  <span class="text-[9.5px] text-indigo-600 hidden sm:inline">Desplaza todo el cuadro inferior como una sola unidad</span>
+                  <span class="text-[9.5px] text-indigo-600 hidden sm:inline">Desplaza las líneas de texto dentro de la tabla sin mover el marco exterior</span>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-1.5">
-                  <!-- Mover Vertical Tabla -->
+                  <!-- Mover Vertical Contenido Tabla -->
                   <div>
                     <div class="flex items-center justify-between mb-0.5">
                       <span class="text-[10px] sm:text-[10.5px] font-bold text-indigo-950 flex items-center gap-1">
                         <span>↕️</span> Mover Vert (Arriba / Abajo):
                       </span>
-                      <span id="val-tablaOffsetY" class="font-receipt font-black bg-indigo-200/90 px-1.5 py-0.5 rounded text-[10px] text-indigo-950">0.0 mm</span>
+                      <span id="val-tablaContenidoOffsetY" class="font-receipt font-black bg-indigo-200/90 px-1.5 py-0.5 rounded text-[10px] text-indigo-950">0.0 mm</span>
                     </div>
                     <div class="flex items-center gap-1.5">
-                      <button type="button" onclick="stepAjuste('tablaOffsetY', -0.2); highlightPreviewPart('tabla-box');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Subir tabla (−)">−</button>
-                      <input type="range" id="ajuste-tablaOffsetY" min="-8.0" max="8.0" step="0.2" oninput="highlightPreviewPart('tabla-box'); onAjusteInput('tablaOffsetY', this.value)" class="flex-1 cursor-pointer accent-indigo-600">
-                      <button type="button" onclick="stepAjuste('tablaOffsetY', 0.2); highlightPreviewPart('tabla-box');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Bajar tabla (+)">+</button>
+                      <button type="button" onclick="stepAjuste('tablaContenidoOffsetY', -0.2); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Subir texto (−)">−</button>
+                      <input type="range" id="ajuste-tablaContenidoOffsetY" min="-8.0" max="8.0" step="0.2" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('tablaContenidoOffsetY', this.value)" class="flex-1 cursor-pointer accent-indigo-600">
+                      <button type="button" onclick="stepAjuste('tablaContenidoOffsetY', 0.2); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Bajar texto (+)">+</button>
                     </div>
                   </div>
-                  <!-- Mover Horizontal Tabla -->
+                  <!-- Mover Horizontal Contenido Tabla -->
                   <div>
                     <div class="flex items-center justify-between mb-0.5">
                       <span class="text-[10px] sm:text-[10.5px] font-bold text-indigo-950 flex items-center gap-1">
                         <span>↔️</span> Mover Horiz (Izquierda / Derecha):
                       </span>
-                      <span id="val-tablaOffsetX" class="font-receipt font-black bg-indigo-200/90 px-1.5 py-0.5 rounded text-[10px] text-indigo-950">0.0 mm</span>
+                      <span id="val-tablaContenidoOffsetX" class="font-receipt font-black bg-indigo-200/90 px-1.5 py-0.5 rounded text-[10px] text-indigo-950">0.0 mm</span>
                     </div>
                     <div class="flex items-center gap-1.5">
-                      <button type="button" onclick="stepAjuste('tablaOffsetX', -0.2); highlightPreviewPart('tabla-box');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Mover izquierda tabla (−)">−</button>
-                      <input type="range" id="ajuste-tablaOffsetX" min="-5.0" max="5.0" step="0.2" oninput="highlightPreviewPart('tabla-box'); onAjusteInput('tablaOffsetX', this.value)" class="flex-1 cursor-pointer accent-indigo-600">
-                      <button type="button" onclick="stepAjuste('tablaOffsetX', 0.2); highlightPreviewPart('tabla-box');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Mover derecha tabla (+)">+</button>
+                      <button type="button" onclick="stepAjuste('tablaContenidoOffsetX', -0.2); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Mover izquierda (−)">−</button>
+                      <input type="range" id="ajuste-tablaContenidoOffsetX" min="-5.0" max="5.0" step="0.2" oninput="highlightPreviewPart('grupo-44'); onAjusteInput('tablaContenidoOffsetX', this.value)" class="flex-1 cursor-pointer accent-indigo-600">
+                      <button type="button" onclick="stepAjuste('tablaContenidoOffsetX', 0.2); highlightPreviewPart('grupo-44');" class="w-6 h-6 rounded-md bg-white hover:bg-indigo-100 active:bg-indigo-200 text-indigo-900 font-black text-sm flex items-center justify-center cursor-pointer transition border border-indigo-300 select-none flex-shrink-0" title="Mover derecha (+)">+</button>
                     </div>
                   </div>
                 </div>
@@ -1569,31 +1569,31 @@
     ffG1_LabelsContrib: 'Inter, sans-serif',
 
     // 2. Cabecera de Tabla & Totales (PARTIDA, DESCRIPCIÓN, IMPORTE, Son:, TOTAL)
-    fontG2_TablaLabels: 8.0,
+    fontG2_TablaLabels: 8.5,
     boldG2_TablaLabels: true,
     ffG2_TablaLabels: 'Inter, sans-serif',
 
     // 3.1. Título RECIBO DE CAJA (Independiente)
-    fontG3_ReciboCaja: 9.5,
+    fontG3_ReciboCaja: 10.5,
     boldG3_ReciboCaja: true,
     ffG3_ReciboCaja: 'Inter, sans-serif',
 
     // 3.2. Etiquetas Cajetín (Nº RECIBO, FECHA)
-    fontG3_CajetinLabels: 8.5,
+    fontG3_CajetinLabels: 10.0,
     boldG3_CajetinLabels: true,
     ffG3_CajetinLabels: 'Inter, sans-serif',
 
     // 4.1. Información Cajetín (Nº Recibo y Fecha datos)
-    fontG41_CajetinVal: 9.0,
-    boldG41_CajetinVal: true,
-    ffG41_CajetinVal: 'Inter, sans-serif',
+    fontG41_CajetinVal: 9.5,
+    boldG41_CajetinVal: false,
+    ffG41_CajetinVal: 'Tahoma, sans-serif',
 
     // 4.2. Serie Roja Correlativa (Nº 098466 - Rojo intenso de fábrica)
     fontG42_SerieRoja: 16.5,
     boldG42_SerieRoja: true,
     ffG42_SerieRoja: "'Times New Roman', Times, serif",
     serieOffsetX: 0.0,   // mm (-6.0 a +6.0 mm)
-    serieOffsetY: -0.6,  // mm (-6.0 a +6.0 mm) - Centrado óptimo para evitar que caiga hacia abajo
+    serieOffsetY: -0.2,  // mm (-6.0 a +6.0 mm)
 
     // 4.3. Información Contribuyente (Inputs - Siempre en Mayúsculas)
     fontG43_DatosContrib: 8.5,
@@ -1606,22 +1606,22 @@
     boldG44_Valores: true,     // Negrita Solo Datos / Valores (importes numéricos y total)
     ffG44_TablaDatos: "Inter, sans-serif",
 
-    // Dimensiones y espaciados (mm) - Calibrados para NUNCA colisionar ni solaparse
-    gapLabelBox: 1.8,     // 1.8 mm espacio limpio entre etiqueta y borde superior de caja
-    gapCampos: 2.0,       // 2.0 mm separación entre bloques de campos
-    hNombre: 5.5,         // 5.5 mm alto caja Nombre
-    hDomicilio: 5.5,      // 5.5 mm alto caja Domicilio
-    hObs: 8.5,            // 8.5 mm alto caja Observaciones
-    hTablaBody: 18.0,     // 18.0 mm alto cuerpo tabla
-    hFilaTabla: 4.2,      // 4.2 mm alto de fila compacta (sin separación excesiva entre ítems)
-    wBoxNumFecha: 41.0,   // 41.0 mm ancho cajetín
-    hHeader: 16.0,        // 16.0 mm alto encabezado
-    borderWidth: 1.0,     // px espesor bordes
+    // Dimensiones y espaciados (mm) - Exactos de Calibración Oficial en Captura
+    gapLabelBox: 1.0,     // 1.0 mm (0.10 cm)
+    gapCampos: 1.0,       // 1.0 mm (0.10 cm)
+    hNombre: 6.0,         // 6.0 mm (0.60 cm)
+    hDomicilio: 6.0,      // 6.0 mm (0.60 cm)
+    hObs: 8.0,            // 8.0 mm (0.80 cm)
+    hTablaBody: 33.0,     // 33.0 mm (3.30 cm)
+    hFilaTabla: 4.2,      // 4.2 mm (0.42 cm)
+    wBoxNumFecha: 41.0,   // 41.0 mm (4.10 cm)
+    hHeader: 16.0,        // 16.0 mm (1.60 cm)
+    borderWidth: 0.7,     // 0.7 px espesor bordes
     margenLateral: 9.0,       // mm margen lateral exterior (simetría perfecta: 9 + 90 + 9 = 108 mm)
     margenCorteCentral: 9.0,  // mm margen de corte central entre original y copia
     boxWidthMm: 90.0,         // mm ancho de marco del recibo
-    tablaOffsetX: 0.0,        // mm desplazamiento horizontal en conjunto (Partida, Descripción, Importe, Son, Total)
-    tablaOffsetY: 0.0,        // mm desplazamiento vertical en conjunto
+    tablaContenidoOffsetY: 0.0, // mm desplazamiento del contenido de la tabla
+    tablaContenidoOffsetX: 0.0, // mm
 
     // Controles de Logo MC (logo/mc.png)
     logoSize: 15.0,       // mm
@@ -1637,6 +1637,17 @@
     // Filigrana Azul de Fondo
     filigranaOpacity: 0.26 // 0.05 - 0.50
   };
+
+  // Versión de calibración para forzar la actualización limpia del predeterminado oficial
+  const AJUSTES_CONFIG_VERSION = 3;
+  try {
+    const savedVer = localStorage.getItem('recibo_mc_config_ver');
+    if (Number(savedVer) < AJUSTES_CONFIG_VERSION) {
+      localStorage.setItem('recibo_mc_ajustes_custom_default', JSON.stringify(AJUSTES_DEFAULT));
+      localStorage.setItem('recibo_mc_ajustes', JSON.stringify(AJUSTES_DEFAULT));
+      localStorage.setItem('recibo_mc_config_ver', String(AJUSTES_CONFIG_VERSION));
+    }
+  } catch(e) {}
 
   function getPredeterminados() {
     try {
@@ -1683,6 +1694,7 @@
     try {
       localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
     } catch(e) {}
+    ultimoPdfGenerado = null;
     sincronizarValoresAjustesUI();
     renderAjustesLiveSlip();
     triggerLivePreview();
@@ -1777,13 +1789,13 @@
         parsed.serieOffsetX = baseDefaults.serieOffsetX !== undefined ? baseDefaults.serieOffsetX : 0.0;
       }
       if (parsed.serieOffsetY === undefined) {
-        parsed.serieOffsetY = baseDefaults.serieOffsetY !== undefined ? baseDefaults.serieOffsetY : -0.6;
+        parsed.serieOffsetY = baseDefaults.serieOffsetY !== undefined ? baseDefaults.serieOffsetY : -0.2;
       }
-      if (parsed.tablaOffsetX === undefined) {
-        parsed.tablaOffsetX = baseDefaults.tablaOffsetX !== undefined ? baseDefaults.tablaOffsetX : 0.0;
+      if (parsed.tablaContenidoOffsetX === undefined) {
+        parsed.tablaContenidoOffsetX = parsed.tablaOffsetX !== undefined ? parsed.tablaOffsetX : (baseDefaults.tablaContenidoOffsetX !== undefined ? baseDefaults.tablaContenidoOffsetX : 0.0);
       }
-      if (parsed.tablaOffsetY === undefined) {
-        parsed.tablaOffsetY = baseDefaults.tablaOffsetY !== undefined ? baseDefaults.tablaOffsetY : 0.0;
+      if (parsed.tablaContenidoOffsetY === undefined) {
+        parsed.tablaContenidoOffsetY = parsed.tablaOffsetY !== undefined ? parsed.tablaOffsetY : (baseDefaults.tablaContenidoOffsetY !== undefined ? baseDefaults.tablaContenidoOffsetY : 0.0);
       }
       ajustes = { ...baseDefaults, ...parsed };
     }
@@ -1857,8 +1869,8 @@
       selector = `[data-part="grupo-1"], [data-part="grupo-43"]`;
     } else if (partName === 'tabla-hdr') {
       selector = `[data-part="grupo-2"]`;
-    } else if (partName === 'tabla-body' || partName === 'tabla-pie') {
-      selector = `[data-part="grupo-44"], [data-part="grupo-2"]`;
+    } else if (partName === 'tabla-body' || partName === 'tabla-pie' || partName === 'tabla-contenido' || partName === 'grupo-44') {
+      selector = `[data-part="grupo-44"], [data-part="tabla-contenido"]`;
     } else if (partName === 'hdr-recibo-caja' || partName === 'grupo-recibo-caja') {
       selector = `[data-part="grupo-recibo-caja"]`;
     } else if (partName === 'hdr-num-fecha-lbl' || partName === 'grupo-cajetin-lbl') {
@@ -1975,7 +1987,7 @@
         lbl.textContent = `${Math.round(num * 100)}%`;
       } else if (key === 'borderWidth') {
         lbl.textContent = `${num.toFixed(1)} px`;
-      } else if (key.startsWith('serieOffset') || key.startsWith('tablaOffset')) {
+      } else if (key.includes('Offset') || key.startsWith('serieOffset') || key.startsWith('tablaOffset') || key.startsWith('tablaContenidoOffset')) {
         lbl.textContent = `${num > 0 ? '+' : ''}${num.toFixed(1)} mm`;
       } else if (key.startsWith('margen') || key.startsWith('boxWidth')) {
         const cm = (num / 10).toFixed(2);
@@ -1987,6 +1999,7 @@
         lbl.textContent = `${num.toFixed(1)} px`;
       }
     }
+    ultimoPdfGenerado = null;
     renderAjustesLiveSlip();
     triggerLivePreview();
   }
@@ -2024,6 +2037,7 @@
     try {
       localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
     } catch(e) {}
+    ultimoPdfGenerado = null;
     actualizarBotonBoldUI(key);
     renderAjustesLiveSlip();
     triggerLivePreview();
@@ -2047,6 +2061,7 @@
     try {
       localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
     } catch(e) {}
+    ultimoPdfGenerado = null;
     renderAjustesLiveSlip();
     triggerLivePreview();
   }
@@ -2159,8 +2174,8 @@
       ajustes.margenLateral = def.margenLateral !== undefined ? def.margenLateral : 9.0;
       ajustes.margenCorteCentral = def.margenCorteCentral !== undefined ? def.margenCorteCentral : 9.0;
       ajustes.boxWidthMm = def.boxWidthMm !== undefined ? def.boxWidthMm : 90.0;
-      ajustes.tablaOffsetX = def.tablaOffsetX !== undefined ? def.tablaOffsetX : 0.0;
-      ajustes.tablaOffsetY = def.tablaOffsetY !== undefined ? def.tablaOffsetY : 0.0;
+      ajustes.tablaContenidoOffsetX = def.tablaContenidoOffsetX !== undefined ? def.tablaContenidoOffsetX : 0.0;
+      ajustes.tablaContenidoOffsetY = def.tablaContenidoOffsetY !== undefined ? def.tablaContenidoOffsetY : 0.0;
     } else if (grupo === 'logos') {
       ajustes.logoSize = def.logoSize;
       ajustes.logoOffsetX = def.logoOffsetX;
@@ -2174,6 +2189,7 @@
     try {
       localStorage.setItem('recibo_mc_ajustes', JSON.stringify(ajustes));
     } catch(e) {}
+    ultimoPdfGenerado = null;
     sincronizarValoresAjustesUI();
     renderAjustesLiveSlip();
     triggerLivePreview();
@@ -2193,6 +2209,7 @@
       localStorage.removeItem('recibo_mc_ajustes');
       localStorage.removeItem('recibo_mc_ajustes_custom_default');
     } catch(e) {}
+    ultimoPdfGenerado = null;
     sincronizarValoresAjustesUI();
     renderAjustesLiveSlip();
     triggerLivePreview();
@@ -2241,7 +2258,7 @@
           lbl.textContent = `${Math.round(val * 100)}%`;
         } else if (key === 'borderWidth') {
           lbl.textContent = `${Number(val).toFixed(1)} px`;
-        } else if (key.startsWith('serieOffset') || key.startsWith('tablaOffset')) {
+        } else if (key.includes('Offset') || key.startsWith('serieOffset') || key.startsWith('tablaOffset') || key.startsWith('tablaContenidoOffset')) {
           lbl.textContent = `${Number(val) > 0 ? '+' : ''}${Number(val).toFixed(1)} mm`;
         } else if (key.startsWith('margen') || key.startsWith('boxWidth')) {
           const cm = (val / 10).toFixed(2);
@@ -2876,10 +2893,10 @@
     const escudoOp = a.escudoOpacity !== undefined ? a.escudoOpacity : 0.12;
 
     const serieX = a.serieOffsetX !== undefined ? Number(a.serieOffsetX) : 0.0;
-    const serieY = a.serieOffsetY !== undefined ? Number(a.serieOffsetY) : -0.6;
+    const serieY = a.serieOffsetY !== undefined ? Number(a.serieOffsetY) : -0.2;
 
-    const tablaX = a.tablaOffsetX !== undefined ? Number(a.tablaOffsetX) : 0.0;
-    const tablaY = a.tablaOffsetY !== undefined ? Number(a.tablaOffsetY) : 0.0;
+    const tablaContenidoX = a.tablaContenidoOffsetX !== undefined ? Number(a.tablaContenidoOffsetX) : 0.0;
+    const tablaContenidoY = a.tablaContenidoOffsetY !== undefined ? Number(a.tablaContenidoOffsetY) : 0.0;
 
     // Espaciados calibrados para ajuste milimétrico continuo (admite valores negativos)
     const gapLbl = a.gapLabelBox !== undefined ? Number(a.gapLabelBox) : 1.8;
@@ -2957,7 +2974,7 @@
     ` : '';
 
     return `
-      <div class="inner-box-9cm" style="width: ${boxWidth}; min-width: ${boxWidth}; max-width: ${boxWidth}; height: ${boxHeight}; min-height: ${boxHeight}; max-height: ${boxHeight}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; position: relative; z-index: 10; background: transparent; overflow: hidden;">
+      <div class="inner-box-9cm" style="width: ${boxWidth}; min-width: ${boxWidth}; max-width: ${boxWidth}; min-height: ${boxHeight}; max-height: 96mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; position: relative; z-index: 10; background: transparent; overflow: visible;">
         
         <!-- ENCABEZADO OFICIAL (${hHeaderVal}mm de alto exacto) -->
         <div data-part="hdr-general" class="transition-all" style="height: ${hHeaderVal}mm; min-height: ${hHeaderVal}mm; max-height: ${hHeaderVal}mm; width: 100%; display: flex; align-items: flex-start; justify-content: space-between; flex-shrink: 0; box-sizing: border-box;">
@@ -3026,7 +3043,7 @@
         <div style="height: 1mm; min-height: 1mm; max-height: 1mm; flex-shrink: 0;"></div>
 
         <!-- TABLA OFICIAL (${hTablaTotal}mm de alto: Cabecera 4mm + Cuerpo ${a.hTablaBody}mm + Total 6mm) -->
-        <div data-part="tabla-box" class="transition-all" style="width: 100%; height: ${hTablaTotal}mm; min-height: ${hTablaTotal}mm; max-height: ${hTablaTotal}mm; border: ${bw} solid #0f172a; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; box-sizing: border-box; background: transparent; position: relative; transform: translate(${tablaX}mm, ${tablaY}mm); transition: transform 0.1s ease;">
+        <div data-part="tabla-box" class="transition-all" style="width: 100%; height: ${hTablaTotal}mm; min-height: ${hTablaTotal}mm; max-height: ${hTablaTotal}mm; border: ${bw} solid #0f172a; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; box-sizing: border-box; background: transparent; position: relative;">
           
           <!-- Cabecera de Tabla (4mm de alto: Partida 13mm, Descripción 59mm, Importe 18mm) -->
           <div data-part="grupo-2" class="transition-all relative z-[2]" style="height: 4mm; min-height: 4mm; max-height: 4mm; display: flex; border-bottom: ${bw} solid #0f172a; align-items: center; background: transparent; box-sizing: border-box; font-family: ${ffG2};">
@@ -3044,7 +3061,10 @@
               <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; box-sizing: border-box;"></div>
               <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; box-sizing: border-box;"></div>
             </div>
-            ${rowsHTML}
+            <!-- Filas de datos de la tabla (Partida, Descripción e Importes con posición calibrable) -->
+            <div data-part="tabla-contenido" style="width: 100%; display: flex; flex-direction: column; transform: translate(${tablaContenidoX}mm, ${tablaContenidoY}mm); transition: transform 0.1s ease; position: relative; z-index: 1;">
+              ${rowsHTML}
+            </div>
           </div>
 
           <!-- Pie de Tabla: Son / TOTAL / Monto (6mm de alto: Son 59mm, TOTAL 13mm, Monto 18mm) -->
@@ -3153,7 +3173,7 @@
     ` : '';
 
     container.innerHTML = `
-      <div class="receipt-pane shadow-2xl rounded-sm receipt-watermark-bg" style="width: 108mm; min-width: 108mm; max-width: 108mm; height: 102mm; min-height: 102mm; max-height: 102mm; padding: 5mm 9mm 5mm 9mm; box-sizing: border-box; position: relative; background: #ffffff; border: 1px solid #cbd5e1; overflow: hidden;">
+      <div class="receipt-pane shadow-2xl rounded-sm receipt-watermark-bg" style="width: 108mm; min-width: 108mm; max-width: 108mm; height: 102mm; min-height: 102mm; max-height: 102mm; padding: 3.5mm 9mm 3.5mm 9mm; box-sizing: border-box; position: relative; background: #ffffff; border: 1px solid #cbd5e1; overflow: hidden;">
         ${watermarkSlipHTML}
         <div style="position: relative; z-index: 10; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
           ${slipInner}
@@ -3262,11 +3282,11 @@
     const mCut = (ajustes && ajustes.margenCorteCentral !== undefined) ? Number(ajustes.margenCorteCentral) : 9.0;
     let pLeft, pRight;
     if (isA4) {
-      pLeft = 'padding: 5mm 7.5mm 5mm 7.5mm;';
-      pRight = 'padding: 5mm 7.5mm 5mm 7.5mm;';
+      pLeft = 'padding: 3.5mm 7.5mm 3.5mm 7.5mm;';
+      pRight = 'padding: 3.5mm 7.5mm 3.5mm 7.5mm;';
     } else {
-      pLeft = `padding: 5mm ${mCut}mm 5mm ${mExt}mm;`;
-      pRight = `padding: 5mm ${mExt}mm 5mm ${mCut}mm;`;
+      pLeft = `padding: 3.5mm ${mCut}mm 3.5mm ${mExt}mm;`;
+      pRight = `padding: 3.5mm ${mExt}mm 3.5mm ${mCut}mm;`;
     }
 
     return `
@@ -3734,11 +3754,14 @@
           y: 0,
           width: target.offsetWidth,
           height: target.offsetHeight,
-          windowWidth: target.offsetWidth,
-          windowHeight: target.offsetHeight,
+          windowWidth: 1280,
+          windowHeight: 1024,
           onclone: (doc) => {
             const el = doc.getElementById('pdf-sandbox');
-            if (el) el.style.opacity = '1';
+            if (el) {
+              el.style.opacity = '1';
+              el.style.zIndex = '1';
+            }
             const style = doc.createElement('style');
             style.textContent = `
               * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; }
@@ -3748,20 +3771,7 @@
           }
         };
 
-        // Hook calibrado: compensa exactamente 0.18 del tamaño de fuente (centrado geométrico óptimo en cajetines y cajas)
-        const origFillText = CanvasRenderingContext2D.prototype.fillText;
-        CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
-          const m = this.font ? this.font.match(/(\d+(\.\d+)?)px/) : null;
-          const fs = m ? parseFloat(m[1]) : 0;
-          return origFillText.call(this, text, x, y - fs * 0.18, maxWidth);
-        };
-
-        let canvas;
-        try {
-          canvas = await html2canvas(target, h2cOpts);
-        } finally {
-          CanvasRenderingContext2D.prototype.fillText = origFillText;
-        }
+        const canvas = await html2canvas(target, h2cOpts);
 
         const imgData = canvas.toDataURL('image/png');
 
@@ -3923,6 +3933,7 @@
   window.stepZoom = stepZoom;
   window.descargarPDF = descargarPDF;
   window.verPDF = verPDF;
+  window.generarDocumentoPDF = generarDocumentoPDF;
   window.abrirModalVerPDF = abrirModalVerPDF;
   window.cerrarModalVerPDF = cerrarModalVerPDF;
   window.abrirUltimoPDFGenerado = abrirUltimoPDFGenerado;
