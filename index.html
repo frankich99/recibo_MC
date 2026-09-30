@@ -3197,7 +3197,7 @@
   }
 
   // ======================== GENERADOR HTML TIRA ========================
-  function buildStripHTML(serieNum, forceBlank, stripWidth = '216mm', slipWidth = '108mm', boxWidth = '90mm', boxHeight = '92mm', stripHeight = '102mm', isLastStrip = false) {
+  function buildStripHTML(serieNum, forceBlank, stripWidth = '216mm', slipWidth = '108mm', boxWidth = '90mm', boxHeight = '92mm', stripHeight = '102mm', isLastStrip = false, isFirstStrip = false) {
     const serieStr = String(serieNum).padStart(6, '0');
     const numStr = String(serieNum).padStart(10, '0');
     const isBlank = (modo === 1 || forceBlank);
@@ -3278,27 +3278,26 @@
       // Talón Copia: 108.0mm (caja 90×92mm centrada)
       // Línea de corte punteada exterior derecha (en x = 256.5mm)
       // Sobrante Derecho: 40.5mm con línea de corte punteada a la izquierda
-      // División horizontal entre Tira 1 y Tira 2: border-bottom dashed 1.5px
-      const borderBottomStrip = isLastStrip ? 'border-bottom: 0 !important;' : 'border-bottom: 1.5px dashed #475569 !important;';
+      // División horizontal y límites de corte: border-bottom dashed 1.5px en todas las tiras y border-top dashed 1.5px en la primera tira
+      const borderTopStrip = isFirstStrip ? 'border-top: 1.5px dashed #475569 !important;' : 'border-top: 0 !important;';
+      const borderBottomStrip = 'border-bottom: 1.5px dashed #475569 !important;';
 
       return `
-        <section class="receipt-strip bg-transparent" style="width: ${stripWidth}; min-width: ${stripWidth}; max-width: ${stripWidth}; height: ${stripHeight}; min-height: ${stripHeight}; max-height: ${stripHeight}; display: flex; flex-direction: row; flex-wrap: nowrap !important; box-sizing: border-box; position: relative; border-top: 0 !important; ${borderBottomStrip}">
+        <section class="receipt-strip bg-transparent" style="width: ${stripWidth}; min-width: ${stripWidth}; max-width: ${stripWidth}; height: ${stripHeight}; min-height: ${stripHeight}; max-height: ${stripHeight}; display: flex; flex-direction: row; flex-wrap: nowrap !important; box-sizing: border-box; position: relative; ${borderTopStrip} ${borderBottomStrip}">
           <!-- Sobrante Lateral Izquierdo 40.5 mm con guías de corte -->
-          <div class="sobrante-lateral sobrante-izq" style="width: 40.5mm; min-width: 40.5mm; max-width: 40.5mm; flex: 0 0 40.5mm !important; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; position: relative; border-right: 1.5px dashed #475569; box-sizing: border-box; overflow: hidden; pointer-events: none; user-select: none; padding: 6mm 0;">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1px; font-family: 'Courier Prime', Courier, monospace; color: #64748b; font-weight: 700;">
-              <span style="font-size: 11px; line-height: 1;">✂</span>
-              <span style="font-size: 7px; letter-spacing: 0.5px;">CORTE</span>
-              <span style="font-size: 6px; color: #94a3b8;">4.0 CM</span>
-            </div>
-            ${!isLastStrip ? `
-              <div style="display: flex; align-items: center; justify-content: flex-end; width: 100%; padding-right: 2px; font-family: 'Courier Prime', Courier, monospace; font-size: 6.5px; color: #475569; font-weight: 700;">
+          <div class="sobrante-lateral sobrante-izq" style="width: 40.5mm; min-width: 40.5mm; max-width: 40.5mm; flex: 0 0 40.5mm !important; height: 100%; position: relative; border-right: 1.5px dashed #475569; box-sizing: border-box; overflow: hidden; pointer-events: none; user-select: none;">
+            ${isFirstStrip ? `
+              <div style="position: absolute; top: 1.5mm; right: 2px; font-family: 'Courier Prime', Courier, monospace; font-size: 7px; color: #475569; font-weight: 700;">
                 <span>✂ - - -</span>
               </div>
             ` : ''}
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1px; font-family: 'Courier Prime', Courier, monospace; color: #64748b; font-weight: 700;">
-              <span style="font-size: 6px; color: #94a3b8;">4.0 CM</span>
-              <span style="font-size: 7px; letter-spacing: 0.5px;">CORTE</span>
-              <span style="font-size: 11px; line-height: 1;">✂</span>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 2px; font-family: 'Courier Prime', Courier, monospace; color: #475569; font-weight: 700;">
+              <span style="font-size: 13px; line-height: 1;">✂</span>
+              <span style="font-size: 8px; letter-spacing: 0.8px;">CORTE</span>
+              <span style="font-size: 7px; color: #64748b;">4.0 CM</span>
+            </div>
+            <div style="position: absolute; bottom: 1.5mm; right: 2px; font-family: 'Courier Prime', Courier, monospace; font-size: 7px; color: #475569; font-weight: 700;">
+              <span>✂ - - -</span>
             </div>
           </div>
 
@@ -3313,21 +3312,19 @@
           </div>
 
           <!-- Sobrante Lateral Derecho 40.5 mm con guías de corte -->
-          <div class="sobrante-lateral sobrante-der" style="width: 40.5mm; min-width: 40.5mm; max-width: 40.5mm; flex: 0 0 40.5mm !important; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; position: relative; box-sizing: border-box; overflow: hidden; pointer-events: none; user-select: none; padding: 6mm 0;">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1px; font-family: 'Courier Prime', Courier, monospace; color: #64748b; font-weight: 700;">
-              <span style="font-size: 11px; line-height: 1;">✂</span>
-              <span style="font-size: 7px; letter-spacing: 0.5px;">CORTE</span>
-              <span style="font-size: 6px; color: #94a3b8;">4.0 CM</span>
-            </div>
-            ${!isLastStrip ? `
-              <div style="display: flex; align-items: center; justify-content: flex-start; width: 100%; padding-left: 2px; font-family: 'Courier Prime', Courier, monospace; font-size: 6.5px; color: #475569; font-weight: 700;">
+          <div class="sobrante-lateral sobrante-der" style="width: 40.5mm; min-width: 40.5mm; max-width: 40.5mm; flex: 0 0 40.5mm !important; height: 100%; position: relative; box-sizing: border-box; overflow: hidden; pointer-events: none; user-select: none;">
+            ${isFirstStrip ? `
+              <div style="position: absolute; top: 1.5mm; left: 2px; font-family: 'Courier Prime', Courier, monospace; font-size: 7px; color: #475569; font-weight: 700;">
                 <span>- - - ✂</span>
               </div>
             ` : ''}
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 1px; font-family: 'Courier Prime', Courier, monospace; color: #64748b; font-weight: 700;">
-              <span style="font-size: 6px; color: #94a3b8;">4.0 CM</span>
-              <span style="font-size: 7px; letter-spacing: 0.5px;">CORTE</span>
-              <span style="font-size: 11px; line-height: 1;">✂</span>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 2px; font-family: 'Courier Prime', Courier, monospace; color: #475569; font-weight: 700;">
+              <span style="font-size: 13px; line-height: 1;">✂</span>
+              <span style="font-size: 8px; letter-spacing: 0.8px;">CORTE</span>
+              <span style="font-size: 7px; color: #64748b;">4.0 CM</span>
+            </div>
+            <div style="position: absolute; bottom: 1.5mm; left: 2px; font-family: 'Courier Prime', Courier, monospace; font-size: 7px; color: #475569; font-weight: 700;">
+              <span>- - - ✂</span>
             </div>
           </div>
         </section>
@@ -3387,12 +3384,13 @@
       let stripsHTML = '';
       for (let t = 0; t < tirasEnEstaPag; t++) {
         const globalIdx = pag * tirasPorPag + t;
+        const isFirst = (t === 0);
         const isLast = (t === tirasEnEstaPag - 1);
         if (modo === 1) {
-          stripsHTML += buildStripHTML(0, true, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm', isLast);
+          stripsHTML += buildStripHTML(0, true, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm', isLast, isFirst);
         } else {
           const serieNum = serieDesde + globalIdx;
-          stripsHTML += buildStripHTML(serieNum, false, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm', isLast);
+          stripsHTML += buildStripHTML(serieNum, false, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm', isLast, isFirst);
         }
       }
 
@@ -3755,11 +3753,12 @@
         let stripsHTML = '';
         for (let t = 0; t < tiras; t++) {
           const globalIdx = p * tirasPorPag + t;
+          const isFirst = (t === 0);
           const isLast = (t === tiras - 1);
           if (modo === 1) {
-            stripsHTML += buildStripHTML(0, true, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm', isLast);
+            stripsHTML += buildStripHTML(0, true, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm', isLast, isFirst);
           } else {
-            stripsHTML += buildStripHTML(serieDesde + globalIdx, false, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm', isLast);
+            stripsHTML += buildStripHTML(serieDesde + globalIdx, false, dims.stripWidth, dims.slipWidth, dims.boxWidth, dims.boxHeight, dims.stripHeight || '102mm', isLast, isFirst);
           }
         }
 
