@@ -270,18 +270,18 @@
           <div class="text-[10px] text-slate-500 mt-0.5">Plantilla vacía para llenar a mano.</div>
         </button>
 
-        <!-- Modo 2: Solo Correlativo -->
-        <button type="button" id="btn-modo-2" onclick="setModo(2)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-slate-200 bg-slate-50 cursor-pointer">
+        <!-- Modo 2: Solo Correlativo (Predeterminado Oficial) -->
+        <button type="button" id="btn-modo-2" onclick="setModo(2)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-red-500 bg-red-50 ring-2 ring-red-400/30 cursor-pointer">
           <div class="text-lg mb-0.5">🔴</div>
-          <div class="text-xs font-black text-slate-900 uppercase">2. Solo Correlativo</div>
-          <div class="text-[10px] text-slate-500 mt-0.5">Solo números (cajas de texto vacías).</div>
+          <div class="text-xs font-black text-red-950 uppercase">2. Solo Correlativo (Oficial)</div>
+          <div class="text-[10px] text-red-700 mt-0.5">Solo números correlativos rojos (cajas vacías).</div>
         </button>
 
-        <!-- Modo 3: Con Datos (Default) -->
-        <button type="button" id="btn-modo-3" onclick="setModo(3)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-emerald-500 bg-emerald-50 ring-2 ring-emerald-400/30 cursor-pointer">
+        <!-- Modo 3: Con Datos -->
+        <button type="button" id="btn-modo-3" onclick="setModo(3)" class="mode-btn p-3 sm:p-4 rounded-xl border-2 text-left transition hover:shadow-md border-slate-200 bg-slate-50 cursor-pointer">
           <div class="text-lg mb-0.5">📝</div>
-          <div class="text-xs font-black text-emerald-950 uppercase">3. Con Datos Completos</div>
-          <div class="text-[10px] text-emerald-800 mt-0.5">Contribuyente, conceptos, importes y totales.</div>
+          <div class="text-xs font-black text-slate-900 uppercase">3. Con Datos Completos</div>
+          <div class="text-[10px] text-slate-500 mt-0.5">Contribuyente, conceptos, importes y totales.</div>
         </button>
       </div>
     </section>
@@ -368,10 +368,10 @@
         <!-- Fecha -->
         <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 p-3 bg-slate-50 rounded-xl border border-slate-200">
           <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-slate-800">
-            <input type="checkbox" id="chk-fecha" onchange="onChkFechaChange()" checked class="w-4 h-4 text-sky-600 rounded">
+            <input type="checkbox" id="chk-fecha" onchange="onChkFechaChange()" class="w-4 h-4 text-sky-600 rounded">
             <span>Imprimir Fecha:</span>
           </label>
-          <div id="box-fecha-input" class="flex items-center gap-2 w-full sm:w-auto">
+          <div id="box-fecha-input" class="flex items-center gap-2 w-full sm:w-auto opacity-40 pointer-events-none">
             <input id="f-fecha-global" type="text" oninput="triggerLivePreview()" class="w-full sm:w-36 px-3 py-1.5 border border-slate-300 rounded-lg font-receipt font-bold text-xs text-slate-900 focus:ring-2 focus:ring-sky-500 outline-none" value="01/09/2026" placeholder="DD/MM/AAAA">
           </div>
         </div>
@@ -379,7 +379,7 @@
         <!-- Opciones visuales -->
         <div class="grid grid-cols-3 gap-1.5 sm:gap-2.5 text-xs">
           <label class="flex items-center gap-1.5 sm:gap-2 p-2 sm:p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer text-[11px] sm:text-xs">
-            <input type="checkbox" id="chk-num-recibo" onchange="triggerLivePreview()" checked class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-600 rounded flex-shrink-0">
+            <input type="checkbox" id="chk-num-recibo" onchange="triggerLivePreview()" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-600 rounded flex-shrink-0">
             <span class="font-medium text-slate-800 truncate">Nº Recibo</span>
           </label>
           <label class="flex items-center gap-1.5 sm:gap-2 p-2 sm:p-2.5 bg-slate-50 rounded-lg border border-slate-200 cursor-pointer text-[11px] sm:text-xs">
@@ -1517,13 +1517,13 @@
 (function() {
 
   // ======================== ESTADO ========================
-  let modo = 3;            // 1=blanco, 2=solo correlativo, 3=con datos
+  let modo = 2;            // 1=blanco, 2=solo correlativo (predeterminado), 3=con datos
   let tipoHoja = "oficio"; // "oficio" (216x330mm), "a4" (210x297mm), "tira" (216x102mm)
   let serieDesde = 98466;
   let serieHasta = 98468;
   let fechaGlobal = "01/09/2026";
-  let showFecha = true;
-  let showNumRecibo = true;
+  let showFecha = false;
+  let showNumRecibo = false;
   let showFiligrana = true;
   let showEscudo = true;
   let currentZoom = 0.8;
@@ -1593,7 +1593,7 @@
     boldG42_SerieRoja: true,
     ffG42_SerieRoja: "'Times New Roman', Times, serif",
     serieOffsetX: 0.0,   // mm (-6.0 a +6.0 mm)
-    serieOffsetY: -0.2,  // mm (-6.0 a +6.0 mm)
+    serieOffsetY: -1.0,  // mm (-6.0 a +6.0 mm) - centrado vertical exacto para despegarlo del borde inferior
 
     // 4.3. Información Contribuyente (Inputs - Siempre en Mayúsculas)
     fontG43_DatosContrib: 8.5,
@@ -1639,7 +1639,7 @@
   };
 
   // Versión de calibración para forzar la actualización limpia del predeterminado oficial
-  const AJUSTES_CONFIG_VERSION = 4;
+  const AJUSTES_CONFIG_VERSION = 5;
   try {
     const savedVer = localStorage.getItem('recibo_mc_config_ver');
     if (Number(savedVer) < AJUSTES_CONFIG_VERSION) {
@@ -2150,7 +2150,7 @@
       ajustes.boldG42_SerieRoja = def.boldG42_SerieRoja;
       ajustes.ffG42_SerieRoja = def.ffG42_SerieRoja;
       ajustes.serieOffsetX = def.serieOffsetX !== undefined ? def.serieOffsetX : 0.0;
-      ajustes.serieOffsetY = def.serieOffsetY !== undefined ? def.serieOffsetY : -0.2;
+      ajustes.serieOffsetY = def.serieOffsetY !== undefined ? def.serieOffsetY : -1.0;
     } else if (grupo === 'g43') {
       ajustes.fontG43_DatosContrib = def.fontG43_DatosContrib;
       ajustes.boldG43_DatosContrib = def.boldG43_DatosContrib;
@@ -2956,13 +2956,13 @@
 
       rowsHTML += `
         <div style="width: 100%; min-height: ${hFilaVal}mm; display: flex; flex-direction: row; align-items: flex-start; box-sizing: border-box; position: relative; z-index: 1; color: #000; font-family: ${ffG44}; margin: 0 0 0.6mm 0; padding: 0;">
-          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; display: flex; align-items: flex-start; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0.4mm 0.8mm 0.2mm 0.8mm; line-height: 1.15;">
+          <div style="width: 15mm; min-width: 15mm; max-width: 15mm; display: flex; align-items: flex-start; justify-content: center; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-sizing: border-box; padding: 0.4mm 0.8mm 0.2mm 0.8mm; line-height: 1.15;">
             ${p || '&nbsp;'}
           </div>
-          <div style="width: 59mm; min-width: 59mm; max-width: 59mm; display: flex; align-items: flex-start; justify-content: flex-start; padding: 0.4mm 1.5mm 0.2mm 2.2mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; white-space: normal; word-break: break-word; line-height: 1.15; box-sizing: border-box;">
+          <div style="width: 62mm; min-width: 62mm; max-width: 62mm; display: flex; align-items: flex-start; justify-content: flex-start; padding: 0.4mm 1.5mm 0.2mm 2.2mm; font-size: ${fontG44}px; font-weight: ${fwG44Gen}; color: #000; text-transform: uppercase; white-space: normal; word-break: break-word; line-height: 1.15; box-sizing: border-box;">
             ${d || '&nbsp;'}
           </div>
-          <div style="width: 18mm; min-width: 18mm; max-width: 18mm; display: flex; align-items: flex-start; justify-content: flex-end; padding: 0.4mm 2.2mm 0.2mm 1.2mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box; line-height: 1.15;">
+          <div style="width: 13mm; min-width: 13mm; max-width: 13mm; display: flex; align-items: flex-start; justify-content: flex-end; padding: 0.4mm 1.5mm 0.2mm 1.0mm; font-size: ${fSizeImporte}px; font-weight: ${fwG44Val}; color: #000; overflow: hidden; white-space: nowrap; box-sizing: border-box; line-height: 1.15;">
             ${safeI || '&nbsp;'}
           </div>
         </div>
@@ -3003,38 +3003,38 @@
 
           <!-- Cajetín Nº Recibo / Fecha / Serie (${a.wBoxNumFecha}mm de ancho, ${hHeaderVal}mm de alto) -->
           <div data-part="hdr-cajetin" class="box-num-fecha transition-all" style="width: ${a.wBoxNumFecha}mm; min-width: ${a.wBoxNumFecha}mm; max-width: ${a.wBoxNumFecha}mm; height: ${hHeaderVal}mm; min-height: ${hHeaderVal}mm; max-height: ${hHeaderVal}mm; border: ${bw} solid #0f172a; border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; box-sizing: border-box; background: transparent;">
-            <!-- Fila 1: Nº Recibo -->
+            <!-- Fila 1: Nº Recibo (5mm alto, 20mm etiqueta) -->
             <div style="height: ${hFilaNum}mm; min-height: ${hFilaNum}mm; max-height: ${hFilaNum}mm; display: flex; align-items: center; border-bottom: ${bw} solid #0f172a; box-sizing: border-box;">
-              <span data-part="grupo-cajetin-lbl" class="lbl-col transition-all" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3_Caj}; font-size: ${fontG3_Caj}px; font-weight: ${fwG3_Caj}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">Nº RECIBO</span>
+              <span data-part="grupo-cajetin-lbl" class="lbl-col transition-all" style="width: 20mm; min-width: 20mm; max-width: 20mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3_Caj}; font-size: ${fontG3_Caj}px; font-weight: ${fwG3_Caj}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">Nº RECIBO</span>
               <span data-part="grupo-41" class="transition-all" style="flex: 1; min-width: 0; height: 100%; font-family: ${ffG41}; font-size: ${fontG41}px; font-weight: ${fwG41}; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentNum}</span>
             </div>
-            <!-- Fila 2: Fecha -->
+            <!-- Fila 2: Fecha (5mm alto, 20mm etiqueta) -->
             <div style="height: ${hFilaFecha}mm; min-height: ${hFilaFecha}mm; max-height: ${hFilaFecha}mm; display: flex; align-items: center; border-bottom: ${bw} solid #0f172a; box-sizing: border-box;">
-              <span data-part="grupo-cajetin-lbl" class="lbl-col transition-all" style="width: 19mm; min-width: 19mm; max-width: 19mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3_Caj}; font-size: ${fontG3_Caj}px; font-weight: ${fwG3_Caj}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">FECHA</span>
+              <span data-part="grupo-cajetin-lbl" class="lbl-col transition-all" style="width: 20mm; min-width: 20mm; max-width: 20mm; height: 100%; border-right: ${bw} solid #0f172a; font-family: ${ffG3_Caj}; font-size: ${fontG3_Caj}px; font-weight: ${fwG3_Caj}; color: #000; padding-left: 1.2mm; display: flex; align-items: center; box-sizing: border-box; text-transform: uppercase; white-space: nowrap;">FECHA</span>
               <span data-part="grupo-41" class="transition-all" style="flex: 1; min-width: 0; height: 100%; font-family: ${ffG41}; font-size: ${fontG41}px; font-weight: ${fwG41}; color: #000; display: flex; align-items: center; justify-content: center; box-sizing: border-box; white-space: nowrap;">${currentFecha}</span>
             </div>
-            <!-- Fila 3: Nº Serie Rojo (#dc2626) -->
+            <!-- Fila 3: Nº Serie Rojo (#dc2626, 6mm alto, centrado perfecto despegado del borde inferior) -->
             <div data-part="grupo-42" class="transition-all" style="flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; font-family: ${ffG42}; font-size: ${fontG42}px; font-weight: ${fwG42}; color: #dc2626; line-height: 1; box-sizing: border-box; white-space: nowrap; overflow: visible;">
-              ${currentSerie ? `<span style="display: inline-block; transform: translate(${serieX}mm, ${serieY}mm); transition: transform 0.1s ease;">Nº ${currentSerie}</span>` : ''}
+              ${currentSerie ? `<span style="display: inline-block; position: relative; top: ${serieY}mm; left: ${serieX}mm; transition: top 0.1s ease;">Nº ${currentSerie}</span>` : ''}
             </div>
           </div>
         </div>
 
         <!-- CAMPOS DE DATOS DEL CONTRIBUYENTE (Separación calibrable anti-colisión) -->
         <div style="width: 100%; flex-shrink: 0; display: flex; flex-direction: column; box-sizing: border-box;">
-          <!-- 1. Nombre o Razón Social -->
+          <!-- 1. Nombre o Razón Social (6.0mm) -->
           <div data-part="grupo-1" class="transition-all" style="font-family: ${ffG1}; font-size: ${fontG1}px; font-weight: ${fwG1}; color: #0f172a; line-height: 1.1; margin-bottom: ${gapLbl}mm; padding-left: 1px; box-sizing: border-box;">Nombre o Razón Social:</div>
           <div data-part="grupo-43" class="transition-all" style="height: ${a.hNombre}mm; min-height: ${a.hNombre}mm; max-height: ${a.hNombre}mm; border: ${bw} solid #0f172a; border-radius: 4px; padding: 0 4px; display: flex; align-items: center; font-family: ${ffG43}; font-size: ${fitFontNombre}px; font-weight: ${fwG43}; color: #020617; text-transform: uppercase; overflow: hidden; white-space: nowrap !important; text-overflow: ellipsis; box-sizing: border-box; background: transparent; margin-bottom: ${gapCmp}mm;">
             ${valNombre}
           </div>
 
-          <!-- 2. Domicilio Fiscal -->
+          <!-- 2. Domicilio Fiscal (6.0mm) -->
           <div data-part="grupo-1" class="transition-all" style="font-family: ${ffG1}; font-size: ${fontG1}px; font-weight: ${fwG1}; color: #0f172a; line-height: 1.1; margin-bottom: ${gapLbl}mm; padding-left: 1px; box-sizing: border-box;">Domicilio Fiscal:</div>
           <div data-part="grupo-43" class="transition-all" style="height: ${a.hDomicilio}mm; min-height: ${a.hDomicilio}mm; max-height: ${a.hDomicilio}mm; border: ${bw} solid #0f172a; border-radius: 4px; padding: 0 4px; display: flex; align-items: center; font-family: ${ffG43}; font-size: ${fitFontDomicilio}px; font-weight: ${fwG43}; color: #020617; text-transform: uppercase; overflow: hidden; white-space: nowrap !important; text-overflow: ellipsis; box-sizing: border-box; background: transparent; margin-bottom: ${gapCmp}mm;">
             ${valDomicilio}
           </div>
 
-          <!-- 3. Observaciones -->
+          <!-- 3. Observaciones (8.5mm - 9.0mm) -->
           <div data-part="grupo-1" class="transition-all" style="font-family: ${ffG1}; font-size: ${fontG1}px; font-weight: ${fwG1}; color: #0f172a; line-height: 1.1; margin-bottom: ${gapLbl}mm; padding-left: 1px; box-sizing: border-box;">Observaciones:</div>
           <div data-part="grupo-43" class="transition-all" style="height: ${a.hObs}mm; min-height: ${a.hObs}mm; max-height: ${a.hObs}mm; border: ${bw} solid #0f172a; border-radius: 4px; padding: 1.5px 4px; display: flex; align-items: flex-start; font-family: ${ffG43}; font-size: ${fitFontObs}px; font-weight: ${fwG43}; color: #020617; text-transform: uppercase; overflow: hidden; word-break: break-word; line-height: 1.25; box-sizing: border-box; background: transparent;">
             ${valObs}
@@ -3047,21 +3047,21 @@
         <!-- TABLA OFICIAL (${hTablaTotal}mm de alto: Cabecera 4mm + Cuerpo ${a.hTablaBody}mm + Total 6mm) -->
         <div data-part="tabla-box" class="transition-all" style="width: 100%; height: ${hTablaTotal}mm; min-height: ${hTablaTotal}mm; max-height: ${hTablaTotal}mm; border: ${bw} solid #0f172a; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; box-sizing: border-box; background: transparent; position: relative;">
           
-          <!-- Cabecera de Tabla (4mm de alto: Partida 13mm, Descripción 59mm, Importe 18mm) -->
+          <!-- Cabecera de Tabla (4mm de alto: Partida 15mm, Descripción 62mm, Importe 13mm) -->
           <div data-part="grupo-2" class="transition-all relative z-[2]" style="height: 4mm; min-height: 4mm; max-height: 4mm; display: flex; border-bottom: ${bw} solid #0f172a; align-items: center; background: transparent; box-sizing: border-box; font-family: ${ffG2};">
-            <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG2}px; font-weight: ${fwG2}; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">PARTIDA</div>
-            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG2}px; font-weight: ${fwG2}; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">DESCRIPCIÓN</div>
-            <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: center; font-size: ${fontG2}px; font-weight: ${fwG2}; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">IMPORTE</div>
+            <div style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG2}px; font-weight: ${fwG2}; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">PARTIDA</div>
+            <div style="width: 62mm; min-width: 62mm; max-width: 62mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-size: ${fontG2}px; font-weight: ${fwG2}; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">DESCRIPCIÓN</div>
+            <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; display: flex; align-items: center; justify-content: center; font-size: ${fontG2}px; font-weight: ${fwG2}; color: #000; text-transform: uppercase; box-sizing: border-box; white-space: nowrap;">IMPORTE</div>
           </div>
 
           <!-- Cuerpo de Tabla (${a.hTablaBody}mm de alto) con Escudo Gris de fondo -->
           <div data-part="grupo-44" class="transition-all" style="height: ${a.hTablaBody}mm; min-height: ${a.hTablaBody}mm; max-height: ${a.hTablaBody}mm; display: flex; flex-direction: column; justify-content: flex-start; position: relative; box-sizing: border-box; overflow: hidden; font-family: ${ffG44}; padding-top: 1.0mm;">
             ${escudoHTML}
-            <!-- Guías verticales continuas de columnas (13mm, 59mm, 18mm) de borde a borde -->
+            <!-- Guías verticales continuas de columnas (15mm, 62mm, 13mm) de borde a borde -->
             <div style="position: absolute; inset: 0; display: flex; flex-direction: row; pointer-events: none; z-index: 0; box-sizing: border-box;">
-              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; box-sizing: border-box;"></div>
-              <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; box-sizing: border-box;"></div>
-              <div style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; box-sizing: border-box;"></div>
+              <div style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; border-right: ${bw} solid #0f172a; box-sizing: border-box;"></div>
+              <div style="width: 62mm; min-width: 62mm; max-width: 62mm; height: 100%; border-right: ${bw} solid #0f172a; box-sizing: border-box;"></div>
+              <div style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; box-sizing: border-box;"></div>
             </div>
             <!-- Filas de datos de la tabla (Partida, Descripción e Importes con posición calibrable) -->
             <div data-part="tabla-contenido" style="width: 100%; display: flex; flex-direction: column; transform: translate(${tablaContenidoX}mm, ${tablaContenidoY}mm); transition: transform 0.1s ease; position: relative; z-index: 1;">
@@ -3069,19 +3069,19 @@
             </div>
           </div>
 
-          <!-- Pie de Tabla: Son / TOTAL / Monto (6mm de alto: Son 59mm, TOTAL 13mm, Monto 18mm) -->
+          <!-- Pie de Tabla: Son / TOTAL / Monto (6mm de alto: Son 62mm, TOTAL 15mm, Monto 13mm) -->
           <div class="transition-all text-black relative z-[2]" style="height: 6mm; min-height: 6mm; max-height: 6mm; display: flex; border-top: ${bw} solid #0f172a; align-items: center; background: transparent; box-sizing: border-box;">
-            <!-- Son (59mm) -->
-            <div style="width: 59mm; min-width: 59mm; max-width: 59mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 0 2.2mm; display: flex; align-items: center; gap: 1.2mm; overflow: hidden; box-sizing: border-box;">
+            <!-- Son (62mm) -->
+            <div style="width: 62mm; min-width: 62mm; max-width: 62mm; height: 100%; border-right: ${bw} solid #0f172a; padding: 0 2.2mm; display: flex; align-items: center; gap: 1.2mm; overflow: hidden; box-sizing: border-box;">
               <span data-part="grupo-2" style="font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; flex-shrink: 0; line-height: 1.15; white-space: nowrap;">Son:</span>
               <span data-part="grupo-44" style="font-family: ${ffG44}; text-transform: uppercase; font-size: ${fitFontSon}px; font-weight: ${fwG44Gen}; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.15;">${sonStr}</span>
             </div>
-            <!-- TOTAL (13mm) -->
-            <div data-part="grupo-2" style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap;">
+            <!-- TOTAL (15mm) -->
+            <div data-part="grupo-2" style="width: 15mm; min-width: 15mm; max-width: 15mm; height: 100%; border-right: ${bw} solid #0f172a; display: flex; align-items: center; justify-content: center; font-family: ${ffG2}; font-weight: ${fwG2}; font-size: ${fontG2}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap;">
               TOTAL
             </div>
-            <!-- Monto (18mm) -->
-            <div data-part="grupo-44" style="width: 18mm; min-width: 18mm; max-width: 18mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 2.2mm; font-family: ${ffG44}; font-weight: ${fwG44Val}; font-size: ${fontTotalMonto}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis;">
+            <!-- Monto (13mm) -->
+            <div data-part="grupo-44" style="width: 13mm; min-width: 13mm; max-width: 13mm; height: 100%; display: flex; align-items: center; justify-content: flex-end; padding: 0 1.5mm; font-family: ${ffG44}; font-weight: ${fwG44Val}; font-size: ${fontTotalMonto}px; color: #000; box-sizing: border-box; line-height: 1; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis;">
               ${totalStr}
             </div>
           </div>
@@ -3284,11 +3284,11 @@
     const mCut = (ajustes && ajustes.margenCorteCentral !== undefined) ? Number(ajustes.margenCorteCentral) : 9.0;
     let pLeft, pRight;
     if (isA4) {
-      pLeft = 'padding: 3.5mm 7.5mm 3.5mm 7.5mm;';
-      pRight = 'padding: 3.5mm 7.5mm 3.5mm 7.5mm;';
+      pLeft = 'padding: 5.0mm 7.5mm 5.0mm 7.5mm;';
+      pRight = 'padding: 5.0mm 7.5mm 5.0mm 7.5mm;';
     } else {
-      pLeft = `padding: 3.5mm ${mCut}mm 3.5mm ${mExt}mm;`;
-      pRight = `padding: 3.5mm ${mExt}mm 3.5mm ${mCut}mm;`;
+      pLeft = `padding: 5.0mm ${mCut}mm 5.0mm ${mExt}mm;`;
+      pRight = `padding: 5.0mm ${mExt}mm 5.0mm ${mCut}mm;`;
     }
 
     return `
@@ -3982,7 +3982,7 @@
   window.renderStep5LiveSlip = renderStep5LiveSlip;
 
   // ======================== INIT ========================
-  setModo(3);
+  setModo(2);
   setTipoHoja("oficio");
   onRangoChange();
   cargarReciboEnForm(0);
